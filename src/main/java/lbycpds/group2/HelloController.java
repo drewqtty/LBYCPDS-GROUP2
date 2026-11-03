@@ -1,4 +1,4 @@
-package lbycpds.group2.lbycpds2;
+package lbycpds.group2;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
