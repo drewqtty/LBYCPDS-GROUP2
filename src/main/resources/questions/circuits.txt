@@ -1,0 +1,9 @@
+COURSE#Fundamentals of Electrical Circuits
+TOPIC#Ohm's Law#Series Circuits#Parallel Circuits
+TOPIC#Series Circuits#Kirchhoff's Laws
+TOPIC#Parallel Circuits#Kirchhoff's Laws
+TOPIC#Kirchhoff's Laws
+
+MC#1#Ohm's Law#1#What is the unit of electrical resistance?#Volt#Ampere#Ohm#Watt#C
+ID#2#Ohm's Law#2#Which law states that voltage is directly proportional to current at constant temperature?#Ohm's Law
+PS#3#Ohm's Law#3#A 9 V source is connected across a 3 ohm resistor. Find the current and the power dissipated.#I = 3 A and P = 27 W#3#27

@@ -1,0 +1,9 @@
+COURSE#Data Structures and Algorithms
+TOPIC#Arrays#Linked Lists#Sorting
+TOPIC#Linked Lists#Stacks and Queues
+TOPIC#Sorting
+TOPIC#Stacks and Queues
+
+MC#1#Stacks and Queues#1#Which structure follows the first in, first out rule?#Stack#Queue#Tree#Heap#B
+ID#2#Sorting#2#What sorting algorithm repeatedly swaps adjacent elements that are out of order?#Bubble Sort
+PS#3#Sorting#3#Give the worst-case time complexity of insertion sort and explain why.#O(n^2), because each element may be shifted past all earlier elements#o(n^2)
