@@ -1,9 +1,31 @@
 COURSE#Fundamentals of Electrical Circuits
-TOPIC#Ohm's Law#Series Circuits#Parallel Circuits
-TOPIC#Series Circuits#Kirchhoff's Laws
-TOPIC#Parallel Circuits#Kirchhoff's Laws
+TOPIC#Resistance#Series Circuits#Parallel Circuits
+TOPIC#Series Circuits#Series-Parallel Circuits
+TOPIC#Parallel Circuits#Series-Parallel Circuits
+TOPIC#Series-Parallel Circuits#Superposition
+TOPIC#Superposition#Kirchhoff's Laws
 TOPIC#Kirchhoff's Laws
 
-MC#1#Ohm's Law#1#What is the unit of electrical resistance?#Volt#Ampere#Ohm#Watt#C
-ID#2#Ohm's Law#2#Which law states that voltage is directly proportional to current at constant temperature?#Ohm's Law
-PS#3#Ohm's Law#3#A 9 V source is connected across a 3 ohm resistor. Find the current and the power dissipated.#I = 3 A and P = 27 W#3#27
+MC#1#Resistance#1#A copper wire is stretched so it becomes twice as long and its cross-section is cut in half. What happens to its resistance?#It is doubled#It becomes four times larger#It stays the same#It is cut in half#B
+ID#2#Resistance#2#What is the reciprocal of resistance called? Answer with one word.#conductance
+MC#3#Resistance#3#A heater draws 5 A from a 120 V outlet. What is its resistance in ohms?#60 ohms#600 ohms#24 ohms#12 ohms#C
+
+MC#4#Series Circuits#1#Three bulbs are connected in series and one of them burns out, leaving an open circuit. What happens to the other two bulbs?#They get brighter#They stay lit#They go out because the current path is broken#Only the nearest one stays lit#C
+ID#5#Series Circuits#2#Two series resistors used to get a smaller voltage from a larger one form a what? Answer with two words.#voltage divider
+MC#6#Series Circuits#3#A 60 V supply is connected to a 10 ohm and a 20 ohm heating element in series. What is the voltage across the 20 ohm element in volts?#20 V#40 V#30 V#60 V#B
+
+MC#7#Parallel Circuits#1#What happens to the total resistance when another resistor is connected in parallel across an existing circuit?#It stays the same#It doubles#It increases#It decreases#D
+ID#8#Parallel Circuits#2#What do you call the rule that splits the total current among the branches of a parallel circuit? Answer with two words.#current divider
+MC#9#Parallel Circuits#3#A 20 ohm appliance and a 30 ohm appliance are plugged into a 120 V outlet in parallel. What is the total current in amps?#12 A#4 A#6 A#10 A#D
+
+MC#10#Series-Parallel Circuits#1#A 10 ohm resistor is in series with two 10 ohm resistors in parallel. Which resistor carries the most current?#The single series resistor#Each parallel resistor#All three equally#It cannot be determined#A
+ID#11#Series-Parallel Circuits#2#A 10 ohm resistor and a 15 ohm resistor are connected in parallel. What is the equivalent resistance in ohms? Answer with a number only.#6
+MC#12#Series-Parallel Circuits#3#A 120 V supply feeds a 10 ohm resistor in series with a parallel pair of a 30 ohm and a 60 ohm resistor. What is the voltage across the parallel pair in volts?#80 V#40 V#60 V#120 V#A
+
+MC#13#Superposition#1#When you analyze one voltage source at a time using superposition, what do you do with the other independent voltage sources?#Replace them with open circuits#Leave them unchanged#Replace them with short circuits#Double their values#C
+ID#14#Superposition#2#When applying superposition, an independent current source that is turned off is replaced by a short circuit or an open circuit? Answer with one word: short or open.#open
+MC#15#Superposition#3#Two sources feed the same 10 ohm resistor. Using superposition, source A alone produces 3 A and source B alone produces 5 A, both in the same direction. What is the power in the resistor in watts?#80 W#800 W#640 W#340 W#C
+
+MC#16#Kirchhoff's Laws#1#Which statement about Kirchhoff's current law is correct?#Current is used up by each resistor#The currents entering a node equal the currents leaving it#The voltages at a node add up to zero#Current gets larger after each resistor#B
+ID#17#Kirchhoff's Laws#2#Which Kirchhoff's law states that the algebraic sum of voltages around a closed loop is zero? Answer with the abbreviation.#KVL
+MC#18#Kirchhoff's Laws#3#At a junction in a wiring panel, 15 A and 9 A flow into the node and 11 A flows out through one branch. What is the current in amps in the remaining branch?#24 A#35 A#4 A#13 A#D
