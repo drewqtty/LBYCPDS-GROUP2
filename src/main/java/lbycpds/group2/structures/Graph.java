@@ -134,6 +134,22 @@ public class Graph implements ProgressionGraph {
         System.out.println("Total topics: " + graph.size());
         System.out.println();
 
+        //display all topics and their scores
+        System.out.println("Topics and Scores:");
+        Topic[] allTopicsArray = {sp, dw, mesh, ac};
+        for (Topic t : allTopicsArray) {
+            System.out.println(" - " + t.getName() + " (Score: " + t.getLatestScore() + ")");
+        }
+        System.out.println();
+
+        //display graph edges (prerequisites)
+        System.out.println("Graph Edges (Prerequisites):");
+        System.out.println(" - Superposition -> Delta to Wye");
+        System.out.println(" - Superposition -> Mesh Analysis");
+        System.out.println(" - Mesh Analysis -> AC sources");
+        System.out.println();
+
+
         //test unlocking next topics starting from "Superposition"
         System.out.println("Unlocking from Superposition");
         List<Topic> unlockedTopics = graph.unlockNext("Superposition");
