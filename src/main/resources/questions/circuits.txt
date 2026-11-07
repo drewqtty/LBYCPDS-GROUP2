@@ -29,3 +29,23 @@ MC#15#Superposition#3#Two sources feed the same 10 ohm resistor. Using superposi
 MC#16#Kirchhoff's Laws#1#Which statement about Kirchhoff's current law is correct?#Current is used up by each resistor#The currents entering a node equal the currents leaving it#The voltages at a node add up to zero#Current gets larger after each resistor#B
 ID#17#Kirchhoff's Laws#2#Which Kirchhoff's law states that the algebraic sum of voltages around a closed loop is zero? Answer with the abbreviation.#KVL
 MC#18#Kirchhoff's Laws#3#At a junction in a wiring panel, 15 A and 9 A flow into the node and 11 A flows out through one branch. What is the current in amps in the remaining branch?#24 A#35 A#4 A#13 A#D
+
+MC#1#Mesh analysis#1#Which fundamental circuit law is the basis for mesh analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Ohm's Law#Thevenin's Theorem#B
+MC#2#Mesh analysis#2#In mesh analysis, what variables are solved for using simultaneous equations?#Branch currents#Node voltages#Mesh (loop) currents#Component power values#C
+MC#3#Mesh analysis#3#When writing a KVL equation for a mesh containing a current source shared with an adjacent mesh, what special technique is typically used?#A supermesh#Norton equivalent conversion#Node voltage elimination#Delta-wye transformation#A
+
+MC#4#Nodal analysis#1#Which fundamental circuit law is the basis for nodal analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Superposition Theorem#Maximum Power Transfer Theorem#A
+MC#5#Nodal analysis#2#In nodal analysis, node voltages are calculated relative to which reference point?#The highest voltage node in the circuit#Any arbitrary node chosen as ground (reference node)#The node immediately following the primary power source#The output terminals of the circuit#B
+MC#6#Nodal analysis#3#What is the term for a voltage source connected between two non-reference nodes that requires a combined node equation in nodal analysis?#Dependent source#Independent source#Supernode#Norton source#C
+
+MC#7#Norton's theorem#1#Any linear two-terminal resistive circuit can be replaced by an equivalent circuit consisting of an independent current source in parallel with what?#A series resistor#A parallel resistor#A series voltage source#An open circuit#B
+MC#8#Norton's theorem#2#To find the Norton resistance (R_N) of an independent source circuit, what must be done to all independent voltage and current sources?#Turned off (voltage sources shorted, current sources opened)#Left completely unchanged#Replaced with short circuits only#Scaled to maximum capacity#A
+MC#9#Norton's theorem#3#What is the Norton current (I_N) equal to in a linear circuit?#The open-circuit voltage divided by the Thevenin resistance#The short-circuit current between the two terminals#The total current supplied by the main source#The sum of all branch currents#B
+
+MC#10#Delta to wye#1#What is another common name for a delta ($\Delta$) connection in three-phase or resistive bridge circuits?#T-connection#Pi ($\pi$) connection#Star connection#Bridge connection#B
+MC#11#Delta to wye#2#What is another common name for a wye (Y) connection?#Pi ($\pi$) connection#Mesh connection#T-connection (or Star connection)#Loop connection#C
+MC#12#Delta to wye#3#When converting a balanced delta network of resistor values $R_\Delta$ to an equivalent wye network, what is the relationship between the wye resistor ($R_Y$) and $R_\Delta$?#R_Y = 3 * R_\Delta#R_Y = R_\Delta / 3#R_Y = R_\Delta#R_Y = 2 * R_\Delta#B
+
+ID#13#Mesh analysis#1#What specialized loop containing a current source is formed by combining adjacent meshes in mesh analysis? Answer with one word.#Supermesh
+ID#14#Nodal analysis#2#What is the name given to the node in a circuit that is assigned a potential of zero volts and used as the reference point for all other node voltage measurements? Answer with one word.#Ground
+ID#15#Delta to wye#3#What Greek letter symbol is commonly used to describe a three-terminal delta circuit configuration? Answer with the word. Notice: Delta
