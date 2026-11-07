@@ -1,9 +1,16 @@
 COURSE#Data Structures and Algorithms
-TOPIC#Arrays#Linked Lists#Sorting
-TOPIC#Linked Lists#Stacks and Queues
-TOPIC#Sorting
-TOPIC#Stacks and Queues
+TOPIC#Intro, ADT, and Complexity#Linked Lists
+TOPIC#Linked Lists#Stacks
+TOPIC#Stacks
 
-MC#1#Stacks and Queues#1#Which structure follows the first in, first out rule?#Stack#Queue#Tree#Heap#B
-ID#2#Sorting#2#What sorting algorithm repeatedly swaps adjacent elements that are out of order?#Bubble Sort
-PS#3#Sorting#3#Give the worst-case time complexity of insertion sort and explain why.#O(n^2), because each element may be shifted past all earlier elements#o(n^2)
+MC#1#Intro, ADT, and Complexity#1#Which statement about an abstract data type (ADT) is correct?#It is the same as a primitive type#It must be implemented with arrays#It defines operations without fixing the implementation#It specifies the memory addresses used#C
+ID#2#Intro, ADT, and Complexity#2#What is the Big O time complexity of accessing an array element by its index? Write it in the form O(n).#O(1)
+MC#3#Intro, ADT, and Complexity#3#A loop starts with i = 1 and doubles i on every pass (i = i * 2) while i is less than 1000. How many times does the loop body run?#9#11#10#500#C
+
+MC#4#Linked Lists#1#Why is inserting at the front of a singly linked list faster than inserting at the front of an array?#Linked lists use less memory#Arrays cannot be changed#Linked lists are always sorted#No elements need to be shifted#D
+ID#5#Linked Lists#2#What do you call each element of a linked list, which holds data and a reference to the next element?#Node
+MC#6#Linked Lists#3#A music playlist is a singly linked list of 40 songs with only a head reference. How many next references must be followed to reach song 25?#24#23#25#40#A
+
+MC#7#Stacks#1#Which situation is best modeled by a stack?#Print jobs waiting for a printer#Undo history in a text editor#People waiting in line at a counter#Customers served by arrival time#B
+ID#8#Stacks#2#Which operation removes and returns the top element of a stack? Answer with one word.#pop
+MC#9#Stacks#3#A stack starts empty. Do push(15), push(8), pop(), push(23), push(42), pop(). What is the sum of all values left in the stack?#46#38#23#88#B
