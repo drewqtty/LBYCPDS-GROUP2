@@ -119,6 +119,11 @@ public class MinHeapTree {
         topics[3].setConfidence(3);
         topics[4].setConfidence(4);
 
+        System.out.println("Topics and their confidence levels:");
+        for (Topic t : topics) {
+            System.out.println(" - " + t.getName() + " (Confidence: " + t.getConfidence() + ")");
+        }
+        System.out.println();
 
         quiz.createMinHeapTree(topics);
 
