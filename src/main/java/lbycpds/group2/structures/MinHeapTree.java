@@ -3,10 +3,10 @@ import lbycpds.group2.model.Topic;
 
 public class MinHeapTree {
 
-    class TreeNode {
+    public class TreeNode {
         TreeNode left;
         TreeNode right;
-        Topic data;
+        public Topic data;
 
         TreeNode() {
             left = null;
@@ -20,7 +20,7 @@ public class MinHeapTree {
         }
     }
 
-    TreeNode root;
+    public TreeNode root;
 
     public MinHeapTree() {
         root = null;
@@ -31,7 +31,7 @@ public class MinHeapTree {
     }
 
 
-    void createMinHeapTree(Topic[] topics) {
+    public void createMinHeapTree(Topic[] topics) {
         int n = topics.length;
 
         //Apply min-heapify from the last non-leaf node up to the root
@@ -44,7 +44,7 @@ public class MinHeapTree {
     }
 
 
-    void minHeapify(Topic[] topics, int n, int i) {
+    public void minHeapify(Topic[] topics, int n, int i) {
         int smallest = i;
         int left = 2 * i + 1;
         int right = 2 * i + 2;
@@ -97,7 +97,7 @@ public class MinHeapTree {
     }
 
     // method used for calling it in the main node
-    void displayTree(TreeNode root) {
+    public void displayTree(TreeNode root) {
         displayTree(root, "", true);
     }
 
