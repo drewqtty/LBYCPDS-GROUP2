@@ -12,9 +12,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import lbycpds.group2.logic.InsertionSort;
+import lbycpds.group2.logic.TextFileQuestionBank;
+import lbycpds.group2.model.Question;
+import lbycpds.group2.model.Session;
 import lbycpds.group2.model.Topic;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ConfidenceScreen {
@@ -26,7 +32,7 @@ public class ConfidenceScreen {
     List<Slider> sliders = new ArrayList<>();
 
     public Parent build() {
-        // Top bar
+        // ----- Top bar (same look as MainMenu) -----
         Label logo = new Label("Cram");
         logo.getStyleClass().add("app-name");
 
@@ -40,7 +46,7 @@ public class ConfidenceScreen {
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.getStyleClass().add("topbar");
 
-        // Title
+        // ----- Title + context -----
         Label title = new Label("Rate Your Confidence");
         title.getStyleClass().add("section-title");
 
@@ -52,7 +58,7 @@ public class ConfidenceScreen {
         context.getStyleClass().add("card-label");
         context.setWrapText(true);
 
-        // One row per topic
+        // ----- One row per topic (grouped by course in cram mode) -----
         VBox rows = new VBox(10);
         rows.setFillWidth(true);
 
@@ -79,11 +85,12 @@ public class ConfidenceScreen {
             slider.setShowTickLabels(false);
             HBox.setHgrow(slider, Priority.ALWAYS);
 
-            // Show the saved rating
+            // Show the saved rating if there is one
             if (topic.getConfidence() > 0) {
                 slider.setValue(topic.getConfidence());
             }
 
+            // Live label: "3 - Okay"
             Label badge = new Label();
             badge.getStyleClass().add("rating-badge");
             badge.setPrefWidth(150);
@@ -110,13 +117,14 @@ public class ConfidenceScreen {
         VBox.setVgrow(scroll, Priority.ALWAYS);
         VBox.setVgrow(card, Priority.ALWAYS);
 
-        // Buttons
+        // ----- Buttons -----
         Button back = new Button("Back");
         back.setOnAction(e -> SceneManager.show(new MainMenu().build()));
 
         Button next = new Button("Start Quiz");
         next.getStyleClass().add("start-button");
         next.setOnAction(e -> {
+            // Save each slider value into its topic (same order as the list)
             for (int i = 0; i < AppState.topics.size(); i++) {
                 int rating = (int) Math.round(sliders.get(i).getValue());
                 AppState.topics.get(i).setConfidence(rating);
@@ -140,8 +148,61 @@ public class ConfidenceScreen {
         return root;
     }
 
+    // Temporary quiz launcher (replace with the real controller when it is merged).
+    // Picks up to 10 questions, weakest topics first, then shows the quiz and then the report.
     private void startQuiz() {
-        // TODO: open the quiz
+        List<TextFileQuestionBank> banks = List.of(
+                new TextFileQuestionBank("/questions/circuits.txt"),
+                new TextFileQuestionBank("/questions/dsa.txt"));
+
+        List<Topic> weakestFirst = new ArrayList<>(AppState.topics);
+        InsertionSort.sort(weakestFirst);
+
+        int perTopic = Math.max(1, 10 / Math.max(1, weakestFirst.size()));
+        List<Question> picked = new ArrayList<>();
+        for (Topic t : weakestFirst) {
+            List<Question> atLevel = new ArrayList<>();
+            List<Question> any = new ArrayList<>();
+            for (TextFileQuestionBank bank : banks) {
+                for (Question q : bank.loadQuestions()) {
+                    if (q.getCourse().equals(t.getCourse()) && q.getTopic().equals(t.getName())) {
+                        any.add(q);
+                        if (q.getDifficulty() == t.getLevel()) atLevel.add(q);
+                    }
+                }
+            }
+            List<Question> pool = atLevel.isEmpty() ? any : atLevel;
+            Collections.shuffle(pool);
+            for (int i = 0; i < pool.size() && i < perTopic && picked.size() < 10; i++) {
+                picked.add(pool.get(i));
+            }
+        }
+        if (picked.isEmpty()) return;
+        Collections.shuffle(picked);
+
+        SceneManager.show(new QuizScreen(picked, result -> finishQuiz(picked, result)).build());
+    }
+
+    // Update each topic's scores, then show the report
+    private void finishQuiz(List<Question> asked, QuizScreen.Result result) {
+        for (Topic t : AppState.topics) {
+            int total = 0, right = 0;
+            for (Question q : asked) {
+                if (q.getTopic().equals(t.getName()) && q.getCourse().equals(t.getCourse())) {
+                    total++;
+                    if (!result.missed.contains(q)) right++;
+                }
+            }
+            if (total == 0) continue;
+            int pct = Math.round(100f * right / total);
+            t.setLatestScore(pct);
+            t.setBestScore(Math.max(t.getBestScore(), pct));
+            // TODO: adjust t.setLevel(...) with the difficulty policy, then topicStore.saveTopic(...)
+        }
+        String course = AppState.course != null ? AppState.course : "All courses";
+        Session session = new Session(course, LocalDate.now(), result.percent(), result.seconds);
+        // TODO: sessionStore.saveSession(AppState.student.getName(), session);
+        SceneManager.show(new ReportScreen(AppState.topics, List.of(session)).build());
     }
 
     private void updateBadge(Label badge, int rating) {
