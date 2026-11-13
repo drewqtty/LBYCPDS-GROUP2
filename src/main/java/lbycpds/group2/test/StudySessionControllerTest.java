@@ -5,10 +5,8 @@ import lbycpds.group2.logic.*;
 import lbycpds.group2.model.*;
 import lbycpds.group2.structures.Graph;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class StudySessionControllerTest {
@@ -17,12 +15,12 @@ public class StudySessionControllerTest {
         System.out.println("STUDY SESSION CONTROLLER TEST");
         System.out.println("==================================================\n");
 
-        // 1. Initialize Mock Stores & Policy
+
         MockTopicStore topicStore = new MockTopicStore();
         MockSessionStore sessionStore = new MockSessionStore();
         MockQuestionHistoryStore historyStore = new MockQuestionHistoryStore();
 
-        // Adaptive difficulty policy: if score percentage >= 50%, increment level, else keep it
+
         DifficultyPolicy difficultyPolicy = (currentLevel, score, total) -> {
             double percentage = total > 0 ? (double) score / total : 0.0;
             if (percentage >= 0.5) {
@@ -38,13 +36,13 @@ public class StudySessionControllerTest {
                 topicStore, sessionStore, historyStore, difficultyPolicy
         );
 
-        // 2. Setup Student with Multiple Courses
+
         Student student = new Student("Charlie");
         student.addCourse("DataStructures");
         student.addCourse("Algorithms");
         student.addCourse("Databases");
 
-        // Populate a rich set of topics across courses
+
         Topic t1 = new Topic("ArraysAndStrings", "DataStructures"); t1.setUnlocked(true); t1.setConfidence(10);
         Topic t2 = new Topic("LinkedLists", "DataStructures"); t2.setUnlocked(true); t2.setConfidence(25);
         Topic t3 = new Topic("BinarySearchTrees", "DataStructures"); t3.setUnlocked(false); t3.setConfidence(5);
@@ -67,9 +65,7 @@ public class StudySessionControllerTest {
         Question q3 = new IdentificationQuestion(3, "Algorithms", "SortingAlgorithms", 2,
                 "What sorting algorithm uses a divide-and-conquer pivoting strategy with average O(n log n)?", "Quicksort");
 
-        // ==========================================
-        // SCENARIO 1: Normal Study Session (Single Course)
-        // ==========================================
+
         System.out.println("--- [SCENARIO 1: Normal Single-Course Session] ---");
         SingleCourseStudySession normalSession = (SingleCourseStudySession) controller.createSession(
                 StudyMode.NORMAL, student, "DataStructures", new Graph(), null, null
@@ -79,12 +75,12 @@ public class StudySessionControllerTest {
         Topic targetTopic = normalSession.getTargetTopic();
         System.out.println("Selected Weakest Topic (via MinHeap): " + (targetTopic != null ? targetTopic.getName() : "None") + " (Level: " + targetTopic.getLevel() + ")");
 
-        // Simulating user answering questions
+
         System.out.println("\n-> Answering Q1 (Correctly): 'O(1)'");
         normalSession.recordAnswer(q1, "O(1)");
 
         System.out.println("-> Answering Q2 (Incorrectly): 'Tail'");
-        normalSession.recordAnswer(q2, "Tail"); // Should go to missed history!
+        normalSession.recordAnswer(q2, "Tail");
 
         System.out.println("\n[History Check] Missed questions for DataStructures after Q2 failure: " + historyStore.loadMissed("Charlie", "DataStructures"));
 
@@ -92,9 +88,6 @@ public class StudySessionControllerTest {
         normalSession.finishTurn("DataStructures");
         System.out.println("Session completed and progress saved.\n");
 
-        // ==========================================
-        // SCENARIO 2: Cram Mode (Queue Rotation Process)
-        // ==========================================
         System.out.println("--- [SCENARIO 2: Cram Mode with Circular Queue Rotation] ---");
         Map<String, Graph> courseGraphs = new HashMap<>();
         CramStudySession cramSession = controller.createCramSession(student, courseGraphs);
@@ -106,7 +99,7 @@ public class StudySessionControllerTest {
             Topic cramTarget = cramSession.getCurrentTargetTopic();
             System.out.println("   - Target Topic: " + (cramTarget != null ? cramTarget.getName() : "None"));
 
-            // Simulate answering a question correctly in this turn
+
             System.out.println("   - Answering Q3 correctly...");
             cramSession.recordAnswer(q3, "Quicksort");
 
@@ -114,9 +107,6 @@ public class StudySessionControllerTest {
             cramSession.finishTurn(activeCourse);
         }
 
-        // ==========================================
-        // SCENARIO 3: Missed Questions Review Session
-        // ==========================================
         System.out.println("\n--- [SCENARIO 3: Reviewing Missed Questions] ---");
         System.out.println("Missed question IDs currently stored for DataStructures: " + historyStore.loadMissed("Charlie", "DataStructures"));
 
@@ -126,7 +116,7 @@ public class StudySessionControllerTest {
 
         System.out.println("Starting missed questions review session for: " + missedSession.nextCourse());
         System.out.println("-> Retrying Q2 correctly with answer: 'Null'");
-        missedSession.recordAnswer(q2, "Null"); // Correct! Should clear from missed history.
+        missedSession.recordAnswer(q2, "Null");
 
         missedSession.finishTurn("DataStructures");
         System.out.println("[History Check] Remaining missed questions after correct review: " + historyStore.loadMissed("Charlie", "DataStructures"));
