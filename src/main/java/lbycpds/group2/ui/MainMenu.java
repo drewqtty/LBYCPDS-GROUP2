@@ -46,7 +46,7 @@ public class MainMenu {
         HBox regularCard = modeCard("REGULAR MODE (ONE COURSE)",
                 "Prioritize learning on a specific subject. Please select your course on the right.", regular);
         HBox cramCard = modeCard("CRAM MODE (ALL COURSES)",
-                "A rapid-fire review across all courses. Get ready for speed!", cram);
+                "A rapid-fire review across all courses. Godspeed!", cram);
         regular.setSelected(true);
 
         Label modeHeader = new Label("CHOOSE YOUR STUDY MODE");
