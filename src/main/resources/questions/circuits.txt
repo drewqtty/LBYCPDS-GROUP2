@@ -46,9 +46,9 @@ MC#25#Norton's theorem#1#Any linear two-terminal resistive circuit can be replac
 MC#26#Norton's theorem#2#To find the Norton resistance (R_N) of an independent source circuit, what must be done to all independent voltage and current sources?#Turned off (voltage sources shorted, current sources opened)#Left completely unchanged#Replaced with short circuits only#Scaled to maximum capacity#A
 MC#27#Norton's theorem#3#What is the Norton current (I_N) equal to in a linear circuit?#The open-circuit voltage divided by the Thevenin resistance#The short-circuit current between the two terminals#The total current supplied by the main source#The sum of all branch currents#B
 
-MC#28#Delta to wye#1#What is another common name for a delta ($\Delta$) connection in three-phase or resistive bridge circuits?#T-connection#Pi ($\pi$) connection#Star connection#Bridge connection#B
-MC#29#Delta to wye#2#What is another common name for a wye (Y) connection?#Pi ($\pi$) connection#Mesh connection#T-connection (or Star connection)#Loop connection#C
-MC#30#Delta to wye#3#When converting a balanced delta network of resistor values $R_\Delta$ to an equivalent wye network, what is the relationship between the wye resistor ($R_Y$) and $R_\Delta$?#R_Y = 3 * R_\Delta#R_Y = R_\Delta / 3#R_Y = R_\Delta#R_Y = 2 * R_\Delta#B
+MC#28#Delta to wye#1#What is another common name for a delta (Δ) connection in three-phase or resistive bridge circuits?#T-connection#Pi (π) connection#Star connection#Bridge connection#B
+MC#29#Delta to wye#2#What is another common name for a wye (Y) connection?#Pi (π) connection#Mesh connection#T-connection (or Star connection)#Loop connection#C
+MC#30#Delta to wye#3#When converting a balanced delta network of resistor values R_Δ to an equivalent wye network, what is the relationship between the wye resistor (R_Y) and R_Δ?#R_Y = 3 * R_Δ#R_Y = R_Δ / 3#R_Y = R_Δ#R_Y = 2 * R_Δ#B
 
 ID#31#Mesh analysis#1#What specialized loop containing a current source is formed by combining adjacent meshes in mesh analysis? Answer with one word.#Supermesh
 ID#32#Nodal analysis#2#What is the name given to the node in a circuit that is assigned a potential of zero volts and used as the reference point for all other node voltage measurements? Answer with one word.#Ground
