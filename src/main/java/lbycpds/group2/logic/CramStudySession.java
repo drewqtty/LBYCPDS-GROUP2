@@ -71,7 +71,6 @@ public class CramStudySession extends StudySession {
             return topics.get(0);
         }
 
-        // Convert list to array for your MinHeapTree
         Topic[] topicArray = unlockedTopics.toArray(new Topic[0]);
 
         MinHeapTree heap = new MinHeapTree();
