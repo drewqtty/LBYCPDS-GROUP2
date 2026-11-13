@@ -207,3 +207,108 @@
 .green .slider .thumb {
     -fx-background-color: #FFD166;
 }
+/* ---- Confidence screen ---- */
+.topic-row {
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-background-radius: 10;
+    -fx-padding: 10 16 10 16;
+}
+
+.topic-name {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.rating-badge {
+    -fx-background-color: rgba(255, 209, 102, 0.15);
+    -fx-background-radius: 12;
+    -fx-border-color: #FFD166;
+    -fx-border-radius: 12;
+    -fx-padding: 4 10 4 10;
+    -fx-font-size: 13px;
+    -fx-text-fill: #FFD166;
+}
+
+.slider .track {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+}
+
+.slider .thumb {
+    -fx-background-color: #FFD166;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255, 255, 255, 0.35);
+    -fx-background-radius: 6;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-padding: 0;
+    -fx-shape: " ";
+}
+
+/* ---- Report screen ---- */
+.stat-value {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFD166;
+}
+
+.rank-number {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFD166;
+}
+
+.progress-bar > .track {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: #FFD166;
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-padding: 5;
+}
+
+/* ---- Quiz screen ---- */
+.quiz-question {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.quiz-choice {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.06);
+    -fx-background-radius: 10;
+    -fx-padding: 10 14 10 14;
+}
+
+.quiz-choice:selected {
+    -fx-background-color: rgba(255, 209, 102, 0.15);
+}
+
+.quiz-feedback {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

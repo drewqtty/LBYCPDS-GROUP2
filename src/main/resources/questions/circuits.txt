@@ -4,48 +4,108 @@ TOPIC#Series Circuits#Series-Parallel Circuits
 TOPIC#Parallel Circuits#Series-Parallel Circuits
 TOPIC#Series-Parallel Circuits#Superposition
 TOPIC#Superposition#Kirchhoff's Laws
-TOPIC#Kirchhoff's Laws
+TOPIC#Kirchhoff's Laws#Mesh Analysis#Nodal Analysis
+TOPIC#Mesh Analysis#Norton's Theorem
+TOPIC#Nodal Analysis#Norton's Theorem
+TOPIC#Norton's Theorem#Delta to Wye
+TOPIC#Delta to Wye
 
-MC#1#Resistance#1#A copper wire is stretched so it becomes twice as long and its cross-section is cut in half. What happens to its resistance?#It is doubled#It becomes four times larger#It stays the same#It is cut in half#B
-ID#2#Resistance#2#What is the reciprocal of resistance called? Answer with one word.#conductance
-MC#3#Resistance#3#A heater draws 5 A from a 120 V outlet. What is its resistance in ohms?#60 ohms#600 ohms#24 ohms#12 ohms#C
+MC#111#Resistance#1#A copper wire is stretched so it becomes twice as long and its cross-section is cut in half. What happens to its resistance?#It is doubled#It becomes four times larger#It stays the same#It is cut in half#B
+MC#112#Resistance#1#For a typical metal conductor such as copper, what happens to its resistance as its temperature rises?#It increases#It decreases#It stays exactly the same#It drops to zero#A
+MC#113#Resistance#1#Which of these materials has the highest resistivity?#Copper#Aluminum#Silver#Rubber#D
+ID#121#Resistance#2#What is the reciprocal of resistance called? Answer with one word.#conductance
+ID#122#Resistance#2#What is the name of the property of a material, measured in ohm-meters, that tells how strongly it opposes current? Answer with one word.#resistivity
+ID#123#Resistance#2#A resistor has a resistance of 0.5 ohm. What is its conductance in siemens? Answer with a number only.#2
+PS#131#Resistance#3#A heater draws 5 A from a 120 V outlet. Find its resistance in ohms.#R = V / I = 120 V / 5 A = 24 ohms#24
+PS#132#Resistance#3#An electric kettle draws 8 A from a 240 V supply. Find its resistance in ohms.#R = V / I = 240 V / 8 A = 30 ohms#30
+PS#133#Resistance#3#A wire has a resistance of 8 ohms. A second wire of the same material is three times as long and has twice the cross-sectional area. Find the resistance of the second wire.#R is proportional to L / A, so R2 = 8 x (3 / 2) = 12 ohms#12
 
-MC#4#Series Circuits#1#Three bulbs are connected in series and one of them burns out, leaving an open circuit. What happens to the other two bulbs?#They get brighter#They stay lit#They go out because the current path is broken#Only the nearest one stays lit#C
-ID#5#Series Circuits#2#Two series resistors used to get a smaller voltage from a larger one form a what? Answer with two words.#voltage divider
-MC#6#Series Circuits#3#A 60 V supply is connected to a 10 ohm and a 20 ohm heating element in series. What is the voltage across the 20 ohm element in volts?#20 V#40 V#30 V#60 V#B
+MC#211#Series Circuits#1#Three bulbs are connected in series and one of them burns out, leaving an open circuit. What happens to the other two bulbs?#They get brighter#They stay lit#They go out because the current path is broken#Only the nearest one stays lit#C
+MC#212#Series Circuits#1#In a series circuit, which quantity is the same through every component?#Voltage#Current#Power#Resistance#B
+MC#213#Series Circuits#1#How is the total resistance of resistors in series found?#By adding them#By adding their reciprocals#By multiplying them#By taking the largest one#A
+ID#221#Series Circuits#2#Two series resistors used to get a smaller voltage from a larger one form a what? Answer with two words.#voltage divider
+ID#222#Series Circuits#2#Three resistors of 10 ohms, 20 ohms, and 30 ohms are connected in series. What is the total resistance in ohms? Answer with a number only.#60
+ID#223#Series Circuits#2#A 12 V battery is connected across two 3 ohm resistors in series. What is the current in amps? Answer with a number only.#2
+PS#231#Series Circuits#3#A 60 V supply is connected to a 10 ohm and a 20 ohm heating element in series. Find the voltage across the 20 ohm element.#Total R = 10 + 20 = 30 ohms, I = 60 / 30 = 2 A, V across the 20 ohm element = 2 x 20 = 40 V#40
+PS#232#Series Circuits#3#A 36 V supply is connected to resistors of 4 ohms, 6 ohms, and 8 ohms in series. Find the voltage across the 8 ohm resistor.#Total R = 4 + 6 + 8 = 18 ohms, I = 36 / 18 = 2 A, V across the 8 ohm resistor = 2 x 8 = 16 V#16
+PS#233#Series Circuits#3#Two resistors are in series across a 100 V source. The first is 20 ohms and has 40 V across it. Find the value of the second resistor.#I = 40 / 20 = 2 A, the second resistor has 100 - 40 = 60 V across it, so R2 = 60 / 2 = 30 ohms#30
 
-MC#7#Parallel Circuits#1#What happens to the total resistance when another resistor is connected in parallel across an existing circuit?#It stays the same#It doubles#It increases#It decreases#D
-ID#8#Parallel Circuits#2#What do you call the rule that splits the total current among the branches of a parallel circuit? Answer with two words.#current divider
-MC#9#Parallel Circuits#3#A 20 ohm appliance and a 30 ohm appliance are plugged into a 120 V outlet in parallel. What is the total current in amps?#12 A#4 A#6 A#10 A#D
+MC#311#Parallel Circuits#1#What happens to the total resistance when another resistor is connected in parallel across an existing circuit?#It stays the same#It doubles#It increases#It decreases#D
+MC#312#Parallel Circuits#1#In a parallel circuit, which quantity is the same across every branch?#Current#Voltage#Resistance#Power#B
+MC#313#Parallel Circuits#1#Two identical resistors are connected in parallel. How does the equivalent resistance compare with one resistor?#Twice as large#Equal to one resistor#Half of one resistor#One quarter of one resistor#C
+ID#321#Parallel Circuits#2#What do you call the rule that splits the total current among the branches of a parallel circuit? Answer with two words.#current divider
+ID#322#Parallel Circuits#2#Two 20 ohm resistors are connected in parallel. What is the equivalent resistance in ohms? Answer with a number only.#10
+ID#323#Parallel Circuits#2#A 12 V battery is connected across a 4 ohm resistor and a 6 ohm resistor in parallel. What is the current through the 4 ohm resistor in amps? Answer with a number only.#3
+PS#331#Parallel Circuits#3#A 20 ohm appliance and a 30 ohm appliance are plugged into a 120 V outlet in parallel. Find the total current.#I1 = 120 / 20 = 6 A, I2 = 120 / 30 = 4 A, total I = 6 + 4 = 10 A#10
+PS#332#Parallel Circuits#3#A 12 ohm resistor and a 4 ohm resistor are connected in parallel across a 24 V source. Find the total current.#I1 = 24 / 12 = 2 A, I2 = 24 / 4 = 6 A, total I = 2 + 6 = 8 A#8
+PS#333#Parallel Circuits#3#Three resistors of 30 ohms, 60 ohms, and 60 ohms are connected in parallel. Find the equivalent resistance.#1 / R = 1/30 + 1/60 + 1/60 = 2/60 + 1/60 + 1/60 = 4/60, so R = 60 / 4 = 15 ohms#15
 
-MC#10#Series-Parallel Circuits#1#A 10 ohm resistor is in series with two 10 ohm resistors in parallel. Which resistor carries the most current?#The single series resistor#Each parallel resistor#All three equally#It cannot be determined#A
-ID#11#Series-Parallel Circuits#2#A 10 ohm resistor and a 15 ohm resistor are connected in parallel. What is the equivalent resistance in ohms? Answer with a number only.#6
-MC#12#Series-Parallel Circuits#3#A 120 V supply feeds a 10 ohm resistor in series with a parallel pair of a 30 ohm and a 60 ohm resistor. What is the voltage across the parallel pair in volts?#80 V#40 V#60 V#120 V#A
+MC#411#Series-Parallel Circuits#1#A 10 ohm resistor is in series with two 10 ohm resistors in parallel. Which resistor carries the most current?#The single series resistor#Each parallel resistor#All three equally#It cannot be determined#A
+MC#412#Series-Parallel Circuits#1#In a circuit where one resistor is in series with a parallel pair, what is the first step in finding the total resistance?#Add all the resistors together#Combine the parallel pair into one equivalent resistor#Remove the series resistor#Short the source#B
+MC#413#Series-Parallel Circuits#1#Two 20 ohm resistors in parallel are connected in series with a 10 ohm resistor. What is the total resistance?#50 ohms#30 ohms#20 ohms#10 ohms#C
+ID#421#Series-Parallel Circuits#2#A 10 ohm resistor and a 15 ohm resistor are connected in parallel. What is the equivalent resistance in ohms? Answer with a number only.#6
+ID#422#Series-Parallel Circuits#2#A 4 ohm resistor is in series with a parallel pair of two 12 ohm resistors. What is the total resistance in ohms? Answer with a number only.#10
+ID#423#Series-Parallel Circuits#2#A 30 V source feeds a 5 ohm resistor in series with two 20 ohm resistors in parallel. What is the total current from the source in amps? Answer with a number only.#2
+PS#431#Series-Parallel Circuits#3#A 120 V supply feeds a 10 ohm resistor in series with a parallel pair of a 30 ohm and a 60 ohm resistor. Find the voltage across the parallel pair.#Parallel pair = (30 x 60) / (30 + 60) = 20 ohms, total R = 10 + 20 = 30 ohms, I = 120 / 30 = 4 A, V across the pair = 4 x 20 = 80 V#80
+PS#432#Series-Parallel Circuits#3#A 60 V source feeds a 6 ohm resistor in series with a parallel pair of a 12 ohm and a 6 ohm resistor. Find the power dissipated in the series 6 ohm resistor.#Parallel pair = (12 x 6) / (12 + 6) = 4 ohms, total R = 6 + 4 = 10 ohms, I = 60 / 10 = 6 A, P = I^2 x R = 6^2 x 6 = 216 W#216
+PS#433#Series-Parallel Circuits#3#A 36 V source is connected across two parallel branches. Branch 1 is a 6 ohm resistor. Branch 2 is a 2 ohm resistor in series with a 4 ohm resistor. Find the total current from the source.#Branch 2 = 2 + 4 = 6 ohms, the two 6 ohm branches in parallel = 3 ohms, I = 36 / 3 = 12 A#12
 
-MC#13#Superposition#1#When you analyze one voltage source at a time using superposition, what do you do with the other independent voltage sources?#Replace them with open circuits#Leave them unchanged#Replace them with short circuits#Double their values#C
-ID#14#Superposition#2#When applying superposition, an independent current source that is turned off is replaced by a short circuit or an open circuit? Answer with one word: short or open.#open
-MC#15#Superposition#3#Two sources feed the same 10 ohm resistor. Using superposition, source A alone produces 3 A and source B alone produces 5 A, both in the same direction. What is the power in the resistor in watts?#80 W#800 W#640 W#340 W#C
+MC#511#Superposition#1#When you analyze one voltage source at a time using superposition, what do you do with the other independent voltage sources?#Replace them with open circuits#Leave them unchanged#Replace them with short circuits#Double their values#C
+MC#512#Superposition#1#Superposition can only be applied to circuits that are what?#Nonlinear#Linear#Open#Unbalanced#B
+MC#513#Superposition#1#When using superposition, how is the total current in a branch found?#The algebraic sum of the currents from each source acting alone#The product of the currents from each source#The largest of the individual currents#The average of the individual currents#A
+ID#521#Superposition#2#When applying superposition, an independent current source that is turned off is replaced by a short circuit or an open circuit? Answer with one word: short or open.#open
+ID#522#Superposition#2#Which quantity cannot be found by simply adding the results from each source: voltage, current, or power? Answer with one word.#power
+ID#523#Superposition#2#Source A alone produces 4 V across a resistor and source B alone produces 6 V across the same resistor with the same polarity. What is the total voltage in volts? Answer with a number only.#10
+PS#531#Superposition#3#Two sources feed the same 10 ohm resistor. Using superposition, source A alone produces 3 A and source B alone produces 5 A, both in the same direction. Find the power in the resistor.#The currents add: I = 3 + 5 = 8 A, then P = I^2 x R = 8^2 x 10 = 640 W#640
+PS#532#Superposition#3#Source 1 alone produces 18 V across a resistor and source 2 alone produces 7 V across the same resistor with opposite polarity. Find the net voltage across the resistor.#Voltages add algebraically: V = 18 - 7 = 11 V#11
+PS#533#Superposition#3#A 24 V source in series with a 10 ohm resistor is connected to a node. A 2 A current source also feeds the node. A second 10 ohm resistor connects the node to ground. Using superposition, find the voltage at the node.#Voltage source alone (current source open): V1 = 24 x 10 / (10 + 10) = 12 V. Current source alone (voltage source shorted): the two 10 ohm resistors are in parallel = 5 ohms, V2 = 2 x 5 = 10 V. Total V = 12 + 10 = 22 V#22
 
-MC#16#Kirchhoff's Laws#1#Which statement about Kirchhoff's current law is correct?#Current is used up by each resistor#The currents entering a node equal the currents leaving it#The voltages at a node add up to zero#Current gets larger after each resistor#B
-ID#17#Kirchhoff's Laws#2#Which Kirchhoff's law states that the algebraic sum of voltages around a closed loop is zero? Answer with the abbreviation.#KVL
-MC#18#Kirchhoff's Laws#3#At a junction in a wiring panel, 15 A and 9 A flow into the node and 11 A flows out through one branch. What is the current in amps in the remaining branch?#24 A#35 A#4 A#13 A#D
+MC#611#Kirchhoff's Laws#1#Which statement about Kirchhoff's current law is correct?#Current is used up by each resistor#The currents entering a node equal the currents leaving it#The voltages at a node add up to zero#Current gets larger after each resistor#B
+MC#612#Kirchhoff's Laws#1#Kirchhoff's current law is based on the conservation of what?#Charge#Energy#Power#Resistance#A
+MC#613#Kirchhoff's Laws#1#Kirchhoff's voltage law is based on the conservation of what?#Current#Charge#Energy#Resistance#C
+ID#621#Kirchhoff's Laws#2#Which Kirchhoff's law states that the algebraic sum of voltages around a closed loop is zero? Answer with the abbreviation.#KVL
+ID#622#Kirchhoff's Laws#2#What do we call a point where two or more circuit elements are connected together? Answer with one word.#node
+ID#623#Kirchhoff's Laws#2#Which Kirchhoff's law applies at a node? Answer with the abbreviation.#KCL
+PS#631#Kirchhoff's Laws#3#At a junction in a wiring panel, 15 A and 9 A flow into the node and 11 A flows out through one branch. Find the current in the remaining branch.#KCL: current in = current out, so 15 + 9 = 11 + I, and I = 24 - 11 = 13 A#13
+PS#632#Kirchhoff's Laws#3#In a single loop, a 30 V source drives three resistors. The first has a voltage drop of 8 V and the second has a voltage drop of 12 V. Find the voltage drop across the third resistor.#KVL: 30 = 8 + 12 + V3, so V3 = 30 - 20 = 10 V#10
+PS#633#Kirchhoff's Laws#3#A series loop has a 54 V source, a 6 ohm resistor, and a 12 ohm resistor. Using KVL and Ohm's law, find the voltage across the 12 ohm resistor.#KVL: 54 = 6 I + 12 I = 18 I, so I = 3 A, and the voltage across the 12 ohm resistor = 3 x 12 = 36 V#36
 
-MC#1#Mesh analysis#1#Which fundamental circuit law is the basis for mesh analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Ohm's Law#Thevenin's Theorem#B
-MC#2#Mesh analysis#2#In mesh analysis, what variables are solved for using simultaneous equations?#Branch currents#Node voltages#Mesh (loop) currents#Component power values#C
-MC#3#Mesh analysis#3#When writing a KVL equation for a mesh containing a current source shared with an adjacent mesh, what special technique is typically used?#A supermesh#Norton equivalent conversion#Node voltage elimination#Delta-wye transformation#A
+MC#711#Mesh Analysis#1#Which fundamental circuit law is the basis for mesh analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Ohm's Law#Thevenin's Theorem#B
+MC#712#Mesh Analysis#1#Which convention is commonly used to keep mesh equations consistent?#All mesh currents in the same direction, such as clockwise#Alternating directions in neighboring meshes#Each mesh current toward the nearest source#Every mesh current away from ground#A
+MC#713#Mesh Analysis#1#A circuit has 3 meshes. How many independent KVL equations are needed?#1#2#3#6#C
+ID#721#Mesh Analysis#2#What is the name of the larger loop formed when two meshes that share a current source are combined? Answer with one word.#supermesh
+ID#722#Mesh Analysis#2#In mesh analysis, a shared resistor carries mesh currents I1 = 5 A and I2 = 3 A in opposite directions through it. What is the net current through it in amps? Answer with a number only.#2
+ID#723#Mesh Analysis#2#A single mesh has a 30 V source, a 4 ohm resistor, and a 6 ohm resistor. What is the mesh current in amps? Answer with a number only.#3
+PS#731#Mesh Analysis#3#In a two-mesh circuit, mesh 1 has a 20 V source and a 2 ohm resistor, mesh 2 has a 4 ohm resistor and no source, and the two meshes share a 2 ohm resistor. Using mesh analysis with both mesh currents clockwise, find the mesh current I1 and the power delivered by the source.#Mesh 1: 20 = (2 + 2) I1 - 2 I2. Mesh 2: 0 = -2 I1 + (4 + 2) I2, so I1 = 3 I2. Then 20 = 12 I2 - 2 I2, so I2 = 2 A and I1 = 6 A. Power = 20 x 6 = 120 W#6#120
+PS#732#Mesh Analysis#3#Mesh 1 has a 120 V source and a 2 ohm resistor. Mesh 2 has a 140 V source and a 6 ohm resistor. The two meshes share a 4 ohm resistor, and both sources push current clockwise in their own mesh. Using mesh analysis with both mesh currents clockwise, find I1 and I2.#Mesh 1: 120 = (2 + 4) I1 - 4 I2 = 6 I1 - 4 I2. Mesh 2: 140 = -4 I1 + (6 + 4) I2 = -4 I1 + 10 I2. Solving the two equations gives I2 = 30 A and I1 = 40 A#40#30
+PS#733#Mesh Analysis#3#Mesh 1 has a 60 V source and a 5 ohm resistor. Mesh 2 has a 10 ohm resistor and no source. The two meshes share a 10 ohm resistor. Using mesh analysis with both mesh currents clockwise, find the voltage across the shared resistor.#Mesh 1: 60 = (5 + 10) I1 - 10 I2. Mesh 2: 0 = -10 I1 + (10 + 10) I2, so I1 = 2 I2. Then 60 = 30 I2 - 10 I2 = 20 I2, so I2 = 3 A and I1 = 6 A. The net current in the shared resistor is I1 - I2 = 3 A, so V = 3 x 10 = 30 V#30
 
-MC#4#Nodal analysis#1#Which fundamental circuit law is the basis for nodal analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Superposition Theorem#Maximum Power Transfer Theorem#A
-MC#5#Nodal analysis#2#In nodal analysis, node voltages are calculated relative to which reference point?#The highest voltage node in the circuit#Any arbitrary node chosen as ground (reference node)#The node immediately following the primary power source#The output terminals of the circuit#B
-MC#6#Nodal analysis#3#What is the term for a voltage source connected between two non-reference nodes that requires a combined node equation in nodal analysis?#Dependent source#Independent source#Supernode#Norton source#C
+MC#811#Nodal Analysis#1#Which fundamental circuit law is the basis for nodal analysis?#Kirchhoff's Current Law (KCL)#Kirchhoff's Voltage Law (KVL)#Superposition Theorem#Maximum Power Transfer Theorem#A
+MC#812#Nodal Analysis#1#In nodal analysis, the unknowns that we solve for are the what?#Mesh currents#Node voltages#Branch resistances#Source powers#B
+MC#813#Nodal Analysis#1#A circuit has 4 nodes including the reference node. How many node equations are needed?#2#4#3#5#C
+ID#821#Nodal Analysis#2#What is the name of the node that is assigned zero volts and used as the reference for all other node voltages? Answer with one word.#ground
+ID#822#Nodal Analysis#2#What is the name of the node formed when a voltage source connects two non-reference nodes? Answer with one word.#supernode
+ID#823#Nodal Analysis#2#In nodal analysis, a node has a voltage of 12 V and is connected to ground through a 4 ohm resistor. What is the current through that resistor in amps? Answer with a number only.#3
+PS#831#Nodal Analysis#3#An 8 A current source feeds node 1. A 3 ohm resistor connects node 1 to ground, a 6 ohm resistor connects node 1 to node 2, and a 3 ohm resistor connects node 2 to ground. Using nodal analysis, find the node voltages V1 and V2.#Node 1: V1 / 3 + (V1 - V2) / 6 = 8. Node 2: (V2 - V1) / 6 + V2 / 3 = 0, so V1 = 3 V2. Then 3 V1 - V2 = 48 gives 8 V2 = 48, so V2 = 6 V and V1 = 18 V#18#6
+PS#832#Nodal Analysis#3#A 10 A current source feeds a node. A 5 ohm resistor and a 20 ohm resistor each connect that node to ground. Using nodal analysis, find the node voltage.#KCL: V / 5 + V / 20 = 10. Multiply by 20: 4 V + V = 200, so V = 40 V#40
+PS#833#Nodal Analysis#3#A 20 V source in series with a 4 ohm resistor feeds node 1. A 12 ohm resistor connects node 1 to ground, and a 2 A current source also feeds node 1. Using nodal analysis, find the voltage at node 1.#KCL at node 1: (V1 - 20) / 4 + V1 / 12 = 2. Multiply by 12: 3 V1 - 60 + V1 = 24, so 4 V1 = 84 and V1 = 21 V#21
 
-MC#7#Norton's theorem#1#Any linear two-terminal resistive circuit can be replaced by an equivalent circuit consisting of an independent current source in parallel with what?#A series resistor#A parallel resistor#A series voltage source#An open circuit#B
-MC#8#Norton's theorem#2#To find the Norton resistance (R_N) of an independent source circuit, what must be done to all independent voltage and current sources?#Turned off (voltage sources shorted, current sources opened)#Left completely unchanged#Replaced with short circuits only#Scaled to maximum capacity#A
-MC#9#Norton's theorem#3#What is the Norton current (I_N) equal to in a linear circuit?#The open-circuit voltage divided by the Thevenin resistance#The short-circuit current between the two terminals#The total current supplied by the main source#The sum of all branch currents#B
+MC#911#Norton's Theorem#1#Any linear two-terminal resistive circuit can be replaced by an equivalent circuit consisting of an independent current source in parallel with what?#A series resistor#A parallel resistor#A series voltage source#An open circuit#B
+MC#912#Norton's Theorem#1#Which pair of theorems gives equivalent circuits of the same two-terminal network?#Thevenin and Norton#Norton and Superposition#Thevenin and Millman#Ohm and Kirchhoff#A
+MC#913#Norton's Theorem#1#How is the Norton current found?#Open the terminals and measure the voltage#Short the terminals and find the current through the short#Double the load resistance#Remove the load only#B
+ID#921#Norton's Theorem#2#A Norton equivalent circuit has I_N = 4 A and R_N = 5 ohms. What is the open-circuit voltage across its terminals in volts? Answer with a number only.#20
+ID#922#Norton's Theorem#2#A Thevenin equivalent has V_th = 30 V and R_th = 6 ohms. What is the Norton current of the same circuit in amps? Answer with a number only.#5
+ID#923#Norton's Theorem#2#A Norton equivalent has I_N = 6 A and R_N = 4 ohms. A 4 ohm load is connected across its terminals. What is the load current in amps? Answer with a number only.#3
+PS#931#Norton's Theorem#3#A 120 V source in series with a 10 ohm resistor feeds terminals a and b, and a 40 ohm resistor is connected across a and b. Find the Norton equivalent of the circuit as seen from terminals a and b: the Norton current I_N and the Norton resistance R_N.#I_N is the short-circuit current. Shorting a and b bypasses the 40 ohm resistor, so I_N = 120 / 10 = 12 A. R_N is found with the source turned off (shorted): R_N = (10 x 40) / (10 + 40) = 8 ohms#12#8
+PS#932#Norton's Theorem#3#A 180 V source in series with a 20 ohm resistor feeds terminals a and b, and a 60 ohm resistor is connected across a and b. Find the Norton current I_N and the Norton resistance R_N as seen from terminals a and b.#Shorting a and b bypasses the 60 ohm resistor, so I_N = 180 / 20 = 9 A. With the source shorted, R_N = (20 x 60) / (20 + 60) = 15 ohms#9#15
+PS#933#Norton's Theorem#3#A Norton equivalent circuit has I_N = 9 A and R_N = 6 ohms. A 12 ohm load is connected across its terminals. Find the voltage across the load.#The current divides between R_N and the load: I_L = 9 x 6 / (6 + 12) = 3 A, so V_L = 3 x 12 = 36 V#36
 
-MC#10#Delta to wye#1#What is another common name for a delta ($\Delta$) connection in three-phase or resistive bridge circuits?#T-connection#Pi ($\pi$) connection#Star connection#Bridge connection#B
-MC#11#Delta to wye#2#What is another common name for a wye (Y) connection?#Pi ($\pi$) connection#Mesh connection#T-connection (or Star connection)#Loop connection#C
-MC#12#Delta to wye#3#When converting a balanced delta network of resistor values $R_\Delta$ to an equivalent wye network, what is the relationship between the wye resistor ($R_Y$) and $R_\Delta$?#R_Y = 3 * R_\Delta#R_Y = R_\Delta / 3#R_Y = R_\Delta#R_Y = 2 * R_\Delta#B
-
-ID#13#Mesh analysis#1#What specialized loop containing a current source is formed by combining adjacent meshes in mesh analysis? Answer with one word.#Supermesh
-ID#14#Nodal analysis#2#What is the name given to the node in a circuit that is assigned a potential of zero volts and used as the reference point for all other node voltage measurements? Answer with one word.#Ground
-ID#15#Delta to wye#3#What Greek letter symbol is commonly used to describe a three-terminal delta circuit configuration? Answer with the word. Notice: Delta
+MC#1011#Delta to Wye#1#What is another common name for a delta connection in three-phase or resistive bridge circuits?#T-connection#Pi connection#Star connection#Bridge connection#B
+MC#1012#Delta to Wye#1#What is another common name for a wye connection?#Pi connection#Mesh connection#T-connection (or Star connection)#Loop connection#C
+MC#1013#Delta to Wye#1#How many terminals does a delta or wye network have to the rest of the circuit?#Two#Three#Four#Six#B
+ID#1021#Delta to Wye#2#A balanced delta network has three 30 ohm resistors. What is the value of each resistor in the equivalent wye network in ohms? Answer with a number only.#10
+ID#1022#Delta to Wye#2#A balanced wye network has three 12 ohm resistors. What is the value of each resistor in the equivalent delta network in ohms? Answer with a number only.#36
+ID#1023#Delta to Wye#2#In a balanced network, the delta resistance is how many times the wye resistance? Answer with a number only.#3
+PS#1031#Delta to Wye#3#A delta network has R_ab = 30 ohms, R_bc = 60 ohms, and R_ca = 90 ohms. Find the equivalent wye resistors R_a, R_b, and R_c, where R_a is the wye resistor at node a, R_b is at node b, and R_c is at node c.#Sum = 30 + 60 + 90 = 180 ohms. R_a = (30 x 90) / 180 = 15 ohms, R_b = (30 x 60) / 180 = 10 ohms, R_c = (60 x 90) / 180 = 30 ohms#15#10#30
+PS#1032#Delta to Wye#3#A wye network has R_a = 60 ohms, R_b = 30 ohms, and R_c = 20 ohms. Find the equivalent delta resistors R_ab, R_bc, and R_ca.#Sum of products = (60 x 30) + (30 x 20) + (20 x 60) = 3600. R_ab = 3600 / 20 = 180 ohms, R_bc = 3600 / 60 = 60 ohms, R_ca = 3600 / 30 = 120 ohms#180#60#120
+PS#1033#Delta to Wye#3#A balanced delta network has three 90 ohm resistors. Find the resistance measured between any two terminals of the network.#R_Y = R_Delta / 3 = 90 / 3 = 30 ohms. Between two terminals, two wye resistors are in series: 30 + 30 = 60 ohms#60
