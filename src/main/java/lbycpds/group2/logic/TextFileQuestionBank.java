@@ -79,8 +79,10 @@ public class TextFileQuestionBank implements QuestionSource {
             } else {
                 throw new IllegalArgumentException("Unknown line type");
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Bad line " + lineNumber + " (missing field): " + line);
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException("Bad line " + lineNumber + ": " + line);
+            throw new IllegalArgumentException("Bad line " + lineNumber + " (" + e.getMessage() + "): " + line);
         }
     }
 
@@ -91,6 +93,9 @@ public class TextFileQuestionBank implements QuestionSource {
         String text = parts[4];
         String[] choices = {parts[5], parts[6], parts[7], parts[8]};
         String answer = parts[9];
+        if (parts.length != 10) {
+            throw new IllegalArgumentException("Multiple choice needs 10 fields but has " + parts.length);
+        }
         return new MultipleChoiceQuestion(id, course, topic, difficulty, text, answer, choices);
     }
 
@@ -100,6 +105,9 @@ public class TextFileQuestionBank implements QuestionSource {
         int difficulty = Integer.parseInt(parts[3]);
         String text = parts[4];
         String answer = parts[5];
+        if (parts.length != 6) {
+            throw new IllegalArgumentException("Identification needs 6 fields but has " + parts.length);
+        }
         return new IdentificationQuestion(id, course, topic, difficulty, text, answer);
     }
 
@@ -110,6 +118,9 @@ public class TextFileQuestionBank implements QuestionSource {
         String text = parts[4];
         String answer = parts[5];
         String[] keywords = copyFrom(parts, 6);
+        if (parts.length < 7) {
+            throw new IllegalArgumentException("Problem solving needs at least 7 fields but has " + parts.length);
+        }
         return new ProblemSolvingQuestion(id, course, topic, difficulty, text, answer, keywords);
     }
 
@@ -119,7 +130,7 @@ public class TextFileQuestionBank implements QuestionSource {
         }
         for (int i = 0; i < questions.size(); i++) {
             if (questions.get(i).getId() == question.getId()) {
-                throw new IllegalArgumentException("Duplicate id");
+                throw new IllegalArgumentException("Duplicate id " + question.getId());
             }
         }
         questions.add(question);
@@ -130,6 +141,7 @@ public class TextFileQuestionBank implements QuestionSource {
         for (int i = start; i < parts.length; i++) {
             result[i - start] = parts[i];
         }
+
         return result;
     }
 }
