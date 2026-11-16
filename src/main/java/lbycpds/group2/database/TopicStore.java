@@ -7,4 +7,11 @@ public interface TopicStore {
     List<Topic> loadTopics(String studentName, String course);
 
     void saveTopic(String studentName, Topic topic);
+
+    default void saveLastTopic(String studentName, String course, String topic) {
+    }
+
+    default String loadLastTopic(String studentName, String course) {
+        return null;
+    }
 }
