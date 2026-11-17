@@ -31,6 +31,10 @@ public class SplashScreen extends Application {
         SceneManager.show(splashRoot);
         stage.show();
 
+        // full screen
+        stage.setFullScreen(true);
+
+        // wait 2.5 seconds
         PauseTransition wait = new PauseTransition(Duration.seconds(2.5));
         wait.setOnFinished(event -> SceneManager.show(new RoleScreen().build()));
         wait.play();
