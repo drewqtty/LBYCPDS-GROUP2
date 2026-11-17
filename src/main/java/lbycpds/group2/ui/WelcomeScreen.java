@@ -8,13 +8,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import lbycpds.group2.database.Stores;
 import lbycpds.group2.database.StudentStore;
 import lbycpds.group2.model.Student;
 
 public class WelcomeScreen {
 
-    // TODO: replace with Drew's real implementation once it's in main
-    StudentStore studentStore = null;
+    StudentStore studentStore = Stores.studentStore();
 
     public Parent build() {
         Label title = new Label("Welcome to Cram!");
