@@ -3,8 +3,11 @@ package lbycpds.group2.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class BaseDao {
+    private static final Set<String> readyCourses = new HashSet<>();
     protected Connection connection;
 
     public BaseDao(Connection connection) {
@@ -28,9 +31,14 @@ public abstract class BaseDao {
     }
 
     protected void ensureCourse(String studentName, String course) {
+        String key = studentName + "|" + course;
+        if (readyCourses.contains(key)) {
+            return;
+        }
         ensureStudent(studentName);
         update("INSERT INTO student_courses (student_name, course) VALUES (?, ?) "
                         + "ON CONFLICT (student_name, course) DO NOTHING",
                 studentName, course);
+        readyCourses.add(key);
     }
 }
