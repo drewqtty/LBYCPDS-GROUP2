@@ -32,7 +32,7 @@ public class SplashScreen extends Application {
         stage.show();
 
         PauseTransition wait = new PauseTransition(Duration.seconds(2.5));
-        wait.setOnFinished(event -> SceneManager.show(new WelcomeScreen().build()));
+        wait.setOnFinished(event -> SceneManager.show(new RoleScreen().build()));
         wait.play();
     }
 }

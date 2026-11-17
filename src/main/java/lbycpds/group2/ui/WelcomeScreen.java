@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lbycpds.group2.database.Stores;
 import lbycpds.group2.database.StudentStore;
@@ -17,10 +18,13 @@ public class WelcomeScreen {
     StudentStore studentStore = Stores.studentStore();
 
     public Parent build() {
-        Label title = new Label("Welcome to Cram!");
+        Label title = new Label(AppState.role == AppState.Role.ADMIN ? "Admin Login" : "Welcome to Cram!");
         title.getStyleClass().add("heading");
 
         Label prompt = new Label("Enter your name to begin");
+
+        Button back = new Button("Back");
+        back.setOnAction(e -> SceneManager.show(new RoleScreen().build()));
 
         TextField nameField = new TextField();
         nameField.setPromptText("Your name");
@@ -64,7 +68,10 @@ public class WelcomeScreen {
         // Pressing Enter also works
         nameField.setOnAction(e -> next.fire());
 
-        VBox root = new VBox(15, title, prompt, nameField, next, error);
+        HBox actions = new HBox(10, back, next);
+        actions.setAlignment(Pos.CENTER);
+
+        VBox root = new VBox(15, title, prompt, nameField, actions, error);
         root.setAlignment(Pos.CENTER);
         root.getStyleClass().add("green");
         return root;
