@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import lbycpds.group2.database.Stores;
 import lbycpds.group2.logic.InsertionSort;
+import lbycpds.group2.logic.LinearSearch;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Session;
@@ -164,18 +165,17 @@ public class ConfidenceScreen {
         int perTopic = Math.max(1, 10 / Math.max(1, weakestFirst.size()));
         List<Question> picked = new ArrayList<>();
         for (Topic t : weakestFirst) {
-            List<Question> atLevel = new ArrayList<>();
-            List<Question> any = new ArrayList<>();
+            List<Integer> recentIds = new ArrayList<>();
+            if (Stores.isConnected()) {
+                recentIds = Stores.historyStore().loadRecent(AppState.student.getName(), t.getCourse());
+            }
+            List<Question> pool = new ArrayList<>();
             for (TextFileQuestionBank bank : banks) {
-                for (Question q : bank.loadQuestions()) {
-                    if (q.getCourse().equals(t.getCourse()) && q.getTopic().equals(t.getName())) {
-                        any.add(q);
-                        if (q.getDifficulty() == t.getLevel()) atLevel.add(q);
-                    }
+                if (bank.getCourse().equals(t.getCourse())) {
+                    pool = LinearSearch.find(bank.loadQuestions(), t.getCourse(), t.getName(),
+                            Math.min(t.getLevel(), 3), recentIds);
                 }
             }
-            List<Question> pool = atLevel.isEmpty() ? any : atLevel;
-            Collections.shuffle(pool);
             for (int i = 0; i < pool.size() && i < perTopic && picked.size() < 10; i++) {
                 picked.add(pool.get(i));
             }
@@ -202,6 +202,16 @@ public class ConfidenceScreen {
             t.setBestScore(Math.max(t.getBestScore(), pct));
             if (Stores.isConnected()) {
                 Stores.topicStore().saveTopic(AppState.student.getName(), t);
+            }
+        }
+        if (Stores.isConnected()) {
+            for (Question q : asked) {
+                Stores.historyStore().addRecent(AppState.student.getName(), q.getCourse(), q.getId());
+                if (result.missed.contains(q)) {
+                    Stores.historyStore().addMissed(AppState.student.getName(), q.getCourse(), q.getId());
+                } else {
+                    Stores.historyStore().removeMissed(AppState.student.getName(), q.getCourse(), q.getId());
+                }
             }
         }
         String course = AppState.course != null ? AppState.course : "All courses";
