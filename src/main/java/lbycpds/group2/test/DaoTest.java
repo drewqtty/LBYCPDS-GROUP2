@@ -8,6 +8,8 @@ import lbycpds.group2.database.TopicDao;
 import lbycpds.group2.model.Session;
 import lbycpds.group2.model.Student;
 import lbycpds.group2.model.Topic;
+import lbycpds.group2.database.ProgressRestorer;
+import java.util.ArrayList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +26,9 @@ public class DaoTest {
         DatabaseConnection database = new DatabaseConnection();
         try (Connection connection = database.open()) {
             testStudents(new StudentDao(connection));
-            testTopics(new TopicDao(connection));
+            TopicDao topicDao = new TopicDao(connection);
+            testTopics(topicDao);
+            testRestore(topicDao);
             testSessions(new SessionDao(connection));
             testHistory(new QuestionHistoryDao(connection));
             cleanUp(connection);
@@ -75,6 +79,19 @@ public class DaoTest {
         dao.saveLastTopic(TEST_NAME, CIRCUITS, "Resistance");
         check("last topic is saved", "Resistance".equals(dao.loadLastTopic(TEST_NAME, CIRCUITS)));
         check("last topic is empty for an untouched course", dao.loadLastTopic(TEST_NAME, DSA) == null);
+    }
+
+    private static void testRestore(TopicDao dao) {
+        List<Topic> fresh = new ArrayList<>();
+        fresh.add(new Topic("Resistance", CIRCUITS));
+        fresh.add(new Topic("Series Circuits", CIRCUITS));
+        fresh.add(new Topic("Parallel Circuits", CIRCUITS));
+        ProgressRestorer.restore(dao, TEST_NAME, fresh);
+        check("saved progress is merged into fresh topics",
+                fresh.get(0).getLevel() == 2 && fresh.get(0).getConfidence() == 4
+                        && fresh.get(1).getConfidence() == 2);
+        check("topics with no saved progress keep their defaults",
+                fresh.get(2).getLevel() == 1 && fresh.get(2).getConfidence() == 0);
     }
 
     private static void testSessions(SessionDao dao) {
