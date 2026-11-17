@@ -47,10 +47,10 @@ public class DaoTest {
 
     private static void testTopics(TopicDao dao) {
         Topic resistance = new Topic("Resistance", CIRCUITS);
-        resistance.setConfidence(40);
+        resistance.setConfidence(4);
         resistance.setUnlocked(true);
         Topic series = new Topic("Series Circuits", CIRCUITS);
-        series.setConfidence(20);
+        series.setConfidence(2);
         dao.saveTopic(TEST_NAME, resistance);
         dao.saveTopic(TEST_NAME, series);
         check("two topics saved", dao.loadTopics(TEST_NAME, CIRCUITS).size() == 2);
@@ -69,7 +69,7 @@ public class DaoTest {
         }
         check("updated values are loaded",
                 found != null && found.getLevel() == 2 && found.getBestScore() == 3
-                        && found.getConfidence() == 40 && found.isUnlocked());
+                        && found.getConfidence() == 4 && found.isUnlocked());
         check("other course has no topics", dao.loadTopics(TEST_NAME, DSA).isEmpty());
 
         dao.saveLastTopic(TEST_NAME, CIRCUITS, "Resistance");
