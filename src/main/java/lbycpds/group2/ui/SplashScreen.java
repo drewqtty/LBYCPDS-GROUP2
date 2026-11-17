@@ -8,11 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lbycpds.group2.database.Stores;
 
 public class SplashScreen extends Application {
 
     @Override
     public void start(Stage stage) {
+        Stores.connect();
         Label title = new Label("Cram");
         title.getStyleClass().add("title");
 
