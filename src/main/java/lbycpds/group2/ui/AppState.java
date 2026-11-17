@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppState {
+    public enum Role { STUDENT, ADMIN }
+
+    public static Role role = Role.STUDENT;   // chosen on the first screen
     public static Student student;
     public static String mode = "REGULAR";   // "REGULAR" or "CRAM"
     public static String course;             // only used in REGULAR mode
