@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import lbycpds.group2.database.Stores;
 import lbycpds.group2.logic.InsertionSort;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
@@ -128,7 +129,9 @@ public class ConfidenceScreen {
             for (int i = 0; i < AppState.topics.size(); i++) {
                 int rating = (int) Math.round(sliders.get(i).getValue());
                 AppState.topics.get(i).setConfidence(rating);
-                // TODO: topicStore.saveTopic(AppState.student.getName(), AppState.topics.get(i));
+                if (Stores.isConnected()) {
+                    Stores.topicStore().saveTopic(AppState.student.getName(), AppState.topics.get(i));
+                }
             }
             startQuiz();
         });
@@ -197,11 +200,15 @@ public class ConfidenceScreen {
             int pct = Math.round(100f * right / total);
             t.setLatestScore(pct);
             t.setBestScore(Math.max(t.getBestScore(), pct));
-            // TODO: adjust t.setLevel(...) with the difficulty policy, then topicStore.saveTopic(...)
+            if (Stores.isConnected()) {
+                Stores.topicStore().saveTopic(AppState.student.getName(), t);
+            }
         }
         String course = AppState.course != null ? AppState.course : "All courses";
         Session session = new Session(course, LocalDate.now(), result.percent(), result.seconds);
-        // TODO: sessionStore.saveSession(AppState.student.getName(), session);
+        if (Stores.isConnected()) {
+            Stores.sessionStore().saveSession(AppState.student.getName(), session);
+        }
         SceneManager.show(new ReportScreen(AppState.topics, List.of(session)).build());
     }
 
