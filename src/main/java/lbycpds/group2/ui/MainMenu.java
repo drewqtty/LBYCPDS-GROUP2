@@ -10,6 +10,8 @@ import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Topic;
 import java.util.ArrayList;
 import java.util.List;
+import lbycpds.group2.database.ProgressRestorer;
+import lbycpds.group2.database.Stores;
 
 public class MainMenu {
 
@@ -155,6 +157,9 @@ public class MainMenu {
                 seen.add(q.getTopic());
                 list.add(new Topic(q.getTopic(), bank.getCourse()));
             }
+        }
+        if (AppState.returning && Stores.isConnected()) {
+            ProgressRestorer.restore(Stores.topicStore(), AppState.student.getName(), list);
         }
         return list;
     }
