@@ -28,6 +28,7 @@ public class CramStudySession extends StudySession {
                             CramStore cramStore,
                             String course) {
         super(student, topicStore, sessionStore, historyStore);
+        if (student == null) throw new IllegalArgumentException("Cram mode requires a student.");
         if (course == null || course.trim().isEmpty()) {
             throw new IllegalArgumentException("Cram mode requires a course.");
         }
@@ -58,6 +59,10 @@ public class CramStudySession extends StudySession {
 
         boolean isCorrect = question.checkAnswer(studentAnswer);
         int questionId = question.getId();
+
+        if (sessionTotalQuestions == 0) {
+            turnStartTime = System.currentTimeMillis();
+        }
         this.sessionTotalQuestions++;
 
         if (isCorrect) {
@@ -76,7 +81,7 @@ public class CramStudySession extends StudySession {
 
     @Override
     public void finishTurn(String finishedCourse) {
-        if (sessionTotalQuestions == 0) return;
+        if (!course.equalsIgnoreCase(finishedCourse) || sessionTotalQuestions == 0) return;
 
         int timeSpentSeconds = (int) ((System.currentTimeMillis() - turnStartTime) / 1000);
         int percent = Math.round(100f * sessionScore / sessionTotalQuestions);

@@ -24,6 +24,8 @@ public class SingleCourseStudySession extends StudySession {
     private int sessionTotalQuestions = 0;
     private long turnStartTime;
 
+    private Topic activeTopic;
+
     public SingleCourseStudySession(Student student,
                                     TopicStore topicStore,
                                     SessionStore sessionStore,
@@ -48,7 +50,13 @@ public class SingleCourseStudySession extends StudySession {
         this.startTopic = topicName;
     }
 
+    @Override
     public Topic getTargetTopic() {
+        activeTopic = pickTopic();
+        return activeTopic;
+    }
+
+    private Topic pickTopic() {
         if (topicStore == null) return null;
 
         List<Topic> topics = topicStore.loadTopics(student.getName(), targetCourse);
@@ -67,7 +75,7 @@ public class SingleCourseStudySession extends StudySession {
                 .collect(Collectors.toList());
 
         if (unlockedTopics.isEmpty()) {
-            return topics.get(0);
+            return null;
         }
 
         Topic[] topicArray = unlockedTopics.toArray(new Topic[0]);
@@ -87,6 +95,9 @@ public class SingleCourseStudySession extends StudySession {
         boolean isCorrect = question.checkAnswer(studentAnswer);
         int questionId = question.getId();
 
+        if (sessionTotalQuestions == 0) {
+            turnStartTime = System.currentTimeMillis();
+        }
         this.sessionTotalQuestions++;
         if (isCorrect) {
             this.sessionScore++;
@@ -118,7 +129,7 @@ public class SingleCourseStudySession extends StudySession {
         int percent = Math.round(100f * sessionScore / sessionTotalQuestions);
 
         //Fetch the current weak topic using the MinHeapTree logic
-        Topic currentTopic = getTargetTopic();
+        Topic currentTopic = activeTopic != null ? activeTopic : pickTopic();
         if (currentTopic != null) {
             int currentLevel = currentTopic.getLevel();
             int nextLevel = difficultyPolicy.nextLevel(currentLevel, sessionScore, sessionTotalQuestions);
@@ -134,7 +145,7 @@ public class SingleCourseStudySession extends StudySession {
             }
         }
 
-        saveProgress(timeSpentSeconds, percent);
+        saveProgress(currentTopic, timeSpentSeconds, percent);
 
         this.sessionScore = 0;
         this.sessionTotalQuestions = 0;
@@ -142,12 +153,9 @@ public class SingleCourseStudySession extends StudySession {
         this.turnStartTime = System.currentTimeMillis();
     }
 
-    private void saveProgress(int timeSpentSeconds, int percent) {
-        if (topicStore != null) {
-            Topic currentTopic = getTargetTopic();
-            if (currentTopic != null) {
-                topicStore.saveTopic(student.getName(), currentTopic);
-            }
+    private void saveProgress(Topic currentTopic, int timeSpentSeconds, int percent) {
+        if (topicStore != null && currentTopic != null) {
+            topicStore.saveTopic(student.getName(), currentTopic);
         }
         if (sessionStore != null) {
             var sessionRecord = new lbycpds.group2.model.Session(
