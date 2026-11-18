@@ -1,16 +1,127 @@
 COURSE#Data Structures and Algorithms
 TOPIC#Intro, ADT, and Complexity#Linked Lists
 TOPIC#Linked Lists#Stacks
-TOPIC#Stacks
+TOPIC#Stacks#Queues
+TOPIC#Queues#Trees
+TOPIC#Trees#Heaps
+TOPIC#Heaps#Graphs
+TOPIC#Graphs#Sorting
+TOPIC#Sorting#Searching
+TOPIC#Searching
 
 MC#1#Intro, ADT, and Complexity#1#Which statement about an abstract data type (ADT) is correct?#It is the same as a primitive type#It must be implemented with arrays#It defines operations without fixing the implementation#It specifies the memory addresses used#C
+MC#111#Intro, ADT, and Complexity#1#Which of these is an abstract data type?#int#Stack#double#boolean#B
+MC#112#Intro, ADT, and Complexity#1#What does Big O notation describe?#How running time or memory grows as the input size grows#The exact number of seconds a program takes#The number of lines of code in a program#The size of the compiled file#A
 ID#2#Intro, ADT, and Complexity#2#What is the Big O time complexity of accessing an array element by its index? Write it in the form O(n).#O(1)
+ID#121#Intro, ADT, and Complexity#2#What is the Big O time complexity of searching for a value in an unsorted array of n elements in the worst case? Write it in the form O(n).#O(n)
+ID#122#Intro, ADT, and Complexity#2#What is the Big O time complexity of two nested loops that each run n times? Write it in the form O(n), using ^ for exponents (for example O(n^3)).#O(n^2)
 MC#3#Intro, ADT, and Complexity#3#A loop starts with i = 1 and doubles i on every pass (i = i * 2) while i is less than 1000. How many times does the loop body run?#9#11#10#500#C
+MC#131#Intro, ADT, and Complexity#3#What is the time complexity of this code? for (int i = 0; i < n; i++) { for (int j = 1; j < n; j *= 2) { count++; } }#O(n)#O(n log n)#O(n^2)#O(log n)#B
+MC#132#Intro, ADT, and Complexity#3#An algorithm takes 4n^2 + 10n + 7 steps for an input of size n. What is its Big O complexity?#O(n)#O(n^2)#O(4n^2 + 10n)#O(n^3)#B
+PS#141#Intro, ADT, and Complexity#3#A method has a loop that runs n times with another loop of n iterations inside it, followed by a separate loop that runs n times. Find the Big O complexity. Use ^ for exponents.#The cost is n^2 + n, so it is O(n^2)#n^2
+PS#142#Intro, ADT, and Complexity#3#An algorithm takes 3n^2 + 5n + 20 steps. Find the number of steps when n = 10 and the Big O complexity. Use ^ for exponents.#3(100) + 50 + 20 = 370 steps, and the complexity is O(n^2)#370#n^2
+PS#143#Intro, ADT, and Complexity#3#An array of 1024 sorted elements is halved on every step of a binary search until one element remains. How many halvings are needed, and what is the Big O of the search?#1024 = 2^10, so 10 halvings, and the search is O(log n)#10#log
 
 MC#4#Linked Lists#1#Why is inserting at the front of a singly linked list faster than inserting at the front of an array?#Linked lists use less memory#Arrays cannot be changed#Linked lists are always sorted#No elements need to be shifted#D
+MC#211#Linked Lists#1#What does the next reference of the last node in a singly linked list hold?#The head node#null#The previous node#The node itself#B
+MC#212#Linked Lists#1#What extra reference does each node of a doubly linked list store compared with a singly linked list?#A reference to the previous node#A second data value#An array index#A reference to the tail only#A
 ID#5#Linked Lists#2#What do you call each element of a linked list, which holds data and a reference to the next element?#Node
+ID#221#Linked Lists#2#What is the Big O time complexity of inserting a node at the front of a singly linked list? Write it in the form O(n).#O(1)
+ID#222#Linked Lists#2#What do you call the first node of a linked list, the one the whole list is reached from? Answer with one word.#head
 MC#6#Linked Lists#3#A music playlist is a singly linked list of 40 songs with only a head reference. How many next references must be followed to reach song 25?#24#23#25#40#A
+MC#231#Linked Lists#3#Which statements correctly delete a node X that is in the middle of a doubly linked list?#X.prev.next = X.next and X.next.prev = X.prev#X.next = X.prev and X.prev = X.next#X.prev.next = X and X.next.prev = X#head = X.next and tail = X.prev#A
+MC#232#Linked Lists#3#A singly linked list has only a head reference. What is the time complexity of adding a node at the end of the list?#O(1)#O(n)#O(log n)#O(n^2)#B
+PS#241#Linked Lists#3#A singly linked list holds 4, 9, 2, 7 from head to tail. After inserting 5 at the front and deleting the node that holds 9, write the list from head to tail.#5, 4, 2, 7#5#4#2#7
+PS#242#Linked Lists#3#A singly linked list of 12 nodes has only a head reference. How many next references must be followed to reach the last node, and what is the Big O of adding a node at the end?#11 next references, and adding at the end is O(n)#11#o(n)
+PS#243#Linked Lists#3#A doubly linked list holds 10, 20, 30 from head to tail. After deleting the node 20, what value does the next reference of node 10 hold and what value does the prev reference of node 30 hold?#The next of 10 is 30 and the prev of 30 is 10#30#10
 
 MC#7#Stacks#1#Which situation is best modeled by a stack?#Print jobs waiting for a printer#Undo history in a text editor#People waiting in line at a counter#Customers served by arrival time#B
+MC#311#Stacks#1#Which stack operation looks at the top element without removing it?#push#pop#peek#enqueue#C
+MC#312#Stacks#1#Which stack operation can cause an overflow when an array-based stack is already full?#push#pop#peek#size#A
 ID#8#Stacks#2#Which operation removes and returns the top element of a stack? Answer with one word.#pop
+ID#321#Stacks#2#What principle does a stack follow? Answer with the four-letter abbreviation.#LIFO
+ID#322#Stacks#2#A stack starts empty. Do push(4), push(7), push(1), pop(). What value is now on top? Answer with a number only.#7
 MC#9#Stacks#3#A stack starts empty. Do push(15), push(8), pop(), push(23), push(42), pop(). What is the sum of all values left in the stack?#46#38#23#88#B
+MC#331#Stacks#3#A stack starts empty. Do push(2), push(9), pop(), push(5), push(6), pop(), pop(). What is the sum of all values left in the stack?#2#7#11#5#A
+MC#332#Stacks#3#Which problem is best solved with a stack?#Checking whether the brackets in an expression are balanced#Serving customers in arrival order#Finding the weakest topic in a list#Rotating between two courses#A
+PS#341#Stacks#3#A stack starts empty. Do push(6), push(2), push(9), pop(), push(4), pop(), pop(). Give the value on top and the number of elements left.#The stack is [6], so the top is 6 and 1 element is left#6#1
+PS#342#Stacks#3#Evaluate the postfix expression 8 2 / 3 + 4 * using a stack.#8/2 = 4, 4+3 = 7, 7*4 = 28#28
+PS#343#Stacks#3#An array-based stack has a capacity of 4. Do push(1), push(2), push(3), pop(), push(4), push(5), push(6). Write the values in the stack from bottom to top and say what happens on the last push.#The stack holds 1, 2, 4, 5 and the last push causes an overflow#overflow#5
+
+MC#10#Queues#1#Which principle describes how a queue adds and removes elements?#Last in, first out#First in, first out#Smallest value first#Random order#B
+MC#411#Queues#1#Which queue operation adds an element at the back?#enqueue#dequeue#peek#pop#A
+MC#412#Queues#1#Which situation is best modeled by a queue?#Undo history in an editor#Print jobs waiting for a printer#Checking balanced brackets#Backtracking in a maze#B
+ID#11#Queues#2#A circular array queue has a capacity of 5 and its last element is at index 4. At which index is the next element enqueued? Answer with a number only.#0
+ID#421#Queues#2#Which queue operation removes and returns the front element? Answer with one word.#dequeue
+ID#422#Queues#2#A queue starts empty. Do enqueue(3), enqueue(8), enqueue(5), dequeue(). What value is now at the front? Answer with a number only.#8
+MC#12#Queues#3#A queue starts empty. Do enqueue(15), enqueue(8), dequeue(), enqueue(23), enqueue(42), dequeue(). What value is at the front of the queue?#8#15#23#42#C
+MC#431#Queues#3#A circular array queue has a capacity of 5. The front is at index 3 and the queue holds 4 elements. At what index is the last element?#6#1#7#2#B
+MC#432#Queues#3#A circular array queue has a capacity of 4. The front is at index 3 and the queue holds 2 elements. After one dequeue, what is the new front index?#0#1#3#4#A
+PS#441#Queues#3#A queue starts empty. Do enqueue(7), enqueue(3), enqueue(9), dequeue(), enqueue(5), dequeue(). Give the value at the front and the number of elements in the queue.#The queue is [9, 5], so the front is 9 and it has 2 elements#9#2
+PS#442#Queues#3#A circular array queue has a capacity of 6. The front is at index 4 and the queue holds 4 elements. Give the index of the last element and the index where the next enqueue places a value.#Last = (4 + 4 - 1) % 6 = 1, next = (4 + 4) % 6 = 2#1#2
+PS#443#Queues#3#In Cram, the courses Math, Circuits, and DSA are in a circular queue in that order with Math at the front. Each turn the front course is dequeued and enqueued again at the back. Which course is at the front after 5 turns?#Order after each turn: Circuits, DSA, Math then DSA, Math, Circuits then Math, Circuits, DSA then Circuits, DSA, Math then DSA, Math, Circuits, so DSA#dsa
+
+MC#13#Trees#1#In a binary search tree, where is a value smaller than the root placed?#In the left subtree#In the right subtree#It replaces the root#At the last level only#A
+MC#511#Trees#1#What is a tree node with no children called?#Root#Leaf#Parent#Edge#B
+MC#512#Trees#1#In a binary search tree, where is a value larger than the root placed?#In the left subtree#In the right subtree#It replaces the root#It becomes the leftmost leaf#B
+ID#14#Trees#2#Which traversal of a binary search tree visits the keys in ascending order? Answer with one word.#inorder
+ID#521#Trees#2#What is the maximum number of children a node of a binary tree can have? Answer with a number only.#2
+ID#522#Trees#2#The values 50, 30, 70, 20 are inserted into an empty BST in that order. What is the left child of 30? Answer with a number only.#20
+MC#15#Trees#3#The values 10, 20, and 30 are inserted into an empty AVL tree in that order. Which value is the root after balancing?#10#20#30#The tree is not rebalanced#B
+MC#531#Trees#3#The values 50, 30, 70, 20, 40, 60, 80 are inserted into an empty BST in that order. What is the preorder traversal?#50, 30, 20, 40, 70, 60, 80#20, 30, 40, 50, 60, 70, 80#20, 40, 30, 60, 80, 70, 50#50, 30, 70, 20, 40, 60, 80#A
+MC#532#Trees#3#An AVL node has a left subtree of height 3 and a right subtree of height 1. What does the AVL tree do?#Nothing, this is allowed#Rotates, because the heights differ by more than 1#Deletes the node#Rebuilds the whole tree from scratch#B
+PS#541#Trees#3#The values 40, 20, 60, 10, 30 are inserted into an empty BST in that order. Write the inorder traversal.#10, 20, 30, 40, 60#10#20#30#40#60
+PS#542#Trees#3#A BST was built by inserting 50, 30, 70, 20, 40, 60, 80. Give its height (the root has height 0) and the number of comparisons needed to find 60.#Height is 2, and finding 60 compares with 50, 70, and 60, which is 3 comparisons#2#3
+PS#543#Trees#3#The values 30, 20, 10 are inserted into an empty AVL tree one at a time. Which rotation fixes the imbalance and which value becomes the root?#A right rotation, and 20 becomes the root#right#20
+
+MC#16#Heaps#1#A program must always get the item with the lowest score first. Which structure keeps that item at the root?#Max-heap#Min-heap#Stack#Circular queue#B
+MC#611#Heaps#1#Which value is at the root of a max-heap?#The smallest value#The largest value#The median value#The newest value#B
+MC#612#Heaps#1#What is a binary heap usually stored in?#An array#A stack#A set#A graph#A
+ID#17#Heaps#2#In an array-based min-heap with the root at index 0, what is the index of the left child of the node at index 4? Answer with a number only.#9
+ID#621#Heaps#2#In an array-based heap with the root at index 0, what is the index of the parent of the node at index 7? Answer with a number only.#3
+ID#622#Heaps#2#What is the Big O time complexity of extracting the root from a heap of n elements? Write it in the form O(n).#O(log n)
+MC#18#Heaps#3#The values 5, 3, 8, 1 are inserted one at a time into an empty min-heap. What does the array look like afterward?#[1, 3, 8, 5]#[1, 5, 8, 3]#[3, 1, 8, 5]#[1, 3, 5, 8]#A
+MC#631#Heaps#3#A min-heap is stored as [2, 5, 4, 9, 7]. The root is extracted and the heap is fixed. What does the array look like afterward?#[4, 5, 7, 9]#[5, 4, 7, 9]#[4, 5, 9, 7]#[7, 5, 4, 9]#A
+MC#632#Heaps#3#The values 7, 4, 9, 2 are inserted one at a time into an empty min-heap. What does the array look like afterward?#[2, 7, 9, 4]#[4, 2, 9, 7]#[2, 4, 9, 7]#[2, 4, 7, 9]#C
+PS#641#Heaps#3#The values 9, 6, 8, 2 are inserted one at a time into an empty min-heap. Write the heap array.#[2, 6, 8, 9]#2#6#8#9
+PS#642#Heaps#3#A min-heap array is [3, 8, 5, 12, 9] with the root at index 0. Give the indexes of the two children of the node holding 8, and the index of the parent of the node holding 9.#Children are at indexes 3 and 4, and the parent of index 4 is index 1#3#4#1
+PS#643#Heaps#3#The root of the min-heap [3, 8, 5, 12, 9] is extracted and the heap is fixed. Write the heap array afterward.#[5, 8, 9, 12]#5#8#9#12
+
+MC#19#Graphs#1#What is the connection between two vertices in a graph called?#Leaf#Edge#Root#Index#B
+MC#711#Graphs#1#What is a graph called when its edges have a direction?#Undirected#Directed#Complete#Balanced#B
+MC#712#Graphs#1#In a graph that models topic progression, what does each topic represent?#A vertex#An edge#A weight#A cycle#A
+ID#20#Graphs#2#Which data structure does breadth-first search use to hold the vertices waiting to be visited? Answer with one word.#queue
+ID#721#Graphs#2#How many edges does a complete undirected graph with 4 vertices have? Answer with a number only.#6
+ID#722#Graphs#2#Which graph traversal visits all the neighbors of a vertex before going deeper? Answer with the three-letter abbreviation.#BFS
+MC#21#Graphs#3#A directed graph has the edges A to B, A to C, B to D, C to D, and D to E. Breadth-first search starts at A and visits neighbors in alphabetical order. What is the visiting order?#A, B, D, C, E#A, B, C, D, E#A, C, B, E, D#A, D, B, C, E#B
+MC#731#Graphs#3#An undirected graph has the edges A-B, A-D, B-C, D-E, and C-E. Breadth-first search starts at A and visits neighbors in alphabetical order. What is the visiting order?#A, B, C, D, E#A, B, D, C, E#A, D, B, E, C#A, B, D, E, C#B
+MC#732#Graphs#3#Which statement about breadth-first search on an unweighted graph is correct?#It finds a path with the fewest edges from the start vertex#It finds the path with the most edges#It requires the graph to be sorted first#It uses a stack to hold waiting vertices#A
+PS#741#Graphs#3#A complete undirected graph has 6 vertices. How many edges does it have?#6 x 5 / 2 = 15 edges#15
+PS#742#Graphs#3#An undirected graph has the edges 1-2, 1-3, 2-5, 3-4, 4-5, and 5-6. Breadth-first search starts at 1 and visits neighbors in ascending order. Which vertex is visited fourth and which is visited last?#The order is 1, 2, 3, 5, 4, 6, so the fourth is 5 and the last is 6#5#6
+PS#743#Graphs#3#A directed graph has the edges X to Y, X to Z, Y to W, Z to V, V to W, and W to U. Using BFS from X, how many edges are in the shortest path from X to U?#X, Y, W, U has 3 edges#3
+
+MC#22#Sorting#1#Which sorting algorithm builds the sorted part by inserting one element at a time into its correct position?#Heap sort#Insertion sort#Counting sort#Radix sort#B
+MC#811#Sorting#1#Which sorting algorithm is built on a heap?#Heap sort#Counting sort#Radix sort#Insertion sort#A
+MC#812#Sorting#1#What does it mean when a sorting algorithm is stable?#Equal elements keep their original relative order#It never uses extra memory#It always runs in O(n)#It only works on sorted input#A
+ID#23#Sorting#2#What is the worst-case time complexity of insertion sort? Write it in the form O(n), using ^ for exponents (for example O(n^3)).#O(n^2)
+ID#821#Sorting#2#What is the best-case time complexity of insertion sort on an already sorted array? Write it in the form O(n).#O(n)
+ID#822#Sorting#2#What is the Big O time complexity of heap sort for n elements? Write it in the form O(n log n).#O(n log n)
+MC#24#Sorting#3#The array [5, 2, 4, 1] is sorted with insertion sort. What does it look like after the first two passes (inserting the elements at index 1 and index 2)?#[2, 4, 5, 1]#[1, 2, 4, 5]#[2, 5, 4, 1]#[2, 4, 1, 5]#A
+MC#831#Sorting#3#The array [6, 3, 5, 1, 4] is sorted with insertion sort. What does it look like after the first three passes (inserting the elements at index 1, 2, and 3)?#[3, 5, 6, 1, 4]#[1, 3, 4, 5, 6]#[1, 3, 5, 6, 4]#[3, 1, 5, 6, 4]#C
+MC#832#Sorting#3#In the worst case, how many comparisons does insertion sort make to sort 5 elements?#4#5#10#25#C
+PS#841#Sorting#3#The array [7, 3, 5, 1] is sorted with insertion sort. How many times is an element shifted one place to the right in total?#Pass 1 shifts 1, pass 2 shifts 1, pass 3 shifts 3, so 5 shifts#5
+PS#842#Sorting#3#Counting sort is used on [2, 5, 3, 0, 2, 3, 0, 3], where the values go from 0 to 5. How many times does the value 3 appear, and what is the length of the count array?#3 appears 3 times, and the count array has 6 positions#3#6
+PS#843#Sorting#3#Radix sort (least significant digit first, base 10) is used on [170, 45, 75, 90]. After the first pass on the ones digit, which number is first and which is last?#After the ones-digit pass the array is [170, 90, 45, 75], so 170 is first and 75 is last#170#75
+
+MC#25#Searching#1#Which search checks each element one by one from the start until the target is found?#Binary search#Linear search#Interpolation search#Hash search#B
+MC#911#Searching#1#Which search algorithm still works on an unsorted array?#Binary search#Linear search#Both need a sorted array#Neither works on arrays#B
+MC#912#Searching#1#For a large sorted array, which search needs fewer comparisons in the worst case?#Linear search#Binary search#They need the same number#It depends only on the target#B
+ID#26#Searching#2#What must be true about an array before binary search can be used on it? Answer with one word.#sorted
+ID#921#Searching#2#What is the worst-case time complexity of linear search? Write it in the form O(n).#O(n)
+ID#922#Searching#2#What is the worst-case time complexity of binary search? Write it in the form O(n).#O(log n)
+MC#27#Searching#3#Binary search looks for 23 in the sorted array [2, 5, 8, 12, 16, 23, 38] (indexes 0 to 6) using mid = (low + high) / 2 with integer division. Which indexes are checked, in order?#3, then 5#3, then 4, then 5#0, then 3#6, then 5#A
+MC#931#Searching#3#Binary search looks for 5 in the sorted array [1, 3, 5, 7, 9, 11, 13] (indexes 0 to 6) using mid = (low + high) / 2 with integer division. Which indexes are checked, in order?#3, 1, 2#3, 2#0, 1, 2#3, 5, 2#A
+MC#932#Searching#3#Binary search looks for 9 in the sorted array [2, 4, 6, 8, 10, 12] (indexes 0 to 5) using mid = (low + high) / 2 with integer division. 9 is not in the array. How many elements are compared before the search stops?#1#2#3#6#C
+PS#941#Searching#3#Linear search looks for 8 in [4, 9, 2, 8, 6]. How many comparisons are made to find 8, and how many are made when searching for 7, which is not in the array?#8 takes 4 comparisons and 7 takes 5 comparisons#4#5
+PS#942#Searching#3#Binary search looks for 41 in the sorted array [2, 5, 8, 12, 16, 23, 38, 41, 50] (indexes 0 to 8) using mid = (low + high) / 2 with integer division. Write the indexes checked in order and the number of comparisons.#Indexes 4, 6, 7, so 3 comparisons#4#6#7#3
+PS#943#Searching#3#Use worst-case comparisons = floor(log2 n) + 1 for binary search. Find the worst case for n = 31 and for n = 32.#n = 31 gives 5 and n = 32 gives 6#5#6
