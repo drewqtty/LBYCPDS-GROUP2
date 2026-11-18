@@ -5,6 +5,6 @@ import lbycpds.group2.ui.SplashScreen;
 
 public class Launcher {
     public static void main(String[] args) {
-        Application.launch(SplashScreen.class, args);
+        Application.launch(SplashScreen.class, args);args
     }
 }
