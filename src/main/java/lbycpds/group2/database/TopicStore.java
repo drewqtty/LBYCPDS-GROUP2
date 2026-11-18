@@ -14,4 +14,9 @@ public interface TopicStore {
     default String loadLastTopic(String studentName, String course) {
         return null;
     }
+
+    // The course the student studied most recently
+    default String loadLastCourse(String studentName) {
+        return null;
+    }
 }

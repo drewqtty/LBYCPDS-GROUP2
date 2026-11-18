@@ -6,6 +6,8 @@ import java.sql.SQLException;
 public class Stores {
     private static Connection connection;
     private static StudentStore studentStore;
+    private static AdminStore adminStore;
+    private static CramStore cramStore;
     private static TopicStore topicStore;
     private static SessionStore sessionStore;
     private static QuestionHistoryStore historyStore;
@@ -19,6 +21,18 @@ public class Stores {
             return false;
         }
         studentStore = new StudentDao(connection);
+        try {
+            cramStore = new CramDao(connection);
+        } catch (IllegalStateException e) {
+            cramStore = null;
+            System.out.println("Cram levels will not be saved: " + e.getMessage());
+        }
+        try {
+            adminStore = new AdminDao(connection);
+        } catch (IllegalStateException e) {
+            adminStore = null;
+            System.out.println("Admin names will not be saved: " + e.getMessage());
+        }
         topicStore = new TopicDao(connection);
         sessionStore = new SessionDao(connection);
         historyStore = new QuestionHistoryDao(connection);
@@ -31,6 +45,14 @@ public class Stores {
 
     public static StudentStore studentStore() {
         return studentStore;
+    }
+
+    public static CramStore cramStore() {
+        return cramStore;
+    }
+
+    public static AdminStore adminStore() {
+        return adminStore;
     }
 
     public static TopicStore topicStore() {

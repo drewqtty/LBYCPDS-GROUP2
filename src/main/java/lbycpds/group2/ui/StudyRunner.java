@@ -7,9 +7,12 @@ import lbycpds.group2.database.LocalHistoryStore;
 import lbycpds.group2.database.LocalSessionStore;
 import lbycpds.group2.database.LocalTopicStore;
 import lbycpds.group2.database.Stores;
+import lbycpds.group2.database.LocalCramStore;
 import lbycpds.group2.logic.AdaptiveDifficulty;
+import lbycpds.group2.logic.CramStudySession;
 import lbycpds.group2.logic.MissedQuestionsStudySession;
 import lbycpds.group2.logic.QuestionBankFiles;
+import lbycpds.group2.logic.SingleCourseStudySession;
 import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.logic.StudyMode;
 import lbycpds.group2.logic.StudySession;
@@ -29,6 +32,9 @@ public class StudyRunner {
 
     public static void start() {
         String student = AppState.student.getName();
+        if (Stores.isConnected()) {
+            AppState.returning = true;
+        }
         AppState.topicStore = new LocalTopicStore(AppState.topics,
                 Stores.isConnected() ? Stores.topicStore() : null);
         AppState.sessionStore = new LocalSessionStore(
@@ -36,13 +42,21 @@ public class StudyRunner {
         AppState.historyStore = new LocalHistoryStore(
                 Stores.isConnected() ? Stores.historyStore() : null);
 
+        if (AppState.cramStore == null) {
+            AppState.cramStore = new LocalCramStore(Stores.isConnected() ? Stores.cramStore() : null);
+        }
+
         StudySessionController controller = controller();
         if ("CRAM".equals(AppState.mode)) {
             AppState.session = controller.createSession(StudyMode.CRAM, AppState.student,
-                    null, null, null, AppState.graphs);
+                    AppState.course, null, null, null);
         } else {
             AppState.session = controller.createSession(StudyMode.NORMAL, AppState.student,
                     AppState.course, AppState.graphs.get(AppState.course), null, null);
+            if (AppState.resumeTopic != null) {
+                ((SingleCourseStudySession) AppState.session).setStartTopic(AppState.resumeTopic);
+                AppState.resumeTopic = null;
+            }
         }
         nextRound();
     }
@@ -54,6 +68,11 @@ public class StudyRunner {
             return;
         }
 
+        if (session instanceof CramStudySession) {
+            nextCramRound((CramStudySession) session);
+            return;
+        }
+
         String course = session.nextCourse();
         Topic topic = session.getTargetTopic();
         TextFileQuestionBank bank = bankFor(course);
@@ -61,6 +80,13 @@ public class StudyRunner {
             tell("There is no topic to study for " + course + " yet.");
             SceneManager.show(new MainMenu().build());
             return;
+        }
+
+        // Remember where the student is so they can continue later
+        try {
+            AppState.topicStore.saveLastTopic(AppState.student.getName(), course, topic.getName());
+        } catch (RuntimeException e) {
+            System.out.println("Could not save the last topic: " + e.getMessage());
         }
 
         List<Integer> recent = AppState.historyStore.loadRecent(AppState.student.getName(), course);
@@ -74,6 +100,30 @@ public class StudyRunner {
         SceneManager.show(new QuizScreen(picked, session::recordAnswer, result -> {
             session.finishTurn(course);
             saveAllTopics();
+            showReport();
+        }).build());
+    }
+
+    // Cram: one jumbled quiz of every topic in the course at the student's cram level
+    private static void nextCramRound(CramStudySession cram) {
+        String course = cram.nextCourse();
+        TextFileQuestionBank bank = bankFor(course);
+        if (bank == null) {
+            tell("There are no questions for " + course + " yet.");
+            SceneManager.show(new MainMenu().build());
+            return;
+        }
+
+        List<Question> quiz = StudyFlow.cramQuestions(bank.loadQuestions(), course, cram.getLevel());
+        if (quiz.isEmpty()) {
+            tell("There are no level " + cram.getLevel() + " questions for " + course + " yet.");
+            SceneManager.show(new MainMenu().build());
+            return;
+        }
+
+        SceneManager.show(new QuizScreen(quiz, cram::recordAnswer, result -> {
+            cram.finishTurn(course);
+            tell(cram.getLastSummary());
             showReport();
         }).build());
     }
@@ -122,8 +172,10 @@ public class StudyRunner {
     }
 
     private static StudySessionController controller() {
-        return new StudySessionController(AppState.topicStore, AppState.sessionStore,
-                AppState.historyStore, new AdaptiveDifficulty());
+        StudySessionController controller = new StudySessionController(AppState.topicStore,
+                AppState.sessionStore, AppState.historyStore, new AdaptiveDifficulty());
+        controller.setCramStore(AppState.cramStore);
+        return controller;
     }
 
     private static TextFileQuestionBank bankFor(String course) {
@@ -137,8 +189,6 @@ public class StudyRunner {
     }
 
     private static void tell(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
-        alert.setHeaderText(null);
-        alert.showAndWait();
+        Dialogs.tell(message);
     }
 }
