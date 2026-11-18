@@ -36,7 +36,14 @@ public class MainMenu {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        HBox topBar = new HBox(logo, spacer, welcome);
+        Button logout = new Button("Log out");
+        logout.getStyleClass().add("small-button");
+        logout.setOnAction(e -> {
+            AppState.reset();
+            SceneManager.show(new RoleScreen().build());
+        });
+
+        HBox topBar = new HBox(16, logo, spacer, welcome, logout);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.getStyleClass().add("topbar");
 
@@ -106,6 +113,13 @@ public class MainMenu {
 
             AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
 
+            // Returning students can keep their saved confidence ratings
+            if (hasSavedRatings() && keepSavedRatings()) {
+                fillMissingRatings();
+                StudyRunner.start();
+                return;
+            }
+
             // Confidence screen build
             SceneManager.show(new ConfidenceScreen().build());
         });
@@ -159,6 +173,39 @@ public class MainMenu {
             else card.getStyleClass().remove("selected");
         });
         return card;
+    }
+
+    private boolean hasSavedRatings() {
+        if (!AppState.returning) {
+            return false;
+        }
+        for (Topic topic : AppState.topics) {
+            if (topic.isUnlocked() && topic.getConfidence() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Asks the student whether to keep the saved ratings or rate the topics again
+    private boolean keepSavedRatings() {
+        ButtonType keep = new ButtonType("Keep saved ratings", ButtonBar.ButtonData.YES);
+        ButtonType change = new ButtonType("Change ratings", ButtonBar.ButtonData.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "You already rated your topics before. Keep those confidence ratings?", keep, change);
+        alert.setHeaderText(null);
+        return alert.showAndWait().orElse(change) == keep;
+    }
+
+    private void fillMissingRatings() {
+        for (Topic topic : AppState.topics) {
+            if (topic.isUnlocked() && topic.getConfidence() <= 0) {
+                topic.setConfidence(3);
+                if (Stores.isConnected()) {
+                    Stores.topicStore().saveTopic(AppState.student.getName(), topic);
+                }
+            }
+        }
     }
 
     // Makes a Topic for each topic name in the question bank

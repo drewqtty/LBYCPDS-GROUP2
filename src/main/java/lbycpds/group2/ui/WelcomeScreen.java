@@ -41,13 +41,12 @@ public class WelcomeScreen {
                 return;
             }
 
-            // Admins go to the question editor, not the study menu
             if (AppState.role == AppState.Role.ADMIN) {
                 SceneManager.show(new AdminScreen().build());
                 return;
             }
 
-            // Look for saved data (skipped until the database is ready)
+            // Look for saved data
             Student existing = null;
             if (studentStore != null) {
                 existing = studentStore.loadStudent(name);
@@ -66,12 +65,19 @@ public class WelcomeScreen {
             } else {
                 AppState.student = new Student(name);
                 AppState.returning = false;
+
+                if (studentStore != null) {
+                    try {
+                        studentStore.saveStudent(AppState.student);
+                    } catch (RuntimeException ex) {
+                        System.out.println("Could not save the student: " + ex.getMessage());
+                    }
+                }
             }
 
             SceneManager.show(new MainMenu().build());
         });
 
-        // Pressing Enter also works
         nameField.setOnAction(e -> next.fire());
 
         HBox actions = new HBox(10, back, next);

@@ -1,13 +1,15 @@
 package lbycpds.group2.ui;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import lbycpds.group2.database.Stores;
 
-// First screen after the splash: lets the user pick Admin or Student
+// First screen after the splash
 public class RoleScreen {
 
     public Parent build() {
@@ -25,7 +27,13 @@ public class RoleScreen {
         HBox buttons = new HBox(15, student, admin);
         buttons.setAlignment(Pos.CENTER);
 
-        VBox root = new VBox(15, title, prompt, buttons);
+        Button exit = new Button("Exit");
+        exit.setOnAction(e -> {
+            Stores.close();
+            Platform.exit();
+        });
+
+        VBox root = new VBox(15, title, prompt, buttons, exit);
         root.setAlignment(Pos.CENTER);
         root.getStyleClass().add("green");
         return root;
