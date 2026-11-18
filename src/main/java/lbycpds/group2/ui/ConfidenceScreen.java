@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import lbycpds.group2.database.Stores;
 import lbycpds.group2.logic.InsertionSort;
 import lbycpds.group2.logic.LinearSearch;
+import lbycpds.group2.logic.QuestionBankFiles;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Session;
@@ -156,8 +157,8 @@ public class ConfidenceScreen {
     // Picks up to 10 questions, weakest topics first, then shows the quiz and then the report.
     private void startQuiz() {
         List<TextFileQuestionBank> banks = List.of(
-                new TextFileQuestionBank("/questions/circuits.txt"),
-                new TextFileQuestionBank("/questions/dsa.txt"));
+                QuestionBankFiles.open("/questions/circuits.txt"),
+                QuestionBankFiles.open("/questions/dsa.txt"));
 
         List<Topic> weakestFirst = new ArrayList<>(AppState.topics);
         InsertionSort.sort(weakestFirst);
