@@ -60,6 +60,20 @@ public class TopicDao extends BaseDao implements TopicStore {
                 topic, studentName, course);
     }
 
+    public String loadLastCourse(String studentName) {
+        String sql = "SELECT course FROM student_courses WHERE student_name = ? "
+                + "AND last_played_at IS NOT NULL AND last_topic IS NOT NULL "
+                + "ORDER BY last_played_at DESC LIMIT 1";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, studentName);
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next() ? result.getString("course") : null;
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Could not load last course: " + e.getMessage());
+        }
+    }
+
     public String loadLastTopic(String studentName, String course) {
         String sql = "SELECT last_topic FROM student_courses WHERE student_name = ? AND course = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {

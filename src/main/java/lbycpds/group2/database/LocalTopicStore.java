@@ -26,6 +26,23 @@ public class LocalTopicStore implements TopicStore {
     }
 
     @Override
+    public void saveLastTopic(String studentName, String course, String topic) {
+        if (saved != null) {
+            saved.saveLastTopic(studentName, course, topic);
+        }
+    }
+
+    @Override
+    public String loadLastTopic(String studentName, String course) {
+        return saved != null ? saved.loadLastTopic(studentName, course) : null;
+    }
+
+    @Override
+    public String loadLastCourse(String studentName) {
+        return saved != null ? saved.loadLastCourse(studentName) : null;
+    }
+
+    @Override
     public void saveTopic(String studentName, Topic topic) {
         if (saved != null) {
             saved.saveTopic(studentName, topic);

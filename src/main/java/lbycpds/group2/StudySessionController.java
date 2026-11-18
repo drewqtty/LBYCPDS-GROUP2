@@ -1,5 +1,6 @@
 package lbycpds.group2;
 
+import lbycpds.group2.database.CramStore;
 import lbycpds.group2.database.QuestionHistoryStore;
 import lbycpds.group2.database.SessionStore;
 import lbycpds.group2.database.TopicStore;
@@ -17,6 +18,7 @@ public class StudySessionController {
     private final SessionStore sessionStore;
     private final QuestionHistoryStore historyStore;
     private final DifficultyPolicy difficultyPolicy;
+    private CramStore cramStore;
 
     public StudySessionController(TopicStore topicStore,
                                   SessionStore sessionStore,
@@ -26,6 +28,10 @@ public class StudySessionController {
         this.sessionStore = sessionStore;
         this.historyStore = historyStore;
         this.difficultyPolicy = difficultyPolicy;
+    }
+
+    public void setCramStore(CramStore cramStore) {
+        this.cramStore = cramStore;
     }
 
     /**
@@ -49,7 +55,10 @@ public class StudySessionController {
                 );
 
             case CRAM:
-                return createCramSession(student, courseGraphs);
+                if (targetCourse == null || targetCourse.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Cram mode requires a valid target course.");
+                }
+                return createCramSession(student, targetCourse);
 
             case MISSED:
                 if (targetCourse == null || targetCourse.trim().isEmpty()) {
@@ -65,26 +74,32 @@ public class StudySessionController {
         }
     }
 
-    public CramStudySession createCramSession(Student student, Map<String, Graph> courseGraphs) {
+    public CramStudySession createCramSession(Student student, String course) {
         return new CramStudySession(
-                student, topicStore, sessionStore, historyStore,
-                difficultyPolicy, courseGraphs
+                student, topicStore, sessionStore, historyStore, cramStore, course
         );
     }
 
-    public StudySession continueLastSession(Student student, Map<String, Graph> courseGraphs) {
+    /**
+     * Continues where the student stopped: the course they studied last, starting on the
+     * topic they were on. Falls back to the course with the latest saved session.
+     * Returns null when the student has nothing saved to continue.
+     */
+    public SingleCourseStudySession continueLastSession(Student student, Map<String, Graph> courseGraphs) {
         List<String> studentCourses = student.getCourses();
-        String courseToResume = (studentCourses != null && !studentCourses.isEmpty()) ? studentCourses.get(0) : "DEFAULT";
+        String courseToResume = null;
 
-        if (sessionStore != null && studentCourses != null && !studentCourses.isEmpty()) {
+        if (topicStore != null) {
+            courseToResume = topicStore.loadLastCourse(student.getName());
+        }
+
+        if (courseToResume == null && sessionStore != null && studentCourses != null) {
             Session latestSession = null;
-
             for (String course : studentCourses) {
                 List<Session> courseSessions = sessionStore.loadSessions(student.getName(), course);
                 if (courseSessions != null && !courseSessions.isEmpty()) {
                     Session candidate = courseSessions.get(courseSessions.size() - 1);
-
-                    if (latestSession == null || candidate.getDate().isAfter(latestSession.getDate())) {
+                    if (latestSession == null || !candidate.getDate().isBefore(latestSession.getDate())) {
                         latestSession = candidate;
                         courseToResume = course;
                     }
@@ -92,11 +107,18 @@ public class StudySessionController {
             }
         }
 
-        Graph graph = courseGraphs != null ? courseGraphs.get(courseToResume) : null;
+        if (courseToResume == null) {
+            return null;
+        }
 
-        return new SingleCourseStudySession(
+        Graph graph = courseGraphs != null ? courseGraphs.get(courseToResume) : null;
+        SingleCourseStudySession session = new SingleCourseStudySession(
                 student, topicStore, sessionStore, historyStore,
                 courseToResume, difficultyPolicy, graph
         );
+        if (topicStore != null) {
+            session.setStartTopic(topicStore.loadLastTopic(student.getName(), courseToResume));
+        }
+        return session;
     }
 }

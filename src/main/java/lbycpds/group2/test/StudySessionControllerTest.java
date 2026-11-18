@@ -88,16 +88,13 @@ public class StudySessionControllerTest {
         normalSession.finishTurn("DataStructures");
         System.out.println("Session completed and progress saved.\n");
 
-        System.out.println("--- [SCENARIO 2: Cram Mode with Circular Queue Rotation] ---");
+        System.out.println("--- [SCENARIO 2: Cram Mode, one course, level by level] ---");
         Map<String, Graph> courseGraphs = new HashMap<>();
-        CramStudySession cramSession = controller.createCramSession(student, courseGraphs);
+        CramStudySession cramSession = controller.createCramSession(student, "DataStructures");
 
         for (int i = 1; i <= 3; i++) {
             String activeCourse = cramSession.nextCourse();
-            System.out.println("\n[Cram Turn " + i + "] Current Course in Rotation: " + activeCourse);
-
-            Topic cramTarget = cramSession.getCurrentTargetTopic();
-            System.out.println("   - Target Topic: " + (cramTarget != null ? cramTarget.getName() : "None"));
+            System.out.println("\n[Cram Turn " + i + "] Course: " + activeCourse + "  Level: " + cramSession.getLevel());
 
 
             System.out.println("   - Answering Q3 correctly...");
@@ -105,6 +102,7 @@ public class StudySessionControllerTest {
 
             System.out.println("   - Finishing turn for: " + activeCourse);
             cramSession.finishTurn(activeCourse);
+            System.out.println("   - " + cramSession.getLastSummary());
         }
 
         System.out.println("\n--- [SCENARIO 3: Reviewing Missed Questions] ---");
