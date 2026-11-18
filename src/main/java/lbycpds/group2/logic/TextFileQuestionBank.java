@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,18 @@ public class TextFileQuestionBank implements QuestionSource {
         questions = new ArrayList<>();
         topicLinks = new ArrayList<>();
         readFile(resourcePath);
+    }
+
+    // Reads a question bank from a file on disk (used for the admin-editable copies)
+    public TextFileQuestionBank(Path file) {
+        course = "";
+        questions = new ArrayList<>();
+        topicLinks = new ArrayList<>();
+        try {
+            readStream(Files.newInputStream(file), file.toString());
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not read " + file);
+        }
     }
 
     public String getCourse() {
@@ -42,6 +56,10 @@ public class TextFileQuestionBank implements QuestionSource {
         if (stream == null) {
             throw new IllegalArgumentException("Question file not found: " + resourcePath);
         }
+        readStream(stream, resourcePath);
+    }
+
+    private void readStream(InputStream stream, String name) {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream, StandardCharsets.UTF_8))) {
             String line;
@@ -55,7 +73,7 @@ public class TextFileQuestionBank implements QuestionSource {
                 parseLine(line, lineNumber);
             }
         } catch (IOException e) {
-            throw new IllegalStateException("Could not read " + resourcePath);
+            throw new IllegalStateException("Could not read " + name);
         }
     }
 
