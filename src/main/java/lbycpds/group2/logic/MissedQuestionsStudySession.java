@@ -8,6 +8,7 @@ import lbycpds.group2.model.Student;
 import lbycpds.group2.model.Session;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MissedQuestionsStudySession extends StudySession {
@@ -24,8 +25,14 @@ public class MissedQuestionsStudySession extends StudySession {
                                        QuestionHistoryStore historyStore,
                                        String targetCourse) {
         super(student, topicStore, sessionStore, historyStore);
+        if (student == null) throw new IllegalArgumentException("Missed review requires a student.");
+        if (targetCourse == null || targetCourse.trim().isEmpty()) {
+            throw new IllegalArgumentException("Missed review requires a target course.");
+        }
         this.targetCourse = targetCourse;
-        this.missedQuestionIds = historyStore != null ? historyStore.loadMissed(student.getName(), targetCourse) : List.of();
+        List<Integer> loaded = historyStore != null
+                ? historyStore.loadMissed(student.getName(), targetCourse) : null;
+        this.missedQuestionIds = loaded != null ? new ArrayList<>(loaded) : new ArrayList<>();
         this.turnStartTime = System.currentTimeMillis();
     }
 
@@ -35,7 +42,7 @@ public class MissedQuestionsStudySession extends StudySession {
     }
 
     public List<Integer> getMissedQuestionIds() {
-        return missedQuestionIds;
+        return java.util.Collections.unmodifiableList(missedQuestionIds);
     }
 
     public void recordAnswer(Question question, String studentAnswer) {
@@ -44,6 +51,9 @@ public class MissedQuestionsStudySession extends StudySession {
         boolean isCorrect = question.checkAnswer(studentAnswer);
         int questionId = question.getId();
 
+        if (sessionTotalQuestions == 0) {
+            turnStartTime = System.currentTimeMillis();
+        }
         this.sessionTotalQuestions++;
         if (isCorrect) {
             this.sessionScore++;
