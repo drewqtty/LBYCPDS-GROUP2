@@ -13,6 +13,7 @@ import lbycpds.group2.model.Topic;
 import java.util.ArrayList;
 import java.util.List;
 import lbycpds.group2.StudySessionController;
+import lbycpds.group2.database.LastSession;
 import lbycpds.group2.database.ProgressRestorer;
 import lbycpds.group2.logic.AdaptiveDifficulty;
 import lbycpds.group2.logic.SingleCourseStudySession;
@@ -106,7 +107,6 @@ public class MainMenu {
 
             AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
 
-            // Cram mode needs no confidence ratings: the quiz covers every topic of the course
             if (cram.isSelected()) {
                 StudyRunner.start();
                 return;
@@ -128,18 +128,16 @@ public class MainMenu {
 
         VBox courseCardBox = new VBox(20, courseHeader, courseBox, start);
 
-        // Returning students can pick up where they stopped
-        SingleCourseStudySession resume = findSavedSession();
+        // Returning students can pick up where they stopped, in the mode they were using
+        LastSession resume = findSavedSession();
         if (resume != null) {
-            Topic lastTopic = lastTopicOf(resume);
             Button resumeButton = new Button("CONTINUE LAST SESSION");
             resumeButton.getStyleClass().add("start-button");
             resumeButton.setMaxWidth(Double.MAX_VALUE);
-            Label resumeInfo = new Label(resume.nextCourse()
-                    + (lastTopic != null ? "  -  " + lastTopic.getName() : ""));
+            Label resumeInfo = new Label(describe(resume));
             resumeInfo.getStyleClass().add("mode-desc");
             resumeInfo.setWrapText(true);
-            resumeButton.setOnAction(e -> continueLast(resume.nextCourse(), lastTopic));
+            resumeButton.setOnAction(e -> continueLast(resume));
             courseCardBox.getChildren().addAll(resumeInfo, resumeButton);
         }
         courseCardBox.getStyleClass().add("card");
@@ -189,37 +187,65 @@ public class MainMenu {
         return card;
     }
 
-    // The student's saved session from an earlier run, or null if there is none
-    private SingleCourseStudySession findSavedSession() {
+    // The student's saved session from an earlier run
+    private LastSession findSavedSession() {
         if (!AppState.returning || !Stores.isConnected()) {
             return null;
         }
+        String name = AppState.student.getName();
         try {
+            if (Stores.lastSessionStore() != null) {
+                LastSession last = Stores.lastSessionStore().load(name);
+                if (last != null) {
+                    return last;
+                }
+            }
+            // Older saves only know the course and topic of a regular session
             StudySessionController controller = new StudySessionController(Stores.topicStore(),
                     Stores.sessionStore(), Stores.historyStore(), new AdaptiveDifficulty());
-            return controller.continueLastSession(AppState.student, null);
+            SingleCourseStudySession regular = controller.continueLastSession(AppState.student, null);
+            if (regular == null) {
+                return null;
+            }
+            return new LastSession(regular.nextCourse(), "REGULAR",
+                    Stores.topicStore().loadLastTopic(name, regular.nextCourse()));
         } catch (RuntimeException e) {
             System.out.println("Could not look for a saved session: " + e.getMessage());
             return null;
         }
     }
 
-    // Placeholder topic carrying only the saved topic name, for showing on the button
-    private Topic lastTopicOf(SingleCourseStudySession saved) {
-        String name = Stores.topicStore().loadLastTopic(AppState.student.getName(), saved.nextCourse());
-        return name == null ? null : new Topic(name, saved.nextCourse());
+    // Text under the Continue button: the mode, the course, and the topic or cram level
+    private String describe(LastSession last) {
+        if (last.isCram()) {
+            String level = "";
+            try {
+                if (Stores.cramStore() != null) {
+                    level = "  -  Level " + Stores.cramStore().loadLevel(AppState.student.getName(), last.getCourse());
+                }
+            } catch (RuntimeException e) {
+                level = "";
+            }
+            return "CRAM MODE  -  " + last.getCourse() + level;
+        }
+        return "REGULAR MODE  -  " + last.getCourse()
+                + (last.getTopic() != null ? "  -  " + last.getTopic() : "");
     }
 
-    // Loads the saved progress and goes straight back to the quiz on the topic the student was on
-    private void continueLast(String course, Topic lastTopic) {
-        AppState.mode = "REGULAR";
-        AppState.course = course;
-        AppState.student.addCourse(course);
+    // Loads the saved progress and goes straight back into the mode the student was using
+    private void continueLast(LastSession last) {
+        AppState.mode = last.isCram() ? "CRAM" : "REGULAR";
+        AppState.course = last.getCourse();
+        AppState.student.addCourse(last.getCourse());
         AppState.topics = new ArrayList<>();
-        AppState.topics.addAll(loadTopics(course.equals(circuits.getCourse()) ? circuits : dsa));
+        AppState.topics.addAll(loadTopics(last.getCourse().equals(circuits.getCourse()) ? circuits : dsa));
         AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
+        if (last.isCram()) {
+            StudyRunner.start();
+            return;
+        }
         fillMissingRatings();
-        AppState.resumeTopic = lastTopic != null ? lastTopic.getName() : null;
+        AppState.resumeTopic = last.getTopic();
         StudyRunner.start();
     }
 
