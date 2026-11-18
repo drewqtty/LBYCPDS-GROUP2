@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class StudyFlow {
 
-    public static final int PASS_PERCENT = 70;
+    public static final int PASS_PERCENT = 90;
 
     public static Map<String, Graph> buildGraphs(List<Topic> topics, List<? extends QuestionSource> banks) {
         Map<String, Graph> graphs = new HashMap<>();
