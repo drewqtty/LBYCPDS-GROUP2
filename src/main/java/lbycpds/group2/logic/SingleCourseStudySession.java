@@ -114,7 +114,7 @@ public class SingleCourseStudySession extends StudySession {
                 currentTopic.setBestScore(percent);
             }
 
-            if (progressionGraph != null && currentTopic.getLatestScore() >= 70) {
+            if (progressionGraph != null && currentTopic.getLatestScore() >= StudyFlow.PASS_PERCENT) {
                 progressionGraph.unlockNext(currentTopic.getName());
             }
         }

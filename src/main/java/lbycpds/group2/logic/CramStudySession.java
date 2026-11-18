@@ -135,10 +135,10 @@ public class CramStudySession extends StudySession {
                     currentTopic.setBestScore(percent);
                 }
 
-                //Unlock subsequent topics if score is >= 70
+                //Unlock subsequent topics if the score reaches StudyFlow.PASS_PERCENT
                 if (courseGraphs != null && courseGraphs.containsKey(course)) {
                     Graph graph = courseGraphs.get(course);
-                    if (graph != null && currentTopic.getLatestScore() >= 70) {
+                    if (graph != null && currentTopic.getLatestScore() >= StudyFlow.PASS_PERCENT) {
                         graph.unlockNext(currentTopic.getName());
                     }
                 }

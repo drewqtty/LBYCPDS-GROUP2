@@ -15,7 +15,7 @@ import java.util.Map;
 public class AppState {
     public enum Role { STUDENT, ADMIN }
 
-    public static Role role = Role.STUDENT;   // chosen on the first screen
+    public static Role role = Role.STUDENT;
     public static Student student;
     public static String mode = "REGULAR";   // regular or cram
     public static String course;             // only used in regular mode
@@ -28,4 +28,18 @@ public class AppState {
     public static LocalTopicStore topicStore;
     public static LocalSessionStore sessionStore;
     public static LocalHistoryStore historyStore;
+
+    public static void reset() {
+        role = Role.STUDENT;
+        student = null;
+        mode = "REGULAR";
+        course = null;
+        topics = new ArrayList<>();
+        returning = false;
+        session = null;
+        graphs = new HashMap<>();
+        topicStore = null;
+        sessionStore = null;
+        historyStore = null;
+    }
 }
