@@ -23,9 +23,6 @@ import lbycpds.group2.model.Question;
 import java.util.ArrayList;
 import java.util.List;
 
-// Tutor mode: go through one course's questions with the answer key at hand.
-// The student can try an answer and check it, or show the answer key right away.
-// Nothing here is graded or saved, so it does not change the student's progress.
 public class TutorScreen {
 
     private static final String ALL_TOPICS = "All topics";
@@ -38,7 +35,6 @@ public class TutorScreen {
     private List<Question> questions;
     private int index = 0;
 
-    // per-question UI state
     private ToggleGroup choiceGroup;
     private TextField answerField;
 
@@ -239,7 +235,6 @@ public class TutorScreen {
         }
     }
 
-    // The correct answer as text; for multiple choice it includes the choice's wording
     private String describeAnswer(Question q) {
         if (q instanceof MultipleChoiceQuestion mc && !q.getAnswer().isBlank()) {
             String letter = q.getAnswer().trim().toUpperCase();
@@ -251,7 +246,6 @@ public class TutorScreen {
         return q.getAnswer();
     }
 
-    // For problem solving with keywords: what the student's answer has to mention
     private String keyPoints(Question q) {
         if (q instanceof ProblemSolvingQuestion ps && ps.getKeywords().length > 0) {
             List<String> words = new ArrayList<>();

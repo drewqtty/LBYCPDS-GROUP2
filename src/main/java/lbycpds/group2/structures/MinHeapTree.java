@@ -49,12 +49,12 @@ public class MinHeapTree {
         int left = 2 * i + 1;
         int right = 2 * i + 2;
 
-        //Compare priorities (Min-Heap: smallest confidence value comes to the top)
-        if (left < n && topics[left].getConfidence() < topics[smallest].getConfidence()) {
+        //Compare priorities
+        if (left < n && topics[left].compareTo(topics[smallest]) < 0) {
             smallest = left;
         }
 
-        if (right < n && topics[right].getConfidence() < topics[smallest].getConfidence()) {
+        if (right < n && topics[right].compareTo(topics[smallest]) < 0) {
             smallest = right;
         }
 
