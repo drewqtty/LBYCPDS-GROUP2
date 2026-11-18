@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import lbycpds.group2.logic.QuestionBankFiles;
+import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Topic;
@@ -16,7 +17,6 @@ import lbycpds.group2.database.Stores;
 
 public class MainMenu {
 
-    // The editable copies the admin changes (created from the bundled files on first use)
     TextFileQuestionBank circuits = QuestionBankFiles.open("/questions/circuits.txt");
     TextFileQuestionBank dsa = QuestionBankFiles.open("/questions/dsa.txt");
 
@@ -78,7 +78,6 @@ public class MainMenu {
         start.getStyleClass().add("start-button");
         start.setMaxWidth(Double.MAX_VALUE);
         start.setOnAction(e -> {
-            // Tutor mode skips the confidence screen and does not touch the student's progress
             if (tutor.isSelected()) {
                 TextFileQuestionBank bank = courseBox.getValue().equals(circuits.getCourse()) ? circuits : dsa;
                 SceneManager.show(new TutorScreen(bank.getCourse(), bank.loadQuestions()).build());
@@ -104,6 +103,8 @@ public class MainMenu {
                     AppState.topics.addAll(loadTopics(dsa));
                 }
             }
+
+            AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
 
             // Confidence screen build
             SceneManager.show(new ConfidenceScreen().build());
@@ -153,7 +154,6 @@ public class MainMenu {
 
         card.setOnMouseClicked(e -> radio.setSelected(true));
 
-        // Highlight the selected study mode
         radio.selectedProperty().addListener((obs, was, is) -> {
             if (is) card.getStyleClass().add("selected");
             else card.getStyleClass().remove("selected");
@@ -161,7 +161,7 @@ public class MainMenu {
         return card;
     }
 
-    // Makes a Topic for each unique topic name in the question bank
+    // Makes a Topic for each topic name in the question bank
     private List<Topic> loadTopics(TextFileQuestionBank bank) {
         List<Topic> list = new ArrayList<>();
         List<String> seen = new ArrayList<>();
