@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import lbycpds.group2.database.Stores;
+import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.model.Topic;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class ConfidenceScreen {
                 : "Regular mode  •  " + AppState.course;
         Label context = new Label(modeText + "   |   1 = not confident, 5 = very confident. "
                 + "Topics you rate lowest are quizzed first. "
-                + "A locked topic opens when you score 70% on the topic before it.");
+                + "A locked topic opens when you score " + StudyFlow.PASS_PERCENT + "% on the topic before it.");
         context.getStyleClass().add("card-label");
         context.setWrapText(true);
 
