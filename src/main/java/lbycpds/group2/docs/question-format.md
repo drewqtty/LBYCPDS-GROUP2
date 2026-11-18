@@ -3,6 +3,19 @@
 Question banks are plain text files in `src/main/resources/questions/`.
 Use `circuits.txt` for Fundamentals of Electrical Circuits and `dsa.txt` for Data Structures and Algorithms.
 
+## Editing from the app (Admin)
+
+Choose **Admin** on the first screen, enter a name, and the question editor opens. Pick a course, click a
+question to edit it, or press **+ New question** to add one. New questions get the next free id
+automatically, and are placed with the other questions of the same topic. The editor only changes
+question lines; `COURSE`, `TOPIC`, comments and blank lines are left as they are.
+
+Packaged resource files cannot be written to, so the app works on copies. The first time a bank is
+opened it is copied to `~/.cram/questions/` (set `-Dcram.questions.dir=/some/folder` to use another
+folder). Students and the admin both read these copies. To keep changes in the repo, copy the files from
+that folder back into `src/main/resources/questions/` and commit them. Delete the copy to start over from
+the bundled file.
+
 ## Line types
 
 | Type | Line layout |
