@@ -5,6 +5,7 @@ import lbycpds.group2.model.Topic;
 import lbycpds.group2.structures.Graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import java.util.Map;
 public class StudyFlow {
 
     public static final int PASS_PERCENT = 90;
+
+    // Score needed to clear a cram quiz and move up to the next cram level
+    public static final int CRAM_PASS_PERCENT = 80;
 
     public static Map<String, Graph> buildGraphs(List<Topic> topics, List<? extends QuestionSource> banks) {
         Map<String, Graph> graphs = new HashMap<>();
@@ -71,6 +75,17 @@ public class StudyFlow {
         return picked;
     }
 
+    public static List<Question> cramQuestions(Question[] bank, String course, int level) {
+        List<Question> found = new ArrayList<>();
+        for (int i = 0; i < bank.length; i++) {
+            Question question = bank[i];
+            if (question.getCourse().equals(course) && question.getDifficulty() == level) {
+                found.add(question);
+            }
+        }
+        Collections.shuffle(found);
+        return found;
+    }
 
     public static List<Question> missedQuestions(Question[] bank, String course, List<Integer> missedIds) {
         List<Question> found = new ArrayList<>();

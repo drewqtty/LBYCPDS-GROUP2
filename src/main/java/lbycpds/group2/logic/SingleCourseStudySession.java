@@ -18,6 +18,8 @@ public class SingleCourseStudySession extends StudySession {
     private final DifficultyPolicy difficultyPolicy;
     private final Graph progressionGraph;
 
+    // Topic to study first when the student continues a saved session
+    private String startTopic;
     private int sessionScore = 0;
     private int sessionTotalQuestions = 0;
     private long turnStartTime;
@@ -41,11 +43,24 @@ public class SingleCourseStudySession extends StudySession {
         return this.targetCourse;
     }
 
+    // Makes the next turn start on this topic (used when continuing a saved session)
+    public void setStartTopic(String topicName) {
+        this.startTopic = topicName;
+    }
+
     public Topic getTargetTopic() {
         if (topicStore == null) return null;
 
         List<Topic> topics = topicStore.loadTopics(student.getName(), targetCourse);
         if (topics == null || topics.isEmpty()) return null;
+
+        if (startTopic != null) {
+            for (Topic topic : topics) {
+                if (topic.isUnlocked() && topic.getName().equals(startTopic)) {
+                    return topic;
+                }
+            }
+        }
 
         List<Topic> unlockedTopics = topics.stream()
                 .filter(Topic::isUnlocked)
@@ -123,6 +138,7 @@ public class SingleCourseStudySession extends StudySession {
 
         this.sessionScore = 0;
         this.sessionTotalQuestions = 0;
+        this.startTopic = null;   // later turns go back to the weakest topic
         this.turnStartTime = System.currentTimeMillis();
     }
 

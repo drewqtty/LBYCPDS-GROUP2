@@ -42,6 +42,14 @@ public class WelcomeScreen {
             }
 
             if (AppState.role == AppState.Role.ADMIN) {
+                AppState.adminName = name;
+                if (Stores.adminStore() != null) {
+                    try {
+                        Stores.adminStore().saveAdmin(name);
+                    } catch (RuntimeException ex) {
+                        System.out.println("Could not save the admin name: " + ex.getMessage());
+                    }
+                }
                 SceneManager.show(new AdminScreen().build());
                 return;
             }
@@ -53,10 +61,8 @@ public class WelcomeScreen {
             }
 
             if (existing != null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                        "A profile named " + name + " already exists. Is this you?",
-                        ButtonType.YES, ButtonType.NO);
-                if (alert.showAndWait().orElse(ButtonType.NO) == ButtonType.NO) {
+                if (Dialogs.ask("A profile named " + name + " already exists. Is this you?",
+                        "Yes", "No") != 0) {
                     error.setText("Please enter a different name.");
                     return;
                 }

@@ -235,12 +235,10 @@ public class QuizScreen {
     }
 
     private void confirmQuit() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "Quit this quiz? Your progress in this session will be lost.",
-                ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText(null);
-        alert.showAndWait()
-                .filter(b -> b == ButtonType.YES)
-                .ifPresent(b -> SceneManager.show(new MainMenu().build()));
+        int answer = Dialogs.ask("Quit this quiz? Your progress in this session will be lost.",
+                "Yes", "No");
+        if (answer == 0) {
+            SceneManager.show(new MainMenu().build());
+        }
     }
 }
