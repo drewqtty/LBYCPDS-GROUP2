@@ -8,6 +8,7 @@ public class Stores {
     private static StudentStore studentStore;
     private static AdminStore adminStore;
     private static CramStore cramStore;
+    private static LastSessionStore lastSessionStore;
     private static TopicStore topicStore;
     private static SessionStore sessionStore;
     private static QuestionHistoryStore historyStore;
@@ -21,6 +22,12 @@ public class Stores {
             return false;
         }
         studentStore = new StudentDao(connection);
+        try {
+            lastSessionStore = new LastSessionDao(connection);
+        } catch (IllegalStateException e) {
+            lastSessionStore = null;
+            System.out.println("The last session will not be saved: " + e.getMessage());
+        }
         try {
             cramStore = new CramDao(connection);
         } catch (IllegalStateException e) {
@@ -45,6 +52,10 @@ public class Stores {
 
     public static StudentStore studentStore() {
         return studentStore;
+    }
+
+    public static LastSessionStore lastSessionStore() {
+        return lastSessionStore;
     }
 
     public static CramStore cramStore() {
