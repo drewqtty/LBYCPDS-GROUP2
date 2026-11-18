@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import lbycpds.group2.logic.QuestionBankFiles;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Topic;
@@ -15,8 +16,9 @@ import lbycpds.group2.database.Stores;
 
 public class MainMenu {
 
-    TextFileQuestionBank circuits = new TextFileQuestionBank("/questions/circuits.txt");
-    TextFileQuestionBank dsa = new TextFileQuestionBank("/questions/dsa.txt");
+    // The editable copies the admin changes (created from the bundled files on first use)
+    TextFileQuestionBank circuits = QuestionBankFiles.open("/questions/circuits.txt");
+    TextFileQuestionBank dsa = QuestionBankFiles.open("/questions/dsa.txt");
 
     public Parent build() {
         // Top bar
@@ -44,17 +46,21 @@ public class MainMenu {
         ToggleGroup group = new ToggleGroup();
         regular.setToggleGroup(group);
         cram.setToggleGroup(group);
+        RadioButton tutor = new RadioButton();
+        tutor.setToggleGroup(group);
 
         HBox regularCard = modeCard("REGULAR MODE (ONE COURSE)",
                 "Prioritize learning on a specific subject. Please select your course on the right.", regular);
         HBox cramCard = modeCard("CRAM MODE (ALL COURSES)",
                 "A rapid-fire review across all courses. Godspeed!", cram);
+        HBox tutorCard = modeCard("TUTOR MODE (ONE COURSE)",
+                "Learn with the answer keys. Try a question, check it, or reveal the answer. Nothing is graded.", tutor);
         regular.setSelected(true);
 
         Label modeHeader = new Label("CHOOSE YOUR STUDY MODE");
         modeHeader.getStyleClass().add("card-label");
 
-        VBox modeCardBox = new VBox(14, modeHeader, regularCard, cramCard);
+        VBox modeCardBox = new VBox(14, modeHeader, regularCard, cramCard, tutorCard);
         modeCardBox.getStyleClass().add("card");
 
         Label modeTitle = new Label("Study Mode");
@@ -72,6 +78,13 @@ public class MainMenu {
         start.getStyleClass().add("start-button");
         start.setMaxWidth(Double.MAX_VALUE);
         start.setOnAction(e -> {
+            // Tutor mode skips the confidence screen and does not touch the student's progress
+            if (tutor.isSelected()) {
+                TextFileQuestionBank bank = courseBox.getValue().equals(circuits.getCourse()) ? circuits : dsa;
+                SceneManager.show(new TutorScreen(bank.getCourse(), bank.loadQuestions()).build());
+                return;
+            }
+
             AppState.topics = new ArrayList<>();
 
             if (cram.isSelected()) {
