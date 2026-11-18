@@ -25,9 +25,10 @@ public class Graph implements ProgressionGraph {
         Topic to = nameToTopicMap.get(toTopic);
 
         if (from != null && to != null) {
-            // from -> to direction
+
             topics.get(from).add(to);
-            prerequisites.get(from).add(to);
+
+            prerequisites.get(to).add(from);
         }
     }
 
@@ -40,8 +41,8 @@ public class Graph implements ProgressionGraph {
             return  unlocked;
         }
 
-        //placeholder capacity
-        CircularQueue<Topic> q = new CircularQueue<>(50);
+
+        CircularQueue<Topic> q = new CircularQueue<>(Math.max(1, topics.size()));
         Set<Topic> visited = new HashSet<>();
 
         q.offer(startTopic);
@@ -70,12 +71,12 @@ public class Graph implements ProgressionGraph {
     private boolean areAllPrerequisitesCompleted(Topic topic) {
         LinkedList<Topic> prereqs = prerequisites.get(topic);
 
-        //if a topic has no prerequisites, it's ready to unlock
+
         if (prereqs == null || prereqs.isEmpty()) {
             return true;
         }
 
-        //check if every prerequisite meets your completion criteria
+
         for (Topic prereq : prereqs) {
             if (!isTopicCompleted(prereq)) {
                 return false;
@@ -88,8 +89,20 @@ public class Graph implements ProgressionGraph {
 
 
     private boolean isTopicCompleted(Topic topic) {
-        //placeholder score, will come back once the scoring algorithm is completed
+
         return topic.getLatestScore() >= 70;
+    }
+
+
+    public List<Topic> unlockRoots() {
+        List<Topic> roots = new LinkedList<>();
+        for (Topic topic : prerequisites.keySet()) {
+            if (prerequisites.get(topic).isEmpty()) {
+                topic.setUnlocked(true);
+                roots.add(topic);
+            }
+        }
+        return roots;
     }
 
     @Override
@@ -103,7 +116,7 @@ public class Graph implements ProgressionGraph {
     }
 
 
-    //test
+
     public static void main(String[] args) {
         ProgressionGraph graph = new Graph();
 
@@ -142,7 +155,7 @@ public class Graph implements ProgressionGraph {
         }
         System.out.println();
 
-        //display graph edges (prerequisites)
+        //display graph edges
         System.out.println("Graph Edges (Prerequisites):");
         System.out.println(" - Superposition -> Delta to Wye");
         System.out.println(" - Superposition -> Mesh Analysis");
@@ -150,7 +163,7 @@ public class Graph implements ProgressionGraph {
         System.out.println();
 
 
-        //test unlocking next topics starting from "Superposition"
+
         System.out.println("Unlocking from Superposition");
         List<Topic> unlockedTopics = graph.unlockNext("Superposition");
 
@@ -159,7 +172,7 @@ public class Graph implements ProgressionGraph {
             System.out.println(" - Unlocked: " + t.getName() + " (Score: " + t.getLatestScore() + ")");
         }
 
-        // Find and display topics that are still locked
+
         System.out.println("\nLocked topics:");
         List<Topic> allTopics = List.of(sp, dw, mesh, ac);
         for (Topic t : allTopics) {

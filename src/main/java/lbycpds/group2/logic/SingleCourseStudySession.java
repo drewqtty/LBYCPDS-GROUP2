@@ -100,6 +100,7 @@ public class SingleCourseStudySession extends StudySession {
 
         long elapsedTimeMs = System.currentTimeMillis() - turnStartTime;
         int timeSpentSeconds = (int) (elapsedTimeMs / 1000);
+        int percent = Math.round(100f * sessionScore / sessionTotalQuestions);
 
         //Fetch the current weak topic using the MinHeapTree logic
         Topic currentTopic = getTargetTopic();
@@ -108,9 +109,9 @@ public class SingleCourseStudySession extends StudySession {
             int nextLevel = difficultyPolicy.nextLevel(currentLevel, sessionScore, sessionTotalQuestions);
 
             currentTopic.setLevel(nextLevel);
-            currentTopic.setLatestScore(sessionScore);
-            if (sessionScore > currentTopic.getBestScore()) {
-                currentTopic.setBestScore(sessionScore);
+            currentTopic.setLatestScore(percent);
+            if (percent > currentTopic.getBestScore()) {
+                currentTopic.setBestScore(percent);
             }
 
             if (progressionGraph != null && currentTopic.getLatestScore() >= 70) {
@@ -118,14 +119,14 @@ public class SingleCourseStudySession extends StudySession {
             }
         }
 
-        saveProgress(timeSpentSeconds);
+        saveProgress(timeSpentSeconds, percent);
 
         this.sessionScore = 0;
         this.sessionTotalQuestions = 0;
         this.turnStartTime = System.currentTimeMillis();
     }
 
-    private void saveProgress(int timeSpentSeconds) {
+    private void saveProgress(int timeSpentSeconds, int percent) {
         if (topicStore != null) {
             Topic currentTopic = getTargetTopic();
             if (currentTopic != null) {
@@ -136,7 +137,7 @@ public class SingleCourseStudySession extends StudySession {
             var sessionRecord = new lbycpds.group2.model.Session(
                     targetCourse,
                     LocalDate.now(),
-                    sessionScore,
+                    percent,
                     timeSpentSeconds
             );
             sessionStore.saveSession(student.getName(), sessionRecord);

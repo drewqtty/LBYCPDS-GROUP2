@@ -54,6 +54,11 @@ public class CramStudySession extends StudySession {
     }
 
 
+    @Override
+    public Topic getTargetTopic() {
+        return getCurrentTargetTopic();
+    }
+
     public Topic getCurrentTargetTopic() {
         if (topicStore == null) return null;
         String course = nextCourse();
@@ -118,15 +123,16 @@ public class CramStudySession extends StudySession {
 
         long elapsedTimeMs = System.currentTimeMillis() - turnStartTime;
         int timeSpentSeconds = (int) (elapsedTimeMs / 1000);
+        int percent = Math.round(100f * sessionScore / sessionTotalQuestions);
 
         if (topicStore != null) {
             Topic currentTopic = getCurrentTargetTopic();
             if (currentTopic != null && currentTopic.getCourse().equalsIgnoreCase(course)) {
                 int nextLevel = difficultyPolicy.nextLevel(currentTopic.getLevel(), sessionScore, sessionTotalQuestions);
                 currentTopic.setLevel(nextLevel);
-                currentTopic.setLatestScore(sessionScore);
-                if (sessionScore > currentTopic.getBestScore()) {
-                    currentTopic.setBestScore(sessionScore);
+                currentTopic.setLatestScore(percent);
+                if (percent > currentTopic.getBestScore()) {
+                    currentTopic.setBestScore(percent);
                 }
 
                 //Unlock subsequent topics if score is >= 70
@@ -142,7 +148,7 @@ public class CramStudySession extends StudySession {
         }
 
         if (sessionStore != null) {
-            Session sessionRecord = new Session(course, LocalDate.now(), sessionScore, timeSpentSeconds);
+            Session sessionRecord = new Session(course, LocalDate.now(), percent, timeSpentSeconds);
             sessionStore.saveSession(student.getName(), sessionRecord);
         }
 
