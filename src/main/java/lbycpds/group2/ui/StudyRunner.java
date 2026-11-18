@@ -32,6 +32,8 @@ public class StudyRunner {
 
     public static void start() {
         String student = AppState.student.getName();
+        // Ratings and progress are saved from this point on, so the student now counts as
+        // returning. Going back to the main menu will then restore the saved level and ratings.
         if (Stores.isConnected()) {
             AppState.returning = true;
         }
@@ -88,6 +90,7 @@ public class StudyRunner {
         } catch (RuntimeException e) {
             System.out.println("Could not save the last topic: " + e.getMessage());
         }
+        rememberSession(course, "REGULAR", topic.getName());
 
         List<Integer> recent = AppState.historyStore.loadRecent(AppState.student.getName(), course);
         List<Question> picked = StudyFlow.pickQuestions(bank.loadQuestions(), topic, recent, QUESTIONS_PER_ROUND);
@@ -102,6 +105,18 @@ public class StudyRunner {
             saveAllTopics();
             showReport();
         }).build());
+    }
+
+    // Saves the course and mode (and topic in regular mode) for the Continue button
+    private static void rememberSession(String course, String mode, String topic) {
+        if (!Stores.isConnected() || Stores.lastSessionStore() == null) {
+            return;
+        }
+        try {
+            Stores.lastSessionStore().save(AppState.student.getName(), course, mode, topic);
+        } catch (RuntimeException e) {
+            System.out.println("Could not save the last session: " + e.getMessage());
+        }
     }
 
     // Cram: one jumbled quiz of every topic in the course at the student's cram level
@@ -120,6 +135,8 @@ public class StudyRunner {
             SceneManager.show(new MainMenu().build());
             return;
         }
+
+        rememberSession(course, "CRAM", null);
 
         SceneManager.show(new QuizScreen(quiz, cram::recordAnswer, result -> {
             cram.finishTurn(course);
