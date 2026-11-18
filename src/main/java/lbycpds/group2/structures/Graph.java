@@ -1,5 +1,6 @@
 package lbycpds.group2.structures;
 
+import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.model.Topic;
 
 import java.util.*;
@@ -90,7 +91,7 @@ public class Graph implements ProgressionGraph {
 
     private boolean isTopicCompleted(Topic topic) {
 
-        return topic.getLatestScore() >= 70;
+        return topic.getLatestScore() >= StudyFlow.PASS_PERCENT;
     }
 
 
@@ -121,12 +122,12 @@ public class Graph implements ProgressionGraph {
         ProgressionGraph graph = new Graph();
 
 
-        Topic sp = new Topic("Superposition", "FUNDCK1"); // Completed (>= 70) 85
-        Topic dw = new Topic("Delta to Wye", "FUNDCK1"); // Not completed (< 70) 60
+        Topic sp = new Topic("Superposition", "FUNDCK1"); // Completed (at or above the pass mark) 95
+        Topic dw = new Topic("Delta to Wye", "FUNDCK1"); // Not completed (below the pass mark) 60
         Topic mesh = new Topic("Mesh Analysis", "FUNDCK1"); // Locked/Unrated 0
         Topic ac = new Topic("AC sources", "FUNDCK1"); // Locked/Unrated 0
 
-        sp.setLatestScore(85);
+        sp.setLatestScore(95);
         dw.setLatestScore(60);
         mesh.setLatestScore(0);
         ac.setLatestScore(0);
@@ -176,8 +177,8 @@ public class Graph implements ProgressionGraph {
         System.out.println("\nLocked topics:");
         List<Topic> allTopics = List.of(sp, dw, mesh, ac);
         for (Topic t : allTopics) {
-            if (!unlockedTopics.contains(t) && t.getLatestScore() < 70 && !t.getName().equals("Superposition")) {
-                System.out.println(" - Locked: " + t.getName() + " (Prerequisite not met or score below 70)");
+            if (!unlockedTopics.contains(t) && t.getLatestScore() < StudyFlow.PASS_PERCENT && !t.getName().equals("Superposition")) {
+                System.out.println(" - Locked: " + t.getName() + " (Prerequisite not met or score below " + StudyFlow.PASS_PERCENT + ")");
             }
         }
 
