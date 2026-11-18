@@ -12,7 +12,10 @@ import lbycpds.group2.model.Question;
 import lbycpds.group2.model.Topic;
 import java.util.ArrayList;
 import java.util.List;
+import lbycpds.group2.StudySessionController;
 import lbycpds.group2.database.ProgressRestorer;
+import lbycpds.group2.logic.AdaptiveDifficulty;
+import lbycpds.group2.logic.SingleCourseStudySession;
 import lbycpds.group2.database.Stores;
 
 public class MainMenu {
@@ -58,8 +61,8 @@ public class MainMenu {
 
         HBox regularCard = modeCard("REGULAR MODE (ONE COURSE)",
                 "Prioritize learning on a specific subject. Please select your course on the right.", regular);
-        HBox cramCard = modeCard("CRAM MODE (ALL COURSES)",
-                "A rapid-fire review across all courses. Godspeed!", cram);
+        HBox cramCard = modeCard("CRAM MODE (ONE COURSE)",
+                "A jumbled quiz of every topic in the course, one level at a time. Pass it to unlock the next level.", cram);
         HBox tutorCard = modeCard("TUTOR MODE (ONE COURSE)",
                 "Learn with the answer keys. Try a question, check it, or reveal the answer. Nothing is graded.", tutor);
         regular.setSelected(true);
@@ -79,7 +82,6 @@ public class MainMenu {
         courseBox.getItems().addAll(circuits.getCourse(), dsa.getCourse());
         courseBox.setValue(circuits.getCourse());
         courseBox.setMaxWidth(Double.MAX_VALUE);
-        courseBox.disableProperty().bind(cram.selectedProperty());
 
         Button start = new Button("START SESSION  ");
         start.getStyleClass().add("start-button");
@@ -93,25 +95,22 @@ public class MainMenu {
 
             AppState.topics = new ArrayList<>();
 
-            if (cram.isSelected()) {
-                AppState.mode = "CRAM";
-                AppState.course = null;
-                AppState.student.addCourse(circuits.getCourse());
-                AppState.student.addCourse(dsa.getCourse());
+            AppState.mode = cram.isSelected() ? "CRAM" : "REGULAR";
+            AppState.course = courseBox.getValue();
+            AppState.student.addCourse(AppState.course);
+            if (AppState.course.equals(circuits.getCourse())) {
                 AppState.topics.addAll(loadTopics(circuits));
-                AppState.topics.addAll(loadTopics(dsa));
             } else {
-                AppState.mode = "REGULAR";
-                AppState.course = courseBox.getValue();
-                AppState.student.addCourse(AppState.course);
-                if (AppState.course.equals(circuits.getCourse())) {
-                    AppState.topics.addAll(loadTopics(circuits));
-                } else {
-                    AppState.topics.addAll(loadTopics(dsa));
-                }
+                AppState.topics.addAll(loadTopics(dsa));
             }
 
             AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
+
+            // Cram mode needs no confidence ratings: the quiz covers every topic of the course
+            if (cram.isSelected()) {
+                StudyRunner.start();
+                return;
+            }
 
             // Returning students can keep their saved confidence ratings
             if (hasSavedRatings() && keepSavedRatings()) {
@@ -128,6 +127,21 @@ public class MainMenu {
         courseHeader.getStyleClass().add("card-label");
 
         VBox courseCardBox = new VBox(20, courseHeader, courseBox, start);
+
+        // Returning students can pick up where they stopped
+        SingleCourseStudySession resume = findSavedSession();
+        if (resume != null) {
+            Topic lastTopic = lastTopicOf(resume);
+            Button resumeButton = new Button("CONTINUE LAST SESSION");
+            resumeButton.getStyleClass().add("start-button");
+            resumeButton.setMaxWidth(Double.MAX_VALUE);
+            Label resumeInfo = new Label(resume.nextCourse()
+                    + (lastTopic != null ? "  -  " + lastTopic.getName() : ""));
+            resumeInfo.getStyleClass().add("mode-desc");
+            resumeInfo.setWrapText(true);
+            resumeButton.setOnAction(e -> continueLast(resume.nextCourse(), lastTopic));
+            courseCardBox.getChildren().addAll(resumeInfo, resumeButton);
+        }
         courseCardBox.getStyleClass().add("card");
 
         Label courseTitle = new Label("Course & Action");
@@ -175,6 +189,40 @@ public class MainMenu {
         return card;
     }
 
+    // The student's saved session from an earlier run, or null if there is none
+    private SingleCourseStudySession findSavedSession() {
+        if (!AppState.returning || !Stores.isConnected()) {
+            return null;
+        }
+        try {
+            StudySessionController controller = new StudySessionController(Stores.topicStore(),
+                    Stores.sessionStore(), Stores.historyStore(), new AdaptiveDifficulty());
+            return controller.continueLastSession(AppState.student, null);
+        } catch (RuntimeException e) {
+            System.out.println("Could not look for a saved session: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Placeholder topic carrying only the saved topic name, for showing on the button
+    private Topic lastTopicOf(SingleCourseStudySession saved) {
+        String name = Stores.topicStore().loadLastTopic(AppState.student.getName(), saved.nextCourse());
+        return name == null ? null : new Topic(name, saved.nextCourse());
+    }
+
+    // Loads the saved progress and goes straight back to the quiz on the topic the student was on
+    private void continueLast(String course, Topic lastTopic) {
+        AppState.mode = "REGULAR";
+        AppState.course = course;
+        AppState.student.addCourse(course);
+        AppState.topics = new ArrayList<>();
+        AppState.topics.addAll(loadTopics(course.equals(circuits.getCourse()) ? circuits : dsa));
+        AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
+        fillMissingRatings();
+        AppState.resumeTopic = lastTopic != null ? lastTopic.getName() : null;
+        StudyRunner.start();
+    }
+
     private boolean hasSavedRatings() {
         if (!AppState.returning) {
             return false;
@@ -189,12 +237,8 @@ public class MainMenu {
 
     // Asks the student whether to keep the saved ratings or rate the topics again
     private boolean keepSavedRatings() {
-        ButtonType keep = new ButtonType("Keep saved ratings", ButtonBar.ButtonData.YES);
-        ButtonType change = new ButtonType("Change ratings", ButtonBar.ButtonData.NO);
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "You already rated your topics before. Keep those confidence ratings?", keep, change);
-        alert.setHeaderText(null);
-        return alert.showAndWait().orElse(change) == keep;
+        return Dialogs.ask("You already rated your topics before. Keep those confidence ratings?",
+                "Keep saved ratings", "Change ratings") == 0;
     }
 
     private void fillMissingRatings() {
