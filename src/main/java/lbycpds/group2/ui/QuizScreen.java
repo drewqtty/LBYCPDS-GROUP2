@@ -22,6 +22,7 @@ import lbycpds.group2.model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class QuizScreen {
@@ -46,19 +47,24 @@ public class QuizScreen {
 
     private final List<Question> questions;
     private final Consumer<Result> onFinish;
+    private final BiConsumer<Question, String> onAnswer;   // may be null
 
     private int index = 0;
     private int correct = 0;
     private final List<Question> missed = new ArrayList<>();
     private final long startMillis = System.currentTimeMillis();
 
-    // per-question UI state
     private ToggleGroup choiceGroup;
     private TextField answerField;
     private boolean submitted;
 
     public QuizScreen(List<Question> questions, Consumer<Result> onFinish) {
+        this(questions, null, onFinish);
+    }
+
+    public QuizScreen(List<Question> questions, BiConsumer<Question, String> onAnswer, Consumer<Result> onFinish) {
         this.questions = questions;
+        this.onAnswer = onAnswer;
         this.onFinish = onFinish;
     }
 
@@ -129,6 +135,9 @@ public class QuizScreen {
                     return;
                 }
                 submitted = true;
+                if (onAnswer != null) {
+                    onAnswer.accept(q, answer);
+                }
                 answerArea.getChildren().forEach(n -> n.setDisable(true));
 
                 if (q.checkAnswer(answer)) {
@@ -148,7 +157,6 @@ public class QuizScreen {
             }
         });
 
-        // Enter in the text box = Submit
         if (answerField != null) {
             answerField.setOnAction(e -> action.fire());
         }

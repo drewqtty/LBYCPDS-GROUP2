@@ -31,8 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-// Admin screen: browse, add, and edit the questions of both courses.
-// Pick a course, click a question in the table to edit it, or press "+ New question" to add one.
+
 public class AdminScreen {
 
     private static final String[] BANK_RESOURCES = {"/questions/circuits.txt", "/questions/dsa.txt"};
@@ -44,8 +43,8 @@ public class AdminScreen {
     private final List<Path> files = new ArrayList<>();
 
     private QuestionBankEditor editor;   // for the selected course
-    private Question editing;            // null while adding a new question
-    private boolean refreshing;          // true while the code (not the admin) changes the table
+    private Question editing;
+    private boolean refreshing;
 
     // Left side
     private final ObservableList<Question> rows = FXCollections.observableArrayList();
@@ -53,7 +52,7 @@ public class AdminScreen {
     private final ComboBox<String> courseBox = new ComboBox<>();
     private final ComboBox<String> topicFilter = new ComboBox<>();
 
-    // Right side (the form)
+    // Right side
     private final Label formTitle = new Label();
     private final ComboBox<String> typeBox = new ComboBox<>();
     private final ComboBox<String> topicBox = new ComboBox<>();
@@ -95,7 +94,7 @@ public class AdminScreen {
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.getStyleClass().add("topbar");
 
-        // Left: course, topic filter, table
+        // Left
         Label listHeader = new Label("QUESTION BANK");
         listHeader.getStyleClass().add("card-label");
 
@@ -116,7 +115,7 @@ public class AdminScreen {
         leftCard.getStyleClass().add("card");
         VBox.setVgrow(table, Priority.ALWAYS);
 
-        // Right: the form
+        // Right
         ScrollPane rightScroll = new ScrollPane(buildForm());
         rightScroll.setFitToWidth(true);
 
@@ -132,7 +131,7 @@ public class AdminScreen {
         root.setCenter(columns);
         root.getStyleClass().add("green");
 
-        // Wiring
+
         courseBox.setOnAction(e -> {
             if (!refreshing) {
                 openCourse();
@@ -153,7 +152,7 @@ public class AdminScreen {
         return root;
     }
 
-    // ----- Table -----
+    // Table
 
     private void buildTable() {
         TableColumn<Question, String> idCol = column("ID", q -> String.valueOf(q.getId()), 50);
@@ -166,7 +165,7 @@ public class AdminScreen {
         table.getColumns().add(levelCol);
         table.getColumns().add(typeCol);
         table.getColumns().add(textCol);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table.setPlaceholder(new Label("No questions to show."));
     }
 
@@ -177,7 +176,7 @@ public class AdminScreen {
         return col;
     }
 
-    // A different course was chosen: reload its topics and questions and start a blank form
+    // A different course was chosen
     private void openCourse() {
         int index = courseBox.getSelectionModel().getSelectedIndex();
         if (index < 0) {
@@ -246,7 +245,7 @@ public class AdminScreen {
         refreshing = false;
     }
 
-    // ----- Form -----
+    // Form
 
     private Node buildForm() {
         formTitle.getStyleClass().add("card-label");
@@ -337,7 +336,7 @@ public class AdminScreen {
         keywordsField.clear();
     }
 
-    // Blank form, ready to add a question
+    // Blank form
     private void newQuestion() {
         editing = null;
         refreshing = true;
@@ -357,7 +356,7 @@ public class AdminScreen {
         message.setText("");
     }
 
-    // Puts an existing question into the form for editing
+
     private void loadIntoForm(Question q) {
         enterEditMode(q);
         QuestionBankEditor.Draft d = QuestionBankEditor.toDraft(q);
@@ -415,8 +414,7 @@ public class AdminScreen {
         return d;
     }
 
-    // ----- Saving -----
-
+    // Saving
     private void save() {
         try {
             QuestionBankEditor.Draft d = readForm();
@@ -437,7 +435,7 @@ public class AdminScreen {
                 done = "Saved question #" + id + ".";
             }
 
-            // Make sure the saved question is visible in the table
+            // Ensures the saved question is visible in the table
             String filter = topicFilter.getValue();
             if (filter != null && !filter.equals(ALL_TOPICS) && !filter.equals(d.topic.trim())) {
                 refreshing = true;

@@ -20,11 +20,6 @@ import lbycpds.group2.model.Topic;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Progress report. Pass the data in so it works with fake data now and the real
- * stores/controller later:
- *   new ReportScreen(AppState.topics, sessionsFromStore).build()
- */
 public class ReportScreen {
 
     private final List<Topic> topics;
@@ -37,7 +32,7 @@ public class ReportScreen {
     }
 
     public Parent build() {
-        // ----- Top bar (same as other screens) -----
+        // Top bar
         Label logo = new Label("Cram");
         logo.getStyleClass().add("app-name");
         Label user = new Label(AppState.student != null ? AppState.student.getName() : "");
@@ -51,7 +46,7 @@ public class ReportScreen {
         Label title = new Label("Your Progress Report");
         title.getStyleClass().add("section-title");
 
-        // ----- Summary cards -----
+        // Summary cards
         String weakest = topics.isEmpty() ? "-" : topics.get(0).getName();
         HBox stats = new HBox(14,
                 statCard("SESSIONS", String.valueOf(sessions.size())),
@@ -60,7 +55,6 @@ public class ReportScreen {
                 statCard("FOCUS NEXT ON", weakest));
         for (var n : stats.getChildren()) HBox.setHgrow(n, Priority.ALWAYS);
 
-        // ----- Topic rows, weakest first -----
         Label header = new Label("TOPICS  (WEAKEST FIRST)");
         header.getStyleClass().add("card-label");
 
@@ -81,13 +75,16 @@ public class ReportScreen {
         menu.setOnAction(e -> SceneManager.show(new MainMenu().build()));
 
         Button review = new Button("Review Missed Questions");
-        review.setOnAction(e -> {
-            // TODO: SceneManager.show(new ReviewSheetScreen(missedQuestions).build());
-        });
+        review.setOnAction(e -> StudyRunner.reviewMissed());
+
+        Button nextRound = new Button("Next Round");
+        nextRound.getStyleClass().add("start-button");
+        nextRound.setDisable(AppState.session == null);
+        nextRound.setOnAction(e -> StudyRunner.nextRound());
 
         Region bs = new Region();
         HBox.setHgrow(bs, Priority.ALWAYS);
-        HBox buttons = new HBox(15, menu, bs, review);
+        HBox buttons = new HBox(15, menu, bs, review, nextRound);
         buttons.setAlignment(Pos.CENTER);
 
         VBox content = new VBox(12, title, stats, card, buttons);
