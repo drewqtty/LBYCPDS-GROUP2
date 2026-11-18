@@ -83,7 +83,8 @@ public class AdminScreen {
         // Top bar
         Label logo = new Label("Cram");
         logo.getStyleClass().add("app-name");
-        Label role = new Label("Admin  |  Question Editor");
+        String adminName = AppState.adminName != null ? AppState.adminName : "";
+        Label role = new Label("Admin  |  " + adminName + "  |  Question Editor");
         role.getStyleClass().add("user-name");
         Button logout = new Button("Log out");
         logout.getStyleClass().add("small-button");
