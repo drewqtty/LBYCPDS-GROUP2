@@ -41,6 +41,12 @@ public class WelcomeScreen {
                 return;
             }
 
+            // Admins go to the question editor, not the study menu
+            if (AppState.role == AppState.Role.ADMIN) {
+                SceneManager.show(new AdminScreen().build());
+                return;
+            }
+
             // Look for saved data (skipped until the database is ready)
             Student existing = null;
             if (studentStore != null) {
