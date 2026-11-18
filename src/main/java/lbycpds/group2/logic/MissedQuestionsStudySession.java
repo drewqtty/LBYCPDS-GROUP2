@@ -71,10 +71,11 @@ public class MissedQuestionsStudySession extends StudySession {
 
         long elapsedTimeMs = System.currentTimeMillis() - turnStartTime;
         int timeSpentSeconds = (int) (elapsedTimeMs / 1000);
+        int percent = Math.round(100f * sessionScore / sessionTotalQuestions);
 
         //Save session history record
         if (sessionStore != null) {
-            Session sessionRecord = new Session(targetCourse, LocalDate.now(), sessionScore, timeSpentSeconds);
+            Session sessionRecord = new Session(targetCourse, LocalDate.now(), percent, timeSpentSeconds);
             sessionStore.saveSession(student.getName(), sessionRecord);
         }
 
