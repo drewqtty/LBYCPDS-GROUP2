@@ -44,6 +44,10 @@ public class StudySessionController {
                                       CircularQueue<String> courseQueue,
                                       Map<String, Graph> courseGraphs) {
 
+        if (mode == null) {
+            throw new IllegalArgumentException("Study mode is required.");
+        }
+
         switch (mode) {
             case NORMAL:
                 if (targetCourse == null || targetCourse.trim().isEmpty()) {
@@ -75,9 +79,10 @@ public class StudySessionController {
     }
 
     public CramStudySession createCramSession(Student student, String course) {
-        return new CramStudySession(
-                student, topicStore, sessionStore, historyStore, cramStore, course
-        );
+        if (cramStore == null) {
+            throw new IllegalStateException("Call setCramStore() before starting cram mode.");
+        }
+        return new CramStudySession(student, topicStore, sessionStore, historyStore, cramStore, course);
     }
 
     /**
