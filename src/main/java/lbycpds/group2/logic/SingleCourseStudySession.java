@@ -10,7 +10,10 @@ import lbycpds.group2.structures.Graph;
 import lbycpds.group2.structures.MinHeapTree;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SingleCourseStudySession extends StudySession {
@@ -23,6 +26,9 @@ public class SingleCourseStudySession extends StudySession {
     private int sessionScore = 0;
     private int sessionTotalQuestions = 0;
     private long turnStartTime;
+
+    private Topic activeTopic;
+    private String lastSummary = "";
 
     public SingleCourseStudySession(Student student,
                                     TopicStore topicStore,
@@ -48,7 +54,18 @@ public class SingleCourseStudySession extends StudySession {
         this.startTopic = topicName;
     }
 
+    // Tells the student how the last turn went and what it unlocked (or why nothing did)
+    public String getLastSummary() {
+        return lastSummary;
+    }
+
+    @Override
     public Topic getTargetTopic() {
+        activeTopic = pickTopic();
+        return activeTopic;
+    }
+
+    private Topic pickTopic() {
         if (topicStore == null) return null;
 
         List<Topic> topics = topicStore.loadTopics(student.getName(), targetCourse);
@@ -67,7 +84,7 @@ public class SingleCourseStudySession extends StudySession {
                 .collect(Collectors.toList());
 
         if (unlockedTopics.isEmpty()) {
-            return topics.get(0);
+            return null;
         }
 
         Topic[] topicArray = unlockedTopics.toArray(new Topic[0]);
@@ -87,6 +104,9 @@ public class SingleCourseStudySession extends StudySession {
         boolean isCorrect = question.checkAnswer(studentAnswer);
         int questionId = question.getId();
 
+        if (sessionTotalQuestions == 0) {
+            turnStartTime = System.currentTimeMillis();
+        }
         this.sessionTotalQuestions++;
         if (isCorrect) {
             this.sessionScore++;
@@ -118,10 +138,19 @@ public class SingleCourseStudySession extends StudySession {
         int percent = Math.round(100f * sessionScore / sessionTotalQuestions);
 
         //Fetch the current weak topic using the MinHeapTree logic
-        Topic currentTopic = getTargetTopic();
+        Topic currentTopic = activeTopic != null ? activeTopic : pickTopic();
         if (currentTopic != null) {
             int currentLevel = currentTopic.getLevel();
             int nextLevel = difficultyPolicy.nextLevel(currentLevel, sessionScore, sessionTotalQuestions);
+
+            Set<String> openBefore = new HashSet<>();
+            if (topicStore != null) {
+                for (Topic t : topicStore.loadTopics(student.getName(), targetCourse)) {
+                    if (t.isUnlocked()) {
+                        openBefore.add(t.getName());
+                    }
+                }
+            }
 
             currentTopic.setLevel(nextLevel);
             currentTopic.setLatestScore(percent);
@@ -129,12 +158,14 @@ public class SingleCourseStudySession extends StudySession {
                 currentTopic.setBestScore(percent);
             }
 
+            List<Topic> opened = new ArrayList<>();
             if (progressionGraph != null && currentTopic.getLatestScore() >= StudyFlow.PASS_PERCENT) {
-                progressionGraph.unlockNext(currentTopic.getName());
+                opened = progressionGraph.unlockNext(currentTopic.getName());
             }
+            lastSummary = buildSummary(currentTopic, percent, currentLevel, nextLevel, opened, openBefore);
         }
 
-        saveProgress(timeSpentSeconds, percent);
+        saveProgress(currentTopic, timeSpentSeconds, percent);
 
         this.sessionScore = 0;
         this.sessionTotalQuestions = 0;
@@ -142,12 +173,33 @@ public class SingleCourseStudySession extends StudySession {
         this.turnStartTime = System.currentTimeMillis();
     }
 
-    private void saveProgress(int timeSpentSeconds, int percent) {
-        if (topicStore != null) {
-            Topic currentTopic = getTargetTopic();
-            if (currentTopic != null) {
-                topicStore.saveTopic(student.getName(), currentTopic);
+    private String buildSummary(Topic topic, int percent, int oldLevel, int newLevel,
+                                List<Topic> opened, Set<String> openBefore) {
+        if (percent < StudyFlow.PASS_PERCENT) {
+            return "You scored " + percent + "% on " + topic.getName() + ". You need at least "
+                    + StudyFlow.PASS_PERCENT + "% to move up a level and unlock the topics after it, "
+                    + "so keep practicing it.";
+        }
+
+        StringBuilder text = new StringBuilder(topic.getName() + " cleared with " + percent + "%!");
+        if (newLevel > oldLevel) {
+            text.append(" Difficulty is now level ").append(newLevel).append(".");
+        }
+        List<String> names = new ArrayList<>();
+        for (Topic t : opened) {
+            if (!openBefore.contains(t.getName())) {
+                names.add(t.getName());
             }
+        }
+        if (!names.isEmpty()) {
+            text.append(" Unlocked: ").append(String.join(", ", names)).append(".");
+        }
+        return text.toString();
+    }
+
+    private void saveProgress(Topic currentTopic, int timeSpentSeconds, int percent) {
+        if (topicStore != null && currentTopic != null) {
+            topicStore.saveTopic(student.getName(), currentTopic);
         }
         if (sessionStore != null) {
             var sessionRecord = new lbycpds.group2.model.Session(
