@@ -190,6 +190,9 @@ public class SingleCourseStudySession extends StudySession {
             if (!openBefore.contains(t.getName())) {
                 names.add(t.getName());
             }
+    private void saveProgress(Topic currentTopic, int timeSpentSeconds, int percent) {
+        if (topicStore != null && currentTopic != null) {
+            topicStore.saveTopic(student.getName(), currentTopic);
         }
         if (!names.isEmpty()) {
             text.append(" Unlocked: ").append(String.join(", ", names)).append(".");
