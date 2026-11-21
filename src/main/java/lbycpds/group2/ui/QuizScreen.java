@@ -1,5 +1,8 @@
 package lbycpds.group2.ui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import lbycpds.group2.model.MultipleChoiceQuestion;
 import lbycpds.group2.model.Question;
 
@@ -58,6 +62,13 @@ public class QuizScreen {
     private TextField answerField;
     private boolean submitted;
 
+    // Time limit for the whole exam, counted down once and kept across questions
+    private final int timeLimitSeconds;
+    private int secondsLeft;
+    private Timeline clock;
+    private Label timerLabel;
+    private boolean finished;
+
     public QuizScreen(List<Question> questions, Consumer<Result> onFinish) {
         this(questions, null, onFinish);
     }
@@ -66,6 +77,24 @@ public class QuizScreen {
         this.questions = questions;
         this.onAnswer = onAnswer;
         this.onFinish = onFinish;
+
+        int total = 0;
+        for (Question q : questions) {
+            total += secondsFor(q);
+        }
+        this.timeLimitSeconds = total;
+        this.secondsLeft = total;
+    }
+
+    // Time given for one question: multiple choice 30s, identification 45s, problem solving 120s
+    private static int secondsFor(Question q) {
+        if (q instanceof MultipleChoiceQuestion) {
+            return 30;
+        }
+        if ("PROBLEM_SOLVING".equals(q.getType())) {
+            return 120;
+        }
+        return 45;
     }
 
 
@@ -82,7 +111,11 @@ public class QuizScreen {
         user.getStyleClass().add("user-name");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        HBox topBar = new HBox(logo, spacer, user);
+        timerLabel = new Label();
+        timerLabel.getStyleClass().add("timer-label");
+        showTime();
+        HBox.setMargin(timerLabel, new Insets(0, 24, 0, 0));
+        HBox topBar = new HBox(logo, spacer, timerLabel, user);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.getStyleClass().add("topbar");
 
@@ -135,16 +168,11 @@ public class QuizScreen {
                     return;
                 }
                 submitted = true;
-                if (onAnswer != null) {
-                    onAnswer.accept(q, answer);
-                }
                 answerArea.getChildren().forEach(n -> n.setDisable(true));
 
-                if (q.checkAnswer(answer)) {
-                    correct++;
+                if (record(q, answer)) {
                     setFeedback(feedback, "correct", "Correct!");
                 } else {
-                    missed.add(q);
                     setFeedback(feedback, "wrong", "Correct answer: " + describeAnswer(q));
                 }
                 action.setText(index + 1 < questions.size() ? "Next" : "Finish");
@@ -152,6 +180,7 @@ public class QuizScreen {
                 index++;
                 SceneManager.show(build());
             } else {
+                stopClock();
                 int seconds = (int) ((System.currentTimeMillis() - startMillis) / 1000);
                 onFinish.accept(new Result(questions.size(), correct, seconds, missed));
             }
@@ -173,7 +202,78 @@ public class QuizScreen {
         root.setTop(topBar);
         root.setCenter(content);
         root.getStyleClass().add("green");
+
+        if (clock == null) {
+            startClock();
+        }
         return root;
+    }
+
+    // Sends the answer to the session and counts it. Returns true if it was correct.
+    private boolean record(Question q, String answer) {
+        if (onAnswer != null) {
+            onAnswer.accept(q, answer);
+        }
+        if (q.checkAnswer(answer)) {
+            correct++;
+            return true;
+        }
+        missed.add(q);
+        return false;
+    }
+
+    private void startClock() {
+        clock = new Timeline(new KeyFrame(Duration.seconds(1), e -> tick()));
+        clock.setCycleCount(Timeline.INDEFINITE);
+        clock.play();
+    }
+
+    private void stopClock() {
+        finished = true;
+        if (clock != null) {
+            clock.stop();
+        }
+    }
+
+    private void tick() {
+        if (finished) {
+            return;
+        }
+        secondsLeft--;
+        showTime();
+        if (secondsLeft <= 0) {
+            clock.stop();
+            // Dialogs cannot open while the timer is running its pulse, so do it right after
+            Platform.runLater(this::timeUp);
+        }
+    }
+
+    private void showTime() {
+        int shown = Math.max(0, secondsLeft);
+        timerLabel.setText(String.format("%02d:%02d", shown / 60, shown % 60));
+        timerLabel.getStyleClass().remove("timer-low");
+        if (shown <= 60) {
+            timerLabel.getStyleClass().add("timer-low");
+        }
+    }
+
+    // Time ran out (a typed answer still counts)
+    private void timeUp() {
+        if (finished) {
+            return;
+        }
+        finished = true;
+
+        int next = index + 1;
+        if (!submitted) {
+            record(questions.get(index), readAnswer());
+        }
+        for (int i = next; i < questions.size(); i++) {
+            record(questions.get(i), "");
+        }
+
+        Dialogs.tell("Time's up! The questions you did not answer are marked wrong.");
+        onFinish.accept(new Result(questions.size(), correct, timeLimitSeconds, missed));
     }
 
     private VBox buildAnswerArea(Question q) {
@@ -235,10 +335,14 @@ public class QuizScreen {
     }
 
     private void confirmQuit() {
+        clock.pause();
         int answer = Dialogs.ask("Quit this quiz? Your progress in this session will be lost.",
                 "Yes", "No");
         if (answer == 0) {
+            stopClock();
             SceneManager.show(new MainMenu().build());
+        } else if (!finished) {
+            clock.play();
         }
     }
 }
