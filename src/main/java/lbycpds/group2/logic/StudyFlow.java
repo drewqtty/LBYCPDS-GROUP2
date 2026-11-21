@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class StudyFlow {
 
-    public static final int PASS_PERCENT = 90;
+    public static final int PASS_PERCENT = 85;
 
     // Score needed to clear a cram quiz and move up to the next cram level
     public static final int CRAM_PASS_PERCENT = 80;
@@ -53,17 +53,18 @@ public class StudyFlow {
     }
 
 
+
     public static List<Question> pickQuestions(Question[] bank, Topic topic, List<Integer> recentIds, int max) {
         int level = Math.max(1, Math.min(3, topic.getLevel()));
+// Never ask anything harder than the topic's level
         int[] levelOrder;
         if (level == 1) {
-            levelOrder = new int[]{1, 2, 3};
+            levelOrder = new int[]{1};
         } else if (level == 2) {
-            levelOrder = new int[]{2, 1, 3};
+            levelOrder = new int[]{2, 1};
         } else {
             levelOrder = new int[]{3, 2, 1};
         }
-
         List<Question> picked = new ArrayList<>();
         for (int i = 0; i < levelOrder.length && picked.size() < max; i++) {
             List<Question> found = LinearSearch.find(bank, topic.getCourse(), topic.getName(),
