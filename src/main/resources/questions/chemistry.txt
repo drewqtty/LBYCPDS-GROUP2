@@ -1,9 +1,109 @@
-// Question bank for Chemistry for Engineers  (see docs/question-format.md for the line formats)
-//
-// THIS FILE IS INTENTIONALLY EMPTY OF QUESTIONS.
-// The real topics, questions and answers are supplied by the backend / content team.
-// Until this file contains questions, the app shows the temporary sample in questions/chemistry-mock.txt.
-// Once real questions are added here, the sample is ignored automatically.
-//
-// Add, below the COURSE line, the TOPIC lines (topic#topics it unlocks) and the MC / ID / PS lines.
 COURSE#Chemistry for Engineers
+TOPIC#Chemical Safety (MSDS)#Ethanol (MSDS)
+TOPIC#Ethanol (MSDS)#Atmospheric Chemistry
+TOPIC#Atmospheric Chemistry#Water
+TOPIC#Water#Energy from Combustion
+TOPIC#Energy from Combustion#Nuclear Chemistry
+TOPIC#Nuclear Chemistry#Electrochemistry
+TOPIC#Electrochemistry#Fuels
+TOPIC#Fuels#Metallurgy
+TOPIC#Metallurgy
+
+MC#111#Chemical Safety (MSDS)#1#A Material Safety Data Sheet (MSDS) is best described as which of the following?#A label that lists only the price and supplier of a chemical#A document that summarizes the hazards and the health and safety information for a chemical#A certificate stating that a chemical is completely harmless#A permit that allows a chemical to be sold#B
+MC#112#Chemical Safety (MSDS)#1#Which records are cited as some of the earliest written material resembling chemical safety information, dating back over 4,000 years?#Egyptian tomb walls and papyrus records#Roman military manuals#Medieval guild charters#Printed textbooks of the 1900s#A
+MC#113#Chemical Safety (MSDS)#1#Which statement best explains the principle 'the dose makes the poison'?#Every substance is toxic at any amount#Harm depends on the amount of the substance and the exposure to it#Only synthetic chemicals can be toxic#Toxicity depends only on how a substance was manufactured#B
+ID#121#Chemical Safety (MSDS)#2#Which global system influenced the change from the MSDS to the standardized SDS format? Answer with the abbreviation.#GHS
+ID#122#Chemical Safety (MSDS)#2#Which U.S. agency issued the Hazard Communication Standard that requires employers to give access to MSDSs and SDSs? Answer with the abbreviation.#OSHA
+ID#123#Chemical Safety (MSDS)#2#Toxic effects that happen at the site of contact, such as the skin, eyes, or lungs, are called local effects or systemic effects? Answer with one word: local or systemic.#local
+PS#131#Chemical Safety (MSDS)#3#Name the two kinds of toxicity based on exposure time: the one caused by short-term exposure with immediate effects, and the one caused by long-term exposure with delayed effects.#Acute toxicity comes from short-term exposure with immediate effects, and chronic toxicity comes from long-term exposure with delayed effects#acute#chronic
+PS#132#Chemical Safety (MSDS)#3#Give one engineering control that reduces the inhalation of vapors in a workroom, and explain why engineering controls are preferred over personal protective equipment.#Ventilation systems are an example. Engineering controls are preferred because they reduce the risk at the source#ventilation#source
+PS#133#Chemical Safety (MSDS)#3#A chemical has an LD50 of 250 mg per kg of body mass. Assuming the dose scales with body mass, how many grams of the chemical would be lethal to 50% of exposed people with a body mass of 60 kg?#250 mg/kg x 60 kg = 15000 mg = 15 g#15
+PS#134#Chemical Safety (MSDS)#3#State the year in which OSHA issued its final hazard communication rule requiring MSDSs, and the year by which manufacturers and importers had to supply them with all shipments.#OSHA issued the final rule on November 25, 1983, and MSDSs were required with all shipments by November 1985#1983#1985
+
+MC#211#Ethanol (MSDS)#1#What is the molecular formula of ethanol according to its MSDS?#CH3OH#C2H5OH#C3H7OH#C2H6#B
+MC#212#Ethanol (MSDS)#1#Which organs are listed as the target organs of ethanol in its MSDS?#Lungs and skin only#Bones and teeth#Kidneys, heart, central nervous system, and liver#Thyroid and pancreas#C
+MC#213#Ethanol (MSDS)#1#Which statement about the hazards of ethanol in its MSDS is correct?#It is a flammable liquid and vapor#It is nonflammable#It is a strong acid that dissolves metals#It is a radioactive substance#A
+ID#221#Ethanol (MSDS)#2#In which section number of this MSDS are the Fire Fighting Measures found? Answer with a number only.#5
+ID#222#Ethanol (MSDS)#2#What is the flash point of absolute ethanol in degrees Celsius? Answer with a number only.#16.6
+ID#223#Ethanol (MSDS)#2#What is the OSHA permissible exposure limit of ethanol as a time-weighted average, in ppm? Answer with a number only.#1000
+PS#231#Ethanol (MSDS)#3#The flash point of ethanol is 16.6 degrees C. Convert it to degrees Fahrenheit using F = (9/5)C + 32.#F = (9/5)(16.6) + 32 = 29.88 + 32 = 61.88 degrees F#61.8
+PS#232#Ethanol (MSDS)#3#Ethanol is spilled in a laboratory. According to the MSDS, what kind of material should be used to absorb the spill, and what must be removed from the area?#Absorb the spill with an inert material such as sand, vermiculite, or earth, and remove all sources of ignition#inert#ignition
+PS#233#Ethanol (MSDS)#3#The MSDS gives an oral LD50 for rats of 7060 mg per kg of body mass. Calculate the dose in mg that corresponds to the LD50 for a rat with a body mass of 0.25 kg.#7060 mg/kg x 0.25 kg = 1765 mg#1765
+PS#234#Ethanol (MSDS)#3#Ethanol vapor has a vapor density of 1.59 (air = 1). Explain whether the vapor rises or sinks, and why this matters for fire safety.#The vapor is heavier than air, so it sinks and can travel along the ground to a source of ignition and flash back#heavier#ignition
+
+MC#311#Atmospheric Chemistry#1#Which layer of the atmosphere is the lowest, where we live, and holds about 75% of the mass of the air?#Stratosphere#Mesosphere#Troposphere#Thermosphere#C
+MC#312#Atmospheric Chemistry#1#Which gas makes up about 78% of dry air?#Oxygen#Nitrogen#Carbon dioxide#Argon#B
+MC#313#Atmospheric Chemistry#1#Which gas is called the 'silent killer' because it is odorless and blocks the oxygen transport system of the body?#Carbon monoxide#Sulfur dioxide#Ozone#Nitrogen dioxide#A
+ID#321#Atmospheric Chemistry#2#What is the process of converting molecular nitrogen (N2) into usable nitrogen compounds such as ammonia and nitrates called? Answer with two words.#nitrogen fixation
+ID#322#Atmospheric Chemistry#2#Which radioactive noble gas, formed from the decay of uranium-238, can seep from the ground into the basements of homes? Answer with one word.#radon
+ID#323#Atmospheric Chemistry#2#Ozone in photochemical smog is not released directly by vehicles but forms from reactions of other pollutants. Is it a primary or a secondary pollutant? Answer with one word.#secondary
+PS#331#Atmospheric Chemistry#3#An air sample contains 5000 ug of carbon monoxide per cubic meter of air. Convert this to mg per cubic meter, and say whether it is above the 8-hour standard of 10 mg per cubic meter.#5000 ug = 5 mg, so the concentration is 5 mg/m3. This is not above the 10 mg/m3 standard, so it is not harmful#5#not
+PS#332#Atmospheric Chemistry#3#Nitrogen dioxide reacts with water in the lungs (2 NO2 + H2O gives two acids). Name the two acids that form.#Nitrous acid (HNO2) and nitric acid (HNO3)#nitrous#nitric
+PS#333#Atmospheric Chemistry#3#Incomplete combustion of a fuel produces a toxic gas instead of carbon dioxide. Name the gas, and name the gas that a catalytic converter changes it into.#Incomplete combustion produces carbon monoxide, and a catalytic converter changes it into carbon dioxide#carbon monoxide#carbon dioxide
+PS#334#Atmospheric Chemistry#3#Powdered limestone (calcium carbonate) is injected into a furnace to remove sulfur dioxide. At high temperature it decomposes into carbon dioxide and a solid that reacts with the sulfur dioxide. Give the common name of that solid.#Quicklime (calcium oxide)#quicklime
+
+MC#411#Water#1#Why does ice float on liquid water?#Ice is less dense than liquid water because hydrogen bonding makes its structure porous#Ice is heavier than liquid water but is held up by surface tension#Ice contains trapped air that is lighter than water#Ice has a smaller mass than the same amount of liquid water#A
+MC#412#Water#1#A bond in which the electrons are displaced toward the more electronegative atom is called what?#Nonpolar covalent bond#Polar covalent bond#Ionic bond#Metallic bond#B
+MC#413#Water#1#Which source makes up only about 0.3% of the freshwater on Earth but is the most convenient to use?#Glaciers and ice#Aquifers (groundwater)#Surface water such as lakes and rivers#Seawater#C
+ID#421#Water#2#What do we call a compound that dissolves in water but does not dissociate into ions, such as sugar? Answer with one word.#nonelectrolyte
+ID#422#Water#2#What do we call any process that removes sodium chloride and other minerals from salty water to produce potable water? Answer with one word.#desalination
+ID#423#Water#2#What is the pH of a neutral solution at 25 degrees C? Answer with a number only.#7
+PS#431#Water#3#A 6.44 g sample of naphthalene (C10H8) is dissolved in 80.1 g of benzene (C6H6). Calculate the percent by mass of naphthalene in the solution.#Percent by mass = 6.44 g / (6.44 g + 80.1 g) x 100 = 6.44 / 86.54 x 100 = 7.44 percent#7.4
+PS#432#Water#3#If 0.025 g of Pb(NO3)2 is dissolved in 100 g of water, find the concentration in parts per million. Assume that 100 g of water is about 0.100 L of solution.#0.025 g = 25 mg, and 25 mg / 0.100 L = 250 mg/L = 250 ppm#250
+PS#433#Water#3#Calculate the molar concentration of ethanol in a solution that contains 2.30 g of C2H5OH (46.07 g/mol) in 3.50 L of solution. Give the answer as a decimal number, not in scientific notation.#Moles = 2.30 g / 46.07 g/mol = 0.0499 mol, so M = 0.0499 mol / 3.50 L = 0.0143 M#0.014
+PS#434#Water#3#A solution has a hydroxide ion concentration of 1.0 x 10^-3 M at 25 degrees C. Using Kw = [H+][OH-] = 1.0 x 10^-14, find the pH and say whether the solution is acidic, neutral, or basic.#[H+] = 1.0 x 10^-14 / 1.0 x 10^-3 = 1.0 x 10^-11 M, so pH = 11 and the solution is basic#11#basic
+
+MC#511#Energy from Combustion#1#Which statement correctly compares heat and temperature?#Heat is the average kinetic energy of molecules, and temperature is energy flowing between objects#Temperature is a measure of the average kinetic energy of molecules, and heat is energy that flows from a hotter to a colder object#Heat and temperature are two names for the same quantity#Temperature measures the energy stored in chemical bonds, and heat measures the volume of a substance#B
+MC#512#Energy from Combustion#1#What does the First Law of Thermodynamics state?#Energy is neither created nor destroyed, but it may be transformed from one form to another#The entropy of the universe is decreasing#Heat always flows from a colder object to a hotter object#Energy is created when a fuel is burned#A
+MC#513#Energy from Combustion#1#Which statement about bond energy is correct?#Breaking bonds releases energy and forming bonds requires energy#Both breaking and forming bonds release energy#Breaking bonds always requires energy, and forming bonds releases energy#Bond energy is not related to chemical reactions#C
+ID#521#Energy from Combustion#2#How many joules are equal to 1 calorie? Answer with a number only.#4.184
+ID#522#Energy from Combustion#2#Which instrument is used to measure the heat released in a combustion reaction? Answer with one word.#calorimeter
+ID#523#Energy from Combustion#2#According to the Second Law of Thermodynamics, which quantity of the universe is always increasing? Answer with one word.#entropy
+PS#531#Energy from Combustion#3#In the reaction 2 H2 + O2 gives 2 H2O, breaking 2 H-H bonds takes 872 kJ and breaking 1 O=O bond takes 498 kJ, while forming 4 O-H bonds releases 1868 kJ. Find the net energy change in kJ and say whether the reaction is exothermic or endothermic.#Energy absorbed = 872 + 498 = 1370 kJ. Energy released = 1868 kJ. Net change = 1370 - 1868 = -498 kJ, so the reaction is exothermic#498#exothermic
+PS#532#Energy from Combustion#3#A snack bar contains 250 Cal (dietary calories, where 1 Cal = 1 kcal = 1000 cal). Convert this energy to kilojoules using 1 cal = 4.184 J.#250 Cal = 250,000 cal, and 250,000 cal x 4.184 J/cal = 1,046,000 J = 1046 kJ#046
+PS#533#Energy from Combustion#3#How much heat in joules is needed to raise the temperature of 50.0 g of water by 10.0 degrees C? One calorie raises 1 g of water by 1 degree C, and 1 cal = 4.184 J.#50.0 g x 10.0 degrees C x 1 cal = 500 cal, and 500 cal x 4.184 J/cal = 2092 J#092
+PS#534#Energy from Combustion#3#Object A is in thermal equilibrium with object C, and object B is also in thermal equilibrium with object C. What can be said about A and B, and which law states this?#A and B are also in thermal equilibrium with each other. This is the Zeroth Law of Thermodynamics#equilibrium#zeroth
+
+MC#611#Nuclear Chemistry#1#What is the mass number (A) of an atom?#The number of protons#The number of neutrons#The number of protons plus the number of neutrons#The number of electrons#C
+MC#612#Nuclear Chemistry#1#What do we call the process in which a heavy nucleus splits into smaller nuclei and one or more neutrons?#Nuclear fusion#Nuclear fission#Electron capture#Radioactive dating#B
+MC#613#Nuclear Chemistry#1#Which rule is used when balancing a nuclear equation?#Only the number of neutrons must be equal on both sides#Only the electrons must be equal on both sides#Both the mass number and the atomic number must be conserved#The products must have more mass than the reactants#C
+ID#621#Nuclear Chemistry#2#Ar-37 undergoes electron capture and forms one product. What is it? Answer in the form Xx-00, with the element symbol, a hyphen, and the mass number.#Cl-37
+ID#622#Nuclear Chemistry#2#How many half-lives must pass for 12.5 percent of a radioactive sample to remain? Answer with a number only.#3
+ID#623#Nuclear Chemistry#2#How many neutrons are released when U-235 absorbs one neutron and fissions into Ba-138 and Kr-95? Answer with a number only.#3
+PS#631#Nuclear Chemistry#3#Tritium (H-3) has a half-life of 12.3 years. After how many years will about 12% of the original sample remain? Round your answer to the nearest whole number of years.#About 12% remains after 3 half-lives (12.5%), so 3 x 12.3 years = 36.9 years, which is about 37 years#37
+PS#632#Nuclear Chemistry#3#In the fission of 1.0 kg of U-235, the mass decreases by 0.1%, so the mass lost is 1.0 x 10^-3 kg. Use E = (mass lost) x c^2, with c = 3 x 10^8 m/s, to find the energy released in joules.#E = (1.0 x 10^-3 kg)(3 x 10^8 m/s)^2 = 9.0 x 10^13 J#9#13
+PS#633#Nuclear Chemistry#3#Polonium-212 decays spontaneously to Pb-208 and a particle X. Name particle X and the type of decay.#X is an alpha particle, so the decay is alpha decay#alpha
+PS#634#Nuclear Chemistry#3#A worker receives a radiation dose of 150 rem. Convert the dose to sieverts using 1 Sv = 100 rem.#150 rem / 100 rem per Sv = 1.5 Sv#1.5
+
+MC#711#Electrochemistry#1#What determines the voltage of a battery?#Its size#Its chemical composition#Its weight#Its shape#B
+MC#712#Electrochemistry#1#What is the difference between a primary battery and a secondary battery?#A primary battery can be recharged, but a secondary battery cannot#A secondary battery can be recharged because its redox reactions can run in either direction#A primary battery has a higher voltage than every secondary battery#A secondary battery does not use chemical reactions#B
+MC#713#Electrochemistry#1#In an alkaline cell, what happens at the anode?#Zinc is oxidized#Zinc is reduced#Manganese dioxide is oxidized#Water is oxidized to oxygen#A
+ID#721#Electrochemistry#2#What is the name of the electrode where oxidation (the loss of electrons) occurs? Answer with one word.#anode
+ID#722#Electrochemistry#2#What is the maximum voltage of a lead-acid cell, in volts? Answer with a number only.#2.1
+ID#723#Electrochemistry#2#What is the name of the process in which electrical energy is used to cause a nonspontaneous chemical reaction, such as splitting water into hydrogen and oxygen? Answer with one word.#electrolysis
+PS#731#Electrochemistry#3#A 9 V battery is connected across a 450 ohm resistor. Use Ohm's law (V = I x R) to find the current in milliamperes.#I = V / R = 9 V / 450 ohm = 0.020 A = 20 mA#20
+PS#732#Electrochemistry#3#A hydrogen fuel cell converts 45 to 55 percent of its energy to electric energy. If the fuel cell uses 200 kJ of chemical energy, give the range of electric energy it delivers, in kJ.#45 percent of 200 kJ = 90 kJ and 55 percent of 200 kJ = 110 kJ, so the range is 90 to 110 kJ#90#110
+PS#733#Electrochemistry#3#Explain why lithium-ion batteries must use non-aqueous electrolytes.#Group 1 metals such as lithium are dangerously reactive toward water, so water cannot be used as the electrolyte#reactive#water
+PS#734#Electrochemistry#3#The electrolysis reaction H2O(g) gives H2(g) + 1/2 O2(g) requires 249 kJ for each mole of water. How much energy in kJ is needed to split 4 moles of water vapor?#4 mol x 249 kJ/mol = 996 kJ#996
+
+MC#811#Fuels#1#From what were most of the fossil fuels we use today formed?#Decaying plant life#Dinosaur bones#Volcanic ash#Evaporated seawater#A
+MC#812#Fuels#1#Which statement about crude oil is correct?#It is a single pure compound#It is a mixture of several thousand compounds, mostly hydrocarbons with 5 to 12 carbon atoms#It contains only alkynes#It contains no hydrocarbons#B
+MC#813#Fuels#1#What is biodiesel generated from?#Natural gas#Fats and oils, such as waste cooking oil#Coal tar#Seawater#B
+ID#821#Fuels#2#What process separates crude oil into its components based on their different boiling points? Answer with one word.#distillation
+ID#822#Fuels#2#What do we call molecules that have the same molecular formula but different chemical structures? Answer with one word.#isomers
+ID#823#Fuels#2#What substance lowers the activation energy of a reaction by providing an alternate pathway? Answer with one word.#catalyst
+PS#831#Fuels#3#Ethanol (C2H5OH) releases 1240 kJ/mol and octane (C8H18) releases 5060 kJ/mol. How many times more energy per mole does octane release than ethanol? Round to one decimal place.#5060 / 1240 = 4.08, so octane releases about 4.1 times more energy per mole#4.1
+PS#832#Fuels#3#Why is catalytic cracking used in refineries, compared with thermal cracking alone?#A catalyst lowers the temperature that is required to split the large molecules#catalyst#temperature
+PS#833#Fuels#3#Name the refinery process that rearranges linear hydrocarbon molecules into more branched ones, which burn more smoothly.#Catalytic reforming#reforming
+PS#834#Fuels#3#Petroleum generates about 40 to 60 percent more energy per gram than coal. If coal gives 30 kJ per gram, give the range of energy per gram for petroleum in kJ.#30 x 1.40 = 42 kJ/g and 30 x 1.60 = 48 kJ/g, so the range is 42 to 48 kJ per gram#42#48
+
+MC#911#Metallurgy#1#What is an ore?#Any rock found in the ground#A mineral deposit concentrated enough to allow economical recovery of a desired metal#A solid solution of two or more metals#A metal that has already been purified#B
+MC#912#Metallurgy#1#What is an alloy?#A solid solution of two or more metals, or of a metal with one or more nonmetals#A mineral found only in igneous rock#Any compound that contains oxygen#A metal that has been melted and cooled#A
+MC#913#Metallurgy#1#Which mineral has the formula Fe2O3 and is an ore of iron?#Bauxite#Galena#Hematite#Cinnabar#C
+ID#921#Metallurgy#2#Which ore preparation method separates clay and silicate materials (the gangue) from the ore? Answer with one word.#flotation
+ID#922#Metallurgy#2#What is the name of the process that produces aluminum by electrolysis using molten cryolite? Answer with two words.#Hall process
+ID#923#Metallurgy#2#What is the name of the purification method in which a heating coil moves along a metal rod? Answer with two words.#zone refining
+PS#931#Metallurgy#3#Name the three stages in recovering a metal from its ore.#Preparation of the ore, production of the metal, and purification of the metal#preparation#production#purification
+PS#932#Metallurgy#3#Calculate the percent by mass of iron in hematite, Fe2O3 (Fe = 55.85, O = 16.00).#Molar mass = 2(55.85) + 3(16.00) = 159.7 g/mol. Percent Fe = 111.7 / 159.7 x 100 = 69.9 percent#69.9
+PS#933#Metallurgy#3#Calculate the percent by mass of lead in galena, PbS (Pb = 207.2, S = 32.07).#Molar mass = 207.2 + 32.07 = 239.27 g/mol. Percent Pb = 207.2 / 239.27 x 100 = 86.6 percent#86.6
+PS#934#Metallurgy#3#Silicon is doped with aluminum. Is the result an n-type or a p-type semiconductor, and is aluminum a donor or an acceptor impurity?#It is a p-type semiconductor, and aluminum is an acceptor impurity#p-type#acceptor
