@@ -30,12 +30,10 @@ public class CourseCatalog {
     public static class Course {
         private final String resourcePath;
         private final TextFileQuestionBank bank;
-        private final boolean sample;
 
-        Course(String resourcePath, TextFileQuestionBank bank, boolean sample) {
+        Course(String resourcePath, TextFileQuestionBank bank) {
             this.resourcePath = resourcePath;
             this.bank = bank;
-            this.sample = sample;
         }
 
         public String getName() {
@@ -50,11 +48,6 @@ public class CourseCatalog {
 
         public TextFileQuestionBank getBank() {
             return bank;
-        }
-
-        // True while the course is showing temporary sample content instead of real content
-        public boolean isSample() {
-            return sample;
         }
 
         public boolean hasQuestions() {
@@ -91,18 +84,6 @@ public class CourseCatalog {
     }
 
     private static Course open(String resource) {
-        TextFileQuestionBank real = QuestionBankFiles.open(resource);
-        String sampleResource = SAMPLE_BANKS.get(resource);
-        if (real.loadQuestions().length == 0 && sampleResource != null) {
-            try {
-                TextFileQuestionBank sample = QuestionBankFiles.open(sampleResource);
-                if (sample.loadQuestions().length > 0) {
-                    return new Course(sampleResource, sample, true);
-                }
-            } catch (RuntimeException e) {
-                // no usable sample: show the real (empty) course
-            }
-        }
-        return new Course(resource, real, false);
+        return new Course(resource, QuestionBankFiles.open(resource));
     }
 }
