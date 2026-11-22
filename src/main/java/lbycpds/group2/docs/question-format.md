@@ -4,9 +4,7 @@ Question banks are plain text files in `src/main/resources/questions/`.
 Use `circuits.txt` for Fundamentals of Electrical Circuits, `dsa.txt` for Data Structures and Algorithms, and
 `chemistry.txt` for Chemistry for Engineers. Courses are registered in `logic/CourseCatalog.java`.
 
-`chemistry.txt` has no questions yet. While it has none, the app shows the temporary sample in
-`chemistry-mock.txt` (and `lessons/chemistry-mock.txt`). Once real questions are added to `chemistry.txt`
-the sample is ignored; delete the `*-mock.txt` files and `SAMPLE_BANKS` in `CourseCatalog` then.
+`chemistry.txt` holds the Chemistry for Engineers bank. Its Tutor Mode lessons (`lessons/chemistry.txt`) are not written yet.
 
 ## Editing from the app (Admin)
 
