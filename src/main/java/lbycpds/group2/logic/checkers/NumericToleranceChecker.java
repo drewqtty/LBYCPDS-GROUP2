@@ -2,7 +2,7 @@ package lbycpds.group2.logic.checkers;
 
 
 public class NumericToleranceChecker implements SpecialChecker {
-    private double tolerancePercentage;
+    private final double tolerancePercentage;
 
     public NumericToleranceChecker(double tolerancePercentage) {
         this.tolerancePercentage = tolerancePercentage;

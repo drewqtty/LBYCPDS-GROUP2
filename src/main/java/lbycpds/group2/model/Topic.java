@@ -20,10 +20,11 @@ public class Topic implements Comparable<Topic> {
     }
 
     public int compareTo(Topic other) {
-        if (confidence != other.confidence) {
+        if (confidence != other.confidence)
             return Integer.compare(confidence, other.confidence);
-        }
-        return Integer.compare(latestScore, other.latestScore);
+        if (latestScore != other.latestScore)
+            return Integer.compare(latestScore, other.latestScore);
+        return name.compareTo(other.name);
     }
 
     public String getName() { return name; }
