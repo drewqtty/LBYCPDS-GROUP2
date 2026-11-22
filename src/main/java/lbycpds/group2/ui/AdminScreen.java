@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import lbycpds.group2.logic.CourseCatalog;
 import lbycpds.group2.logic.QuestionBankEditor;
 import lbycpds.group2.logic.QuestionBankFiles;
 import lbycpds.group2.logic.TextFileQuestionBank;
@@ -34,7 +35,7 @@ import java.util.function.Function;
 
 public class AdminScreen {
 
-    private static final String[] BANK_RESOURCES = {"/questions/circuits.txt", "/questions/dsa.txt"};
+    private static final String[] BANK_RESOURCES = CourseCatalog.bankResources();
     private static final String[] TYPE_CODES = {"MC", "ID", "PS"};
     private static final String[] TYPE_NAMES = {"Multiple choice", "Identification", "Problem solving"};
     private static final String ALL_TOPICS = "All topics";
