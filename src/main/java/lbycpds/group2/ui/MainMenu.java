@@ -1,5 +1,6 @@
 package lbycpds.group2.ui;
 
+import lbycpds.group2.logic.LessonRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -89,8 +90,11 @@ public class MainMenu {
         start.setMaxWidth(Double.MAX_VALUE);
         start.setOnAction(e -> {
             if (tutor.isSelected()) {
-                TextFileQuestionBank bank = courseBox.getValue().equals(circuits.getCourse()) ? circuits : dsa;
-                SceneManager.show(new TutorScreen(bank.getCourse(), bank.loadQuestions()).build());
+                boolean isCircuits = courseBox.getValue().equals(circuits.getCourse());
+                TextFileQuestionBank bank = isCircuits ? circuits : dsa;
+                LessonRepository lessons = LessonRepository.forQuestionBank(
+                        isCircuits ? "/questions/circuits.txt" : "/questions/dsa.txt");
+                SceneManager.show(new TutorTopicScreen(bank.getCourse(), lessons, bank.loadQuestions()).build());
                 return;
             }
 
@@ -164,7 +168,7 @@ public class MainMenu {
     }
 
     // Study modes
-    private HBox modeCard(String title, String desc, RadioButton radio) {
+    static HBox modeCard(String title, String desc, RadioButton radio) {
         Label t = new Label(title);
         t.getStyleClass().add("mode-title");
         Label d = new Label(desc);
