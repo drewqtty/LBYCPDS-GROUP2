@@ -6,15 +6,16 @@ import lbycpds.group2.model.Topic;
 import java.util.*;
 
 public class Graph implements ProgressionGraph {
-    private HashMap<Topic, LinkedList<Topic>> topics = new HashMap<>();
+    private LinkedHashMap<Topic, LinkedList<Topic>> topics = new LinkedHashMap<>();
 
     // used for finding topic objects by their string name
-    private HashMap<String, Topic> nameToTopicMap = new HashMap<>();
+    private LinkedHashMap<String, Topic> nameToTopicMap = new LinkedHashMap<>();
 
-    private HashMap<Topic, LinkedList<Topic>> prerequisites = new HashMap<>();
+    private LinkedHashMap<Topic, LinkedList<Topic>> prerequisites = new LinkedHashMap<>();
 
     @Override
     public void addTopic(Topic topic) {
+        if (nameToTopicMap.containsKey(topic.getName())) return; // stops the method from creating a duplicate topic
         topics.put(topic, new LinkedList<>());
         prerequisites.put(topic, new LinkedList<>());
         nameToTopicMap.put(topic.getName(), topic);
@@ -25,12 +26,14 @@ public class Graph implements ProgressionGraph {
         Topic from = nameToTopicMap.get(fromTopic);
         Topic to = nameToTopicMap.get(toTopic);
 
-        if (from != null && to != null) {
-
-            topics.get(from).add(to);
-
-            prerequisites.get(to).add(from);
+        if (from == null || to == null) {
+            throw new IllegalArgumentException(
+                    "Unknown topic in edge: " + fromTopic + " -> " + toTopic);
         }
+        if (from == to || topics.get(from).contains(to)) return;  // no self-loops or duplicates
+
+        topics.get(from).add(to);
+        prerequisites.get(to).add(from);
     }
 
     @Override
@@ -58,8 +61,10 @@ public class Graph implements ProgressionGraph {
                     visited.add(neighbor);
 
                     if (areAllPrerequisitesCompleted(neighbor)) {
-                        neighbor.setUnlocked(true);
-                        unlocked.add(neighbor);
+                        if (!neighbor.isUnlocked()) {
+                            neighbor.setUnlocked(true);
+                            unlocked.add(neighbor);
+                        }
                         q.offer(neighbor);
                     }
                 }
@@ -91,10 +96,10 @@ public class Graph implements ProgressionGraph {
 
     private boolean isTopicCompleted(Topic topic) {
 
-        return topic.getLatestScore() >= StudyFlow.PASS_PERCENT;
+        return topic.getBestScore() >= StudyFlow.PASS_PERCENT;
     }
 
-
+    @Override
     public List<Topic> unlockRoots() {
         List<Topic> roots = new LinkedList<>();
         for (Topic topic : prerequisites.keySet()) {

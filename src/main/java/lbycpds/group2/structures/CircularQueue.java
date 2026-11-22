@@ -1,7 +1,7 @@
 package lbycpds.group2.structures;
 
 public class CircularQueue<T> implements QueueInterface<T>{
-    private class Node<T> {
+    private static class Node<T> {
         T data;
         Node<T> next;
 
@@ -16,22 +16,26 @@ public class CircularQueue<T> implements QueueInterface<T>{
     private int capacity;
 
     public CircularQueue(int capacity) {
+        if (capacity < 1) {
+            throw new IllegalArgumentException("capacity must be >= 1");
+        }
+
         this.capacity = capacity;
-        this.size = 0;
     }
 
     @Override
     public void offer(T item) {
+        if (item == null) throw new NullPointerException("null items not allowed");
+        if (isFull()) throw new IllegalStateException("Queue is full");
+
         Node<T> freshNode = new Node<>(item);
         if (isEmpty()) {
-            front = freshNode;
-            back = freshNode;
-            back.next = front;
+            front = back = freshNode;
         } else {
             back.next = freshNode;
             back = freshNode;
-            back.next = front;
         }
+        back.next = front;
         size++;
 
     }
@@ -43,15 +47,13 @@ public class CircularQueue<T> implements QueueInterface<T>{
         }
 
         T polled = front.data;
-        front = front.next;
-        size--;
-
-        if (front == null) {
-            back = null;
+        if (size == 1) {
+            front = back = null;
         } else {
+            front = front.next;
             back.next = front;
         }
-
+        size--;
         return polled;
     }
 
