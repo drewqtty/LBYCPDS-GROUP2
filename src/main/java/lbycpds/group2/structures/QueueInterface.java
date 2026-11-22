@@ -1,6 +1,6 @@
 package lbycpds.group2.structures;
 
-public interface QueueInterface<T> {
+public interface QueueInterface<T> extends DataStructure {
     public void offer(T item);
     public T poll();
     public T front();
