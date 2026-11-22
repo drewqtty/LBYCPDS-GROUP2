@@ -1,6 +1,47 @@
-// Tutor Mode lessons for Chemistry for Engineers
-// THIS FILE IS INTENTIONALLY EMPTY OF LESSONS.
-// The real lessons are supplied by the backend / content team (see the format in lessons/circuits.txt).
-// Practice topics must match the TOPIC# names in questions/chemistry.txt exactly.
-// Until this file has lessons, the app shows the temporary sample in lessons/chemistry-mock.txt.
 COURSE#Chemistry for Engineers
+
+CATEGORY#Safety and Hazards
+
+LESSON#Chemical Safety (MSDS)#Chemical Safety (MSDS)
+PAGE#What Is an MSDS?
+PAGE#Toxicity and Exposure
+
+LESSON#Ethanol (MSDS)#Ethanol (MSDS)
+PAGE#Reading an MSDS: Ethanol
+PAGE#Handling and Fire Safety
+
+CATEGORY#Environment and Matter
+
+LESSON#Atmospheric Chemistry#Atmospheric Chemistry
+PAGE#Layers and Composition of the Atmosphere
+PAGE#Air Pollutants
+
+LESSON#Water#Water
+PAGE#Structure and Properties of Water
+PAGE#Solutions and Concentration
+
+CATEGORY#Energy and Fuels
+
+LESSON#Energy from Combustion#Energy from Combustion
+PAGE#Heat, Temperature and the Laws of Thermodynamics
+PAGE#Bond Energy and Calorimetry
+
+LESSON#Fuels#Fuels
+PAGE#Fossil Fuels and Refining
+PAGE#Biofuels and Alternatives
+
+CATEGORY#Nuclear and Electrical Chemistry
+
+LESSON#Nuclear Chemistry#Nuclear Chemistry
+PAGE#Nuclei, Decay and Half-Life
+PAGE#Fission and Radiation Dose
+
+LESSON#Electrochemistry#Electrochemistry
+PAGE#Batteries and Cells
+PAGE#Electrolysis and Fuel Cells
+
+CATEGORY#Materials
+
+LESSON#Metallurgy#Metallurgy
+PAGE#Ores and Metal Recovery
+PAGE#Alloys and Semiconductors
