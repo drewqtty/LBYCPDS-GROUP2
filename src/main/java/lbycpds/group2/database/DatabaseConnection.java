@@ -22,7 +22,7 @@ public class DatabaseConnection {
             properties.load(input);
         } catch (IOException e) {
             throw new IllegalStateException("Could not read " + configPath
-                    + ". Copy db.properties.example to db.properties and fill it in.");
+                    + ". Copy db.properties to db.properties and fill it in.");
         }
         url = properties.getProperty("db.url");
         user = properties.getProperty("db.user");

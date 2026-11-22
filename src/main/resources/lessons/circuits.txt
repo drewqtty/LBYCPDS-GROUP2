@@ -1,0 +1,759 @@
+// Tutor Mode lessons for Fundamentals of Electrical Circuits
+// Practice topics match the TOPIC# names in questions/circuits.txt exactly
+COURSE#Fundamentals of Electrical Circuits
+
+CATEGORY#Basic Circuits
+
+LESSON#Resistance#Resistance
+PAGE#What Is Resistance?
+Resistance is the opposition a material offers to the flow of electric current. It is measured in ohms (symbol: the Greek letter omega).
+
+Ohm's law ties together voltage, current, and resistance:
+
+```
+V = I x R        I = V / R        R = V / I
+```
+
+- V is the voltage in volts (V)
+- I is the current in amperes (A)
+- R is the resistance in ohms
+
+A component built to provide a specific resistance is called a resistor. Its circuit symbol is a zigzag line:
+
+```
+  o--/\/\/\--o
+      R
+```
+
+## Key terms
+- Resistance: opposition to current, in ohms
+- Conductor: a material with very low resistance, such as copper
+- Insulator: a material with very high resistance, such as rubber
+- Ohm's law: V = I x R
+
+PAGE#Resistivity and Wire Dimensions
+The resistance of a wire depends on the material it is made of and on its shape. For a uniform wire:
+
+```
+R = rho x L / A
+```
+
+- rho is the resistivity of the material, in ohm-meters
+- L is the length of the wire, in meters
+- A is the cross-sectional area, in square meters
+
+## What this means
+- A longer wire has more resistance. R is proportional to L.
+- A thicker wire has less resistance. R is inversely proportional to A.
+- A material with a higher resistivity has more resistance for the same size.
+
+Typical resistivity order, from low to high: silver, copper, aluminum, then much higher for materials like carbon, and extremely high for insulators such as rubber.
+
+PAGE#Temperature and Conductance
+## Temperature
+For typical metal conductors such as copper, resistance increases as temperature rises. The atoms vibrate more and make it harder for charge to move through.
+
+## Conductance
+Conductance is the reciprocal of resistance. It tells how easily current flows. It is measured in siemens (S).
+
+```
+G = 1 / R
+```
+
+Example: a 0.5 ohm resistor has a conductance of G = 1 / 0.5 = 2 S.
+
+PAGE#Worked Examples
+## Example 1: Ohm's law
+A toaster draws 10 A from a 120 V outlet. Find its resistance.
+
+```
+R = V / I
+R = 120 V / 10 A
+R = 12 ohms
+```
+
+## Example 2: Changing the wire
+A wire has a resistance of 6 ohms. A second wire of the same material is twice as long and has three times the cross-sectional area. Find its resistance.
+
+```
+R is proportional to L / A
+R2 = 6 x (2 / 3)
+R2 = 4 ohms
+```
+
+## Example 3: Stretching a wire
+A wire is stretched to twice its length. Its volume stays the same, so its area is cut in half.
+
+```
+R2 = R1 x (2 / (1/2))
+R2 = 4 x R1
+```
+
+The resistance becomes four times larger.
+
+PAGE#Summary
+- Resistance opposes current and is measured in ohms.
+- Ohm's law: V = I x R.
+- For a wire, R = rho x L / A. Longer means more resistance, thicker means less.
+- In metals, resistance rises with temperature.
+- Conductance G = 1 / R is measured in siemens.
+
+LESSON#Series Circuits#Series Circuits
+PAGE#What Is a Series Circuit?
+In a series circuit, components are connected end to end so there is only one path for current.
+
+```
+  +----[ R1 ]----[ R2 ]----[ R3 ]----+
+  |                                    |
+ (+) Vs                                |
+ (-)                                   |
+  +------------------------------------+
+```
+
+## Key terms
+- Series: one single path for current
+- Total (equivalent) resistance: the single resistor that could replace the whole chain
+- Voltage drop: the voltage across one component
+
+PAGE#The Three Series Rules
+1. The same current flows through every component.
+2. The source voltage equals the sum of the voltage drops.
+3. The total resistance is the sum of the individual resistances.
+
+```
+I_total = I1 = I2 = I3
+Vs = V1 + V2 + V3
+R_total = R1 + R2 + R3
+```
+
+Because there is only one path, if any component opens (burns out or is disconnected), the current stops everywhere. This is why one bad bulb in an old string of lights turns off the whole string.
+
+PAGE#Voltage Divider
+Two or more series resistors split the source voltage in proportion to their resistances. This is the voltage divider rule:
+
+```
+V_n = Vs x R_n / R_total
+```
+
+For two resistors, the voltage across R2 is:
+
+```
+V2 = Vs x R2 / (R1 + R2)
+```
+
+A voltage divider is used to get a smaller voltage from a larger one.
+
+PAGE#Worked Examples
+## Example 1: Total resistance and current
+Resistors of 10, 20, and 30 ohms are in series across a 12 V source.
+
+```
+R_total = 10 + 20 + 30 = 60 ohms
+I = 12 / 60 = 0.2 A
+```
+
+## Example 2: Voltage across one resistor
+A 60 V supply drives 10 ohm and 20 ohm elements in series. Find the voltage across the 20 ohm element.
+
+```
+R_total = 10 + 20 = 30 ohms
+I = 60 / 30 = 2 A
+V_20 = 2 x 20 = 40 V
+```
+
+Check with the divider rule: 60 x 20 / 30 = 40 V.
+
+## Example 3: Finding a missing resistor
+Two resistors are in series across 100 V. The first is 20 ohms with 40 V across it.
+
+```
+I = 40 / 20 = 2 A
+V2 = 100 - 40 = 60 V
+R2 = 60 / 2 = 30 ohms
+```
+
+PAGE#Summary
+- Series means one path, so the current is the same everywhere.
+- Voltages add up to the source voltage.
+- R_total = R1 + R2 + R3 + ...
+- The voltage divider rule shares voltage in proportion to resistance.
+- An open anywhere in a series circuit stops the current everywhere.
+
+LESSON#Parallel Circuits#Parallel Circuits
+PAGE#What Is a Parallel Circuit?
+In a parallel circuit, components are connected across the same two nodes, so each one forms its own branch.
+
+```
+  +--------+--------+--------+
+  |        |        |        |
+ (+)      [R1]     [R2]     [R3]
+ Vs        |        |        |
+ (-)       |        |        |
+  +--------+--------+--------+
+```
+
+## Key terms
+- Branch: one path between the two common nodes
+- Equivalent resistance: the single resistor that could replace all the branches
+- Current divider: the rule for splitting current among branches
+
+PAGE#The Parallel Rules
+1. The same voltage is across every branch.
+2. The total current is the sum of the branch currents.
+3. The reciprocal of the total resistance is the sum of the reciprocals.
+
+```
+V_total = V1 = V2 = V3
+I_total = I1 + I2 + I3
+1 / R_total = 1 / R1 + 1 / R2 + 1 / R3
+```
+
+Adding another branch gives the current one more path, so the total resistance goes down. The equivalent resistance is always smaller than the smallest branch.
+
+## Shortcuts
+```
+Two resistors:        R_total = (R1 x R2) / (R1 + R2)
+N identical resistors: R_total = R / N
+```
+
+PAGE#Current Divider
+Branches with less resistance carry more current. For two parallel resistors with total current It:
+
+```
+I1 = It x R2 / (R1 + R2)
+I2 = It x R1 / (R1 + R2)
+```
+
+Notice that each branch current uses the other resistor in the numerator. Another way to find a branch current is simply I = V / R, since each branch has the full source voltage.
+
+PAGE#Worked Examples
+## Example 1: Equivalent resistance
+Two 20 ohm resistors in parallel:
+
+```
+R_total = (20 x 20) / (20 + 20) = 10 ohms
+```
+
+## Example 2: Branch and total current
+A 12 V battery is across a 4 ohm and a 6 ohm resistor in parallel.
+
+```
+I1 = 12 / 4 = 3 A
+I2 = 12 / 6 = 2 A
+I_total = 3 + 2 = 5 A
+```
+
+## Example 3: Three resistors
+Resistors of 30, 60, and 60 ohms in parallel:
+
+```
+1 / R = 1/30 + 1/60 + 1/60
+1 / R = 2/60 + 1/60 + 1/60 = 4/60
+R = 60 / 4 = 15 ohms
+```
+
+PAGE#Summary
+- Parallel means the same voltage across every branch.
+- Branch currents add up to the total current.
+- 1 / R_total = 1 / R1 + 1 / R2 + ...
+- The equivalent resistance is smaller than any single branch.
+- Less resistance means more current in that branch.
+- Household outlets are wired in parallel so each appliance gets the full voltage.
+
+LESSON#Series-Parallel Circuits#Series-Parallel Circuits
+PAGE#Mixing Series and Parallel
+Most real circuits contain both series and parallel parts. The key is to recognize which groups of resistors are in series and which are in parallel, then reduce the circuit step by step.
+
+```
+  +-----[ R1 ]-----+-------+
+  |                 |       |
+ (+) Vs            [R2]    [R3]
+ (-)                |       |
+  +-----------------+-------+
+```
+
+Here R2 and R3 are in parallel. That pair is then in series with R1.
+
+## Key terms
+- Combination circuit: a circuit with both series and parallel parts
+- Reduction: replacing a group of resistors with its equivalent
+
+PAGE#Solution Strategy
+1. Find the parallel groups and replace each with its equivalent resistance.
+2. Add series resistors to get the total resistance.
+3. Find the total current: I = Vs / R_total.
+4. Work backward. Use Ohm's law on each part to find voltages and branch currents.
+5. Check with KCL, or check that total power supplied equals total power absorbed.
+
+Tip: two resistors are in series only if they share a node with nothing else connected to that node. They are in parallel only if both ends connect to the same two nodes.
+
+PAGE#Worked Example
+A 40 V source feeds a 7 ohm resistor in series with a parallel pair of 12 ohms and 4 ohms. Find all currents and voltages.
+
+```
+Series resistor = 7 ohms
+Parallel pair   = (12 x 4) / (12 + 4) = 3 ohms
+R_total         = 7 + 3 = 10 ohms
+I_total         = 40 / 10 = 4 A
+V across 7 ohm  = 4 x 7 = 28 V
+V across pair   = 4 x 3 = 12 V
+I (12 ohm)      = 12 / 12 = 1 A
+I (4 ohm)       = 12 / 4  = 3 A
+```
+
+Checks:
+- KCL: 1 A + 3 A = 4 A
+- KVL: 28 V + 12 V = 40 V
+- Power supplied: 40 x 4 = 160 W. Power absorbed: 112 + 12 + 36 = 160 W
+
+PAGE#More Practice Patterns
+## Pattern 1: A parallel pair in series with a resistor
+Two 20 ohm resistors in parallel give 10 ohms. In series with a 10 ohm resistor, the total is 20 ohms.
+
+## Pattern 2: Series branches inside a parallel circuit
+A 6 ohm resistor in parallel with a branch of 2 ohms plus 4 ohms. First add the series branch: 2 + 4 = 6 ohms. Then 6 ohms in parallel with 6 ohms is 3 ohms. From a 36 V source, the total current is 36 / 3 = 12 A.
+
+## Power in a resistor
+```
+P = V x I = I^2 x R = V^2 / R
+```
+
+PAGE#Summary
+- Reduce parallel groups first, then add series parts.
+- Find the total current, then work backward to every branch.
+- The series resistor carries the total current. A parallel pair splits it.
+- Always check with KCL, KVL, or a power balance.
+
+CATEGORY#Circuit Laws and Analysis Methods
+
+LESSON#Superposition#Superposition
+PAGE#The Superposition Theorem
+In a linear circuit with more than one independent source, the response (a voltage or a current) is the algebraic sum of the responses caused by each source acting alone.
+
+Superposition works only for linear circuits, for example circuits made of resistors and independent sources.
+
+## Key terms
+- Independent source: a source whose value does not depend on other parts of the circuit
+- Linear circuit: a circuit where the response is proportional to the source
+- Algebraic sum: add the values with their signs (direction or polarity)
+
+PAGE#Turning Sources Off
+To find the effect of one source, turn all the other independent sources off:
+
+- An independent voltage source is replaced by a short circuit (0 V).
+- An independent current source is replaced by an open circuit (0 A).
+
+```
+Voltage source off:  replace with a wire
+Current source off:  remove it, leave a gap
+```
+
+Resistors always stay in the circuit.
+
+PAGE#Procedure
+1. Pick one source and turn all the others off.
+2. Solve for the voltage or current you want.
+3. Repeat for each source.
+4. Add the results algebraically. Use signs to account for direction or polarity.
+
+Important: superposition cannot be applied directly to power. Power depends on the square of current or voltage, so it is not linear. Add the voltages or currents first, then calculate the power.
+
+PAGE#Worked Example
+A 12 V source in series with a 6 ohm resistor connects to a node. A 3 A current source also feeds the node. A 3 ohm resistor connects the node to ground. Find the node voltage.
+
+## Source 1: the 12 V source (current source open)
+```
+V1 = 12 x 3 / (6 + 3) = 4 V
+```
+
+## Source 2: the 3 A source (voltage source shorted)
+The 6 ohm and 3 ohm resistors are in parallel.
+
+```
+R_parallel = (6 x 3) / (6 + 3) = 2 ohms
+V2 = 3 x 2 = 6 V
+```
+
+## Total
+```
+V = V1 + V2 = 4 + 6 = 10 V
+```
+
+PAGE#Power Pitfall
+Two sources each produce 3 A and 5 A in the same direction through a 10 ohm resistor.
+
+```
+Correct:  I = 3 + 5 = 8 A, P = 8^2 x 10 = 640 W
+Wrong:    P = 3^2 x 10 + 5^2 x 10 = 340 W
+```
+
+The wrong method misses the cross term. Always add currents first, then find the power.
+
+PAGE#Summary
+- Superposition: total response is the sum of the responses from each source alone.
+- Valid only for linear circuits.
+- Short the other voltage sources, open the other current sources.
+- Add with signs. Never add powers directly.
+
+LESSON#Kirchhoff's Laws#Kirchhoff's Laws
+PAGE#Nodes, Branches, and Loops
+Ohm's law alone is not enough for circuits with several loops. Kirchhoff's laws handle any circuit.
+
+## Key terms
+- Node: a point where two or more circuit elements connect
+- Branch: a single element or a series chain between two nodes
+- Loop: any closed path through the circuit that visits each node at most once
+
+PAGE#Kirchhoff's Current Law
+Kirchhoff's Current Law (KCL) says that the sum of the currents entering a node equals the sum of the currents leaving it. It is based on the conservation of charge.
+
+```
+Sum of currents in = Sum of currents out
+```
+
+```
+          I1 (in)
+            |
+  I2 (in) --o-- I3 (out)
+            |
+          I4 (out)
+
+  I1 + I2 = I3 + I4
+```
+
+Charge cannot pile up at a node, so whatever flows in must flow out.
+
+PAGE#Kirchhoff's Voltage Law
+Kirchhoff's Voltage Law (KVL) says that the algebraic sum of all voltages around any closed loop is zero. It is based on the conservation of energy.
+
+```
+Sum of voltage rises = Sum of voltage drops
+```
+
+## Sign convention
+1. Pick a direction around the loop, clockwise or counterclockwise.
+2. Going from the negative to the positive terminal of a source is a rise (use plus).
+3. Going through a resistor in the direction of the current is a drop (use minus).
+4. Add everything and set the total to zero.
+
+PAGE#Worked Examples
+## Example 1: KCL
+At a junction, 15 A and 9 A flow in. 11 A flows out one branch. Find the current in the other branch.
+
+```
+15 + 9 = 11 + I
+I = 24 - 11 = 13 A
+```
+
+## Example 2: KVL in one loop
+A 24 V source drives a 3 ohm and a 5 ohm resistor in series. Find the current and each voltage drop.
+
+```
+24 - 3 I - 5 I = 0
+8 I = 24
+I = 3 A
+V(3 ohm) = 3 x 3 = 9 V
+V(5 ohm) = 3 x 5 = 15 V
+```
+
+Check: 9 + 15 = 24 V.
+
+## Example 3: Missing drop
+A 30 V source drives three resistors. Two have drops of 8 V and 12 V. Find the third.
+
+```
+30 = 8 + 12 + V3
+V3 = 10 V
+```
+
+PAGE#Summary
+- KCL: currents into a node equal currents out (conservation of charge).
+- KVL: voltages around a closed loop sum to zero (conservation of energy).
+- Keep a consistent sign convention.
+- KCL leads to nodal analysis. KVL leads to mesh analysis.
+
+LESSON#Mesh Analysis#Mesh Analysis
+PAGE#What Is Mesh Analysis?
+Mesh analysis finds currents in a circuit by applying KVL around each mesh. A mesh is a loop that does not contain any other loop inside it.
+
+The unknowns are the mesh currents. Once they are known, any branch current or voltage follows.
+
+## Key terms
+- Mesh: a loop with no other loops inside it
+- Mesh current: a current assumed to circulate around one mesh
+- Shared resistor: a resistor that belongs to two meshes
+
+PAGE#The Procedure
+1. Count the meshes. A circuit with 3 meshes needs 3 equations.
+2. Assign a mesh current to each mesh. Using clockwise for all keeps the equations consistent.
+3. Write KVL around each mesh.
+4. Solve the equations together.
+5. Find the branch currents. In a shared resistor, the net current is the difference of the two mesh currents.
+
+## Shortcut form for two meshes
+```
+(R1 + R_shared) I1 - R_shared I2 = V1
+-R_shared I1 + (R2 + R_shared) I2 = V2
+```
+
+where V1 and V2 are the net source voltages that push current clockwise in each mesh.
+
+PAGE#Worked Example
+Mesh 1 has a 30 V source and a 1 ohm resistor. Mesh 2 has a 3 ohm resistor and no source. The meshes share a 3 ohm resistor. Both mesh currents are clockwise.
+
+```
+Mesh 1: 30 = (1 + 3) I1 - 3 I2 = 4 I1 - 3 I2
+Mesh 2:  0 = -3 I1 + (3 + 3) I2 = -3 I1 + 6 I2
+```
+
+From mesh 2, I1 = 2 I2. Substitute into mesh 1:
+
+```
+30 = 4 (2 I2) - 3 I2 = 5 I2
+I2 = 6 A
+I1 = 12 A
+```
+
+The net current in the shared resistor is I1 - I2 = 6 A, so its voltage is 6 x 3 = 18 V.
+
+Check: the source delivers 30 x 12 = 360 W. Power absorbed: 12^2 x 1 + 6^2 x 3 + 6^2 x 3 = 144 + 108 + 108 = 360 W.
+
+PAGE#Current Sources and the Supermesh
+If a current source is in only one mesh, that mesh current is set equal to the source value (with the right sign). This removes one unknown.
+
+If a current source is shared by two meshes, combine the two meshes into a supermesh:
+
+1. Write KVL around the larger loop that skips the current source.
+2. Write one extra equation relating the two mesh currents through the current source.
+
+```
+I1 - I2 = Is    (when the source points the same way as I1)
+```
+
+PAGE#Summary
+- Mesh analysis uses KVL and mesh currents.
+- A circuit with m meshes needs m equations.
+- A shared resistor has net current equal to the difference of the two mesh currents.
+- A shared current source creates a supermesh.
+- Mesh analysis works best when the circuit has few meshes and mostly voltage sources.
+
+LESSON#Nodal Analysis#Nodal Analysis
+PAGE#What Is Nodal Analysis?
+Nodal analysis finds node voltages by applying KCL at each node. The unknowns are the node voltages measured with respect to a reference node.
+
+## Key terms
+- Reference node (ground): the node chosen as 0 V
+- Node voltage: the voltage of a node relative to the reference
+- Supernode: a pair of non-reference nodes connected by a voltage source
+
+PAGE#The Procedure
+1. Choose a reference node. It is usually the one with the most connections, or the bottom node.
+2. Label the other node voltages. A circuit with N nodes needs N - 1 equations.
+3. At each node, write KCL: the sum of currents leaving the node equals zero (or equals the source current entering).
+4. Express each resistor current with Ohm's law, such as (V1 - V2) / R.
+5. Solve for the node voltages.
+
+```
+Current leaving node 1 through R to node 2 = (V1 - V2) / R
+Current leaving node 1 through R to ground = V1 / R
+```
+
+PAGE#Worked Example
+A 6 A source feeds node 1. A 2 ohm resistor connects node 1 to ground. A 4 ohm resistor connects node 1 to node 2. A 2 ohm resistor connects node 2 to ground.
+
+```
+Node 1: V1 / 2 + (V1 - V2) / 4 = 6
+Node 2: (V2 - V1) / 4 + V2 / 2 = 0
+```
+
+From node 2, multiply by 4: V2 - V1 + 2 V2 = 0, so V1 = 3 V2.
+
+Substitute into node 1 after multiplying by 4:
+
+```
+2 V1 + (V1 - V2) = 24
+3 V1 - V2 = 24
+9 V2 - V2 = 24
+V2 = 3 V
+V1 = 9 V
+```
+
+Check: current from the source is 6 A. Through the first 2 ohm resistor: 9 / 2 = 4.5 A. Through the 4 ohm resistor: (9 - 3) / 4 = 1.5 A. And 4.5 + 1.5 = 6 A.
+
+PAGE#Voltage Sources and the Supernode
+If a voltage source connects a node to ground, that node voltage is simply known, so it needs no equation.
+
+If a voltage source connects two non-reference nodes, treat them together as a supernode:
+
+1. Write KCL for the whole supernode, adding the currents leaving both nodes.
+2. Write the extra equation from the source: V_a - V_b = Vs.
+
+PAGE#Summary
+- Nodal analysis uses KCL and node voltages.
+- Choose a reference node. N nodes give N - 1 equations.
+- A voltage source between two non-reference nodes makes a supernode.
+- Nodal analysis works best when the circuit has few nodes and mostly current sources.
+
+CATEGORY#Network Theorems
+
+LESSON#Norton's Theorem#Norton's Theorem
+PAGE#What Is Norton's Theorem?
+Norton's theorem says that any linear two-terminal circuit can be replaced by an equivalent circuit made of an independent current source I_N in parallel with a resistor R_N.
+
+```
+  a o----+-------+
+         |       |
+        (I_N)   [R_N]
+         |       |
+  b o----+-------+
+```
+
+This makes it easy to see how the circuit behaves when different loads are connected across terminals a and b.
+
+## Key terms
+- Norton current (I_N): the short-circuit current between the terminals
+- Norton resistance (R_N): the resistance seen from the terminals with sources turned off
+- Load: the component connected across the terminals
+
+PAGE#Finding the Norton Equivalent
+1. Remove the load from terminals a and b.
+2. Find I_N by shorting a and b and calculating the current in the short.
+3. Find R_N by turning off all independent sources (short voltage sources, open current sources) and finding the resistance seen from a and b.
+4. Draw the Norton equivalent and connect the load back.
+
+## Link with Thevenin's theorem
+The Norton and Thevenin equivalents describe the same circuit:
+
+```
+R_N = R_th
+V_th = I_N x R_N
+I_N  = V_th / R_th
+```
+
+PAGE#Worked Example
+A 60 V source in series with a 10 ohm resistor feeds terminals a and b. A 15 ohm resistor is across a and b. Find the Norton equivalent, then the current in a 6 ohm load.
+
+## Step 1: Norton current
+Shorting a and b bypasses the 15 ohm resistor.
+
+```
+I_N = 60 / 10 = 6 A
+```
+
+## Step 2: Norton resistance
+Short the 60 V source. The 10 ohm and 15 ohm resistors are in parallel.
+
+```
+R_N = (10 x 15) / (10 + 15) = 6 ohms
+```
+
+## Step 3: Add the load
+A 6 ohm load across the Norton equivalent splits the 6 A equally:
+
+```
+I_L = 6 x 6 / (6 + 6) = 3 A
+V_L = 3 x 6 = 18 V
+```
+
+PAGE#Summary
+- Norton equivalent: a current source I_N in parallel with R_N.
+- I_N is the short-circuit current. R_N is the resistance with sources off.
+- Thevenin and Norton are linked by V_th = I_N x R_N.
+- The load current comes from the current divider: I_L = I_N x R_N / (R_N + R_L).
+
+LESSON#Delta to Wye#Delta to Wye
+PAGE#Delta and Wye Networks
+Some resistor networks are neither in series nor in parallel. A common example is three resistors connected in a triangle (delta, also called pi) or in a Y shape (wye, also called T or star). Each has three terminals.
+
+```
+  Delta (pi)              Wye (T or star)
+
+      a                       a
+     / \                      |
+   Rca  Rab                  Ra
+   /     \                    |
+  c---Rbc---b            c --Rc--o--Rb-- b
+```
+
+Converting between the two shapes can turn a hard circuit into a simple series-parallel one.
+
+## Key terms
+- Delta: three resistors connected in a closed triangle
+- Wye: three resistors joined at one common center point
+- Equivalent: looks the same from the three outside terminals
+
+PAGE#Delta to Wye Formulas
+Each wye resistor equals the product of the two adjacent delta resistors divided by the sum of all three delta resistors.
+
+```
+R_sum = Rab + Rbc + Rca
+
+Ra = (Rab x Rca) / R_sum
+Rb = (Rab x Rbc) / R_sum
+Rc = (Rbc x Rca) / R_sum
+```
+
+Ra is the wye resistor at terminal a, so it uses the two delta resistors that touch terminal a.
+
+## Balanced case
+If all three delta resistors are equal to R_delta, then:
+
+```
+R_Y = R_delta / 3
+```
+
+PAGE#Wye to Delta Formulas
+Each delta resistor equals the sum of the products of the wye resistors taken two at a time, divided by the wye resistor opposite to it.
+
+```
+S = Ra x Rb + Rb x Rc + Rc x Ra
+
+Rab = S / Rc
+Rbc = S / Ra
+Rca = S / Rb
+```
+
+## Balanced case
+If all three wye resistors are equal to R_Y, then:
+
+```
+R_delta = 3 x R_Y
+```
+
+PAGE#Worked Examples
+## Example 1: Delta to wye
+A delta has Rab = 10, Rbc = 20, and Rca = 20 ohms.
+
+```
+R_sum = 10 + 20 + 20 = 50 ohms
+Ra = (10 x 20) / 50 = 4 ohms
+Rb = (10 x 20) / 50 = 4 ohms
+Rc = (20 x 20) / 50 = 8 ohms
+```
+
+## Example 2: Wye back to delta
+Using the wye from Example 1 (Ra = 4, Rb = 4, Rc = 8):
+
+```
+S = 4x4 + 4x8 + 8x4 = 16 + 32 + 32 = 80
+Rab = 80 / 8 = 10 ohms
+Rbc = 80 / 4 = 20 ohms
+Rca = 80 / 4 = 20 ohms
+```
+
+The original delta is recovered, so the conversion checks out.
+
+## Example 3: Balanced delta
+Three 90 ohm resistors form a delta. Each wye resistor is 90 / 3 = 30 ohms. The resistance between any two terminals is 30 + 30 = 60 ohms.
+
+PAGE#Applications
+- Bridge circuits: a bridge with a diagonal resistor cannot be reduced by series and parallel rules alone. Converting one delta into a wye makes it solvable.
+- Three-phase power systems: loads and sources connect in delta or wye, and converting between them simplifies analysis.
+- Resistive networks: replacing a delta with a wye (or the reverse) can reveal hidden series and parallel groups.
+
+PAGE#Summary
+- Delta (pi) and wye (T or star) are three-terminal networks.
+- Delta to wye: Ra = (Rab x Rca) / R_sum, and so on.
+- Wye to delta: Rab = S / Rc, and so on, where S is the sum of products.
+- Balanced case: R_delta = 3 x R_Y.
+- After converting, use series-parallel reduction to finish the circuit.

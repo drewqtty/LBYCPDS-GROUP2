@@ -3,7 +3,7 @@ import lbycpds.group2.model.Topic;
 
 public class MinHeapTree {
 
-    public class TreeNode {
+    public static class TreeNode {
         TreeNode left;
         TreeNode right;
         public Topic data;
@@ -32,15 +32,18 @@ public class MinHeapTree {
 
 
     public void createMinHeapTree(Topic[] topics) {
-        int n = topics.length;
+        if (topics == null) { root = null; return; }
+
+        Topic[] heap = topics.clone(); // prevents the caller's array to be reordered
+        int n = heap.length;
 
         //Apply min-heapify from the last non-leaf node up to the root
         for (int i = (n / 2) - 1; i >= 0; i--) {
-            minHeapify(topics, n, i);
+            minHeapify(heap, n, i);
         }
 
         //Build the binary tree structure from the sorted heap array
-        root = buildTree(topics, 0);
+        root = buildTree(heap, 0);
     }
 
 
