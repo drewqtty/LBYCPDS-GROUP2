@@ -1,13 +1,19 @@
 COURSE#Data Structures and Algorithms
-TOPIC#Intro, ADT, and Complexity#Linked Lists
+TOPIC#Intro, ADT, and Complexity#Linked Lists#Arrays
 TOPIC#Linked Lists#Stacks
 TOPIC#Stacks#Queues
-TOPIC#Queues#Trees
-TOPIC#Trees#Heaps
+TOPIC#Queues#Trees#Recursion
+TOPIC#Trees#Heaps#Binary Search Trees
 TOPIC#Heaps#Graphs
-TOPIC#Graphs#Sorting
+TOPIC#Graphs#Sorting#Breadth-First Search (BFS)
 TOPIC#Sorting#Searching
-TOPIC#Searching
+TOPIC#Searching#Hash Tables
+TOPIC#Arrays
+TOPIC#Recursion
+TOPIC#Binary Search Trees
+TOPIC#Hash Tables
+TOPIC#Breadth-First Search (BFS)#Depth-First Search (DFS)
+TOPIC#Depth-First Search (DFS)
 
 MC#1#Intro, ADT, and Complexity#1#Which statement about an abstract data type (ADT) is correct?#It is the same as a primitive type#It must be implemented with arrays#It defines operations without fixing the implementation#It specifies the memory addresses used#C
 MC#111#Intro, ADT, and Complexity#1#Which of these is an abstract data type?#int#Stack#double#boolean#B
@@ -150,3 +156,65 @@ PS#344#Stacks#3#A stack starts empty. Do push(5), push(3), pop(), push(8), push(
 PS#444#Queues#3#A queue starts empty. Do enqueue(4), enqueue(6), enqueue(1), dequeue(), dequeue(), enqueue(9). Give the value at the front and the number of elements in the queue.#The queue is [1, 9], so the front is 1 and it has 2 elements#1#2
 PS#644#Heaps#3#The values 4, 7, 2, 9 are inserted one at a time into an empty min-heap. Write the heap array.#[2, 7, 4, 9]#2#7#4#9
 PS#744#Graphs#3#An undirected graph has the edges 1-2, 1-3, 2-4, 3-4, and 4-5. Breadth-first search starts at 1 and visits neighbors in ascending order. Which vertex is visited third and which is visited last?#The order is 1, 2, 3, 4, 5, so the third is 3 and the last is 5#3#5
+
+// ---------- Lesson topics added for Tutor Mode (3 questions per level, like the other topics) ----------
+
+MC#9001#Recursion#1#What is the purpose of the base case in a recursive method?#It stops the recursion#It makes the method run faster#It declares the variables#It sorts the input#A
+MC#9002#Recursion#1#What happens in Java when a recursive method never reaches its base case?#It returns 0#It ends with a StackOverflowError#The program does not compile#The method runs only once#B
+MC#9008#Recursion#1#Which line is the base case of this method? int sum(int n) { if (n == 0) return 0; return n + sum(n - 1); }#if (n == 0) return 0;#return n + sum(n - 1);#int sum(int n)#n - 1#A
+ID#9003#Recursion#2#Which data structure does the JVM use to keep track of method calls, including recursive calls? Answer with one word.#stack
+ID#9004#Recursion#2#factorial(n) returns 1 when n is 0, otherwise n * factorial(n - 1). What does factorial(5) return? Answer with a number.#120
+ID#9009#Recursion#2#countdown(n) does nothing when n is 0, otherwise it prints n and then calls countdown(n - 1). How many numbers does countdown(3) print? Answer with a number.#3
+MC#9005#Recursion#3#sum(n) returns 0 when n is 0, otherwise n + sum(n - 1). What does sum(4) return?#24#4#10#0#C
+MC#9006#Recursion#3#fib(0) = 0, fib(1) = 1, and fib(n) = fib(n - 1) + fib(n - 2). How many calls to fib are made in total, counting the first call, when fib(4) is called?#5#7#9#11#C
+PS#9007#Recursion#3#factorial(n) returns 1 when n is 1, otherwise n * factorial(n - 1). How many calls are made for factorial(6), and what is the Big O space used by the call stack?#6 calls (n = 6 down to 1), and the call stack uses O(n) space#6#o(n)
+
+MC#9011#Arrays#1#An array is created with int[] a = new int[8]. What is the index of its last element?#8#7#9#0#B
+MC#9012#Arrays#1#Why can an array read any element by its index so quickly?#The elements are always sorted#The elements are stored in contiguous memory, so the address is calculated from the index#Each element stores the address of the next one#The array is searched from the first element#B
+MC#9018#Arrays#1#Which statement creates an array that can hold 5 integers?#int[] a = new int[5];#int a = new int(5);#int[5] a;#array a = [5];#A
+ID#9013#Arrays#2#What is the Big O time complexity of inserting a new element at the front of an array of n elements, when every other element must shift? Write it in the form O(n).#O(n)
+ID#9014#Arrays#2#Which exception does Java throw when a program uses an index outside the bounds of an array? Write the exception name.#ArrayIndexOutOfBoundsException
+ID#9019#Arrays#2#int[] a = {4, 8, 15, 16}. What is the value of a[2]? Answer with a number.#15
+MC#9015#Arrays#3#int[] a = {10, 20, 30, 40, 0, 0} holds 4 values. To insert 25 at index 2, the values 30 and 40 are shifted one place to the right and then a[2] is set to 25. What does the array hold afterwards?#10, 20, 25, 30, 40, 0#10, 20, 25, 40, 0, 0#10, 25, 20, 30, 40, 0#25, 10, 20, 30, 40, 0#A
+MC#9016#Arrays#3#Which operation on an array of n elements takes O(n) time in the worst case?#Reading a[i]#Overwriting a[i]#Inserting a new element at index 0 by shifting#Reading a.length#C
+PS#9017#Arrays#3#scores = {90, 85, 77, 62, 100}. Find the sum of all the elements and the value of scores[3].#The sum is 90 + 85 + 77 + 62 + 100 = 414, and scores[3] is 62#414#62
+
+MC#9021#Hash Tables#1#What does a hash function do?#It sorts the keys in ascending order#It turns a key into an array index#It deletes duplicate keys#It encrypts the keys#B
+MC#9022#Hash Tables#1#What is a collision in a hash table?#The table becomes empty#Two different keys are given the same index#A key cannot be converted to a number#The table has no capacity left#B
+MC#9028#Hash Tables#1#What is the average-case time of a lookup in a hash table with a good hash function?#O(1)#O(n)#O(log n)#O(n^2)#A
+ID#9023#Hash Tables#2#A hash table uses the hash function key % 10. At which index is the key 47 stored? Answer with a number.#7
+ID#9024#Hash Tables#2#Which collision handling technique keeps a list of all the keys that hash to the same slot? Answer with two words.#separate chaining
+ID#9029#Hash Tables#2#A hash table uses the hash function key % 7. At which index is the key 23 stored? Answer with a number.#2
+MC#9025#Hash Tables#3#A table with capacity 5 uses hash(key) = key % 5 and separate chaining. The keys 12, 25, 7, 17, 22 are inserted in this order. How many keys are in the chain at index 2?#2#3#4#5#C
+MC#9026#Hash Tables#3#A table with capacity 7 uses hash(key) = key % 7 and linear probing. The keys 10, 17, 24 are inserted in this order. At which index is 24 stored?#3#4#5#6#C
+PS#9027#Hash Tables#3#A hash table has capacity 8 and holds 6 keys. Find the load factor, and give the average Big O time of a lookup when the hash function spreads keys evenly.#The load factor is 6 / 8 = 0.75, and an average lookup is O(1)#0.75#o(1)
+
+MC#9031#Binary Search Trees#1#In a binary search tree, where is a value that is smaller than the current node placed?#In the left subtree#In the right subtree#At the root#At the last leaf#A
+MC#9032#Binary Search Trees#1#Which traversal of a binary search tree visits the keys in ascending order?#Preorder#Inorder#Postorder#Level-order#B
+MC#9038#Binary Search Trees#1#Where is the smallest value of a binary search tree found?#At the root#At the leftmost node#At the rightmost node#At the last inserted node#B
+ID#9033#Binary Search Trees#2#The values 8, 3, 10, 1, 6 are inserted in this order into an empty binary search tree. What is the left child of the root? Answer with a number.#3
+ID#9034#Binary Search Trees#2#What is the Big O time of searching a binary search tree with n nodes that has become a single chain? Write it in the form O(n).#O(n)
+ID#9039#Binary Search Trees#2#In a binary search tree, what do you call a node that has no children? Answer with one word.#leaf
+MC#9035#Binary Search Trees#3#The values 40, 20, 60, 10, 30, 50, 70, 45 are inserted in this order into an empty binary search tree. The root 40 is deleted and replaced by its inorder successor. Which value becomes the new root?#50#45#60#30#B
+MC#9036#Binary Search Trees#3#The values 10, 20, 30, 40 are inserted in this order into an empty binary search tree. What does the tree look like?#A balanced tree of height 2#A chain in which every node is the right child of the one before#A chain in which every node is the left child of the one before#A complete tree#B
+PS#9037#Binary Search Trees#3#A binary search tree is built by inserting 15, 10, 20, 8, 12 in this order. List the keys compared when searching for 12, and how many comparisons are made.#The search compares 15, then 10, then 12, so 3 comparisons#15#10#3
+
+MC#9041#Breadth-First Search (BFS)#1#Which data structure does BFS use to decide which vertex to visit next?#Stack#Queue#Heap#Binary search tree#B
+MC#9042#Breadth-First Search (BFS)#1#How does BFS explore a graph?#It follows one path as deep as possible before backing up#It visits all the neighbors of a vertex before going further out#It visits the vertices in alphabetical order only#It visits the vertex with the most edges first#B
+MC#9048#Breadth-First Search (BFS)#1#BFS starts at vertex A. Which vertices does it visit right after A?#The neighbors of A#The neighbors of the neighbors of A#The vertex farthest from A#A random vertex#A
+ID#9043#Breadth-First Search (BFS)#2#BFS on an adjacency list takes O(V + E) time. What does E stand for? Answer with one word.#edges
+ID#9044#Breadth-First Search (BFS)#2#A graph has the edges A-B, A-C, B-D, C-D, D-E. BFS starts at A and visits neighbors in alphabetical order. Which vertex is visited fourth? Answer with a letter.#D
+ID#9049#Breadth-First Search (BFS)#2#A graph has the edges A-B, A-C, B-D. BFS starts at A and visits neighbors in alphabetical order. Which vertex is visited last? Answer with a letter.#D
+MC#9045#Breadth-First Search (BFS)#3#A graph has the edges A-B, A-C, B-D, C-D, D-E. BFS starts at A and visits neighbors in alphabetical order. What is the visiting order?#A, B, D, C, E#A, B, C, D, E#A, C, B, E, D#A, D, B, C, E#B
+MC#9046#Breadth-First Search (BFS)#3#A graph has the edges A-B, A-C, B-D, C-D, D-E. How many edges are on the shortest path from A to E, which BFS finds?#2#3#4#5#B
+PS#9047#Breadth-First Search (BFS)#3#A graph with 6 vertices and 7 edges is stored as an adjacency list. Find V + E, the running time of BFS, and name the data structure BFS uses.#V + E = 6 + 7 = 13, and BFS uses a queue#13#queue
+
+MC#9051#Depth-First Search (DFS)#1#Which data structure does DFS use, directly or through recursion?#Queue#Stack#Heap#Hash table#B
+MC#9052#Depth-First Search (DFS)#1#What does DFS do when the current vertex has no unvisited neighbors?#It stops the whole search#It backtracks to the previous vertex#It starts again from the first vertex#It deletes the vertex#B
+MC#9058#Depth-First Search (DFS)#1#DFS starts at vertex A. What does it do right after visiting A?#It visits one neighbor of A and keeps going deeper#It visits all the neighbors of A first#It visits the vertex farthest from A#It stops#A
+ID#9053#Depth-First Search (DFS)#2#A graph has the edges A-B, A-C, B-D, C-D, D-E. DFS starts at A and visits neighbors in alphabetical order. Which vertex is visited third? Answer with a letter.#D
+ID#9054#Depth-First Search (DFS)#2#Which traversal, BFS or DFS, does not guarantee the shortest path in an unweighted graph? Answer with BFS or DFS.#DFS
+ID#9059#Depth-First Search (DFS)#2#A graph has the edges A-B, A-C, B-D. DFS starts at A and visits neighbors in alphabetical order. Which vertex is visited last? Answer with a letter.#C
+MC#9055#Depth-First Search (DFS)#3#A graph has the edges A-B, A-C, B-D, C-D, D-E. DFS starts at A and visits neighbors in alphabetical order. What is the visiting order?#A, B, D, C, E#A, B, C, D, E#A, C, D, B, E#A, B, D, E, C#A
+MC#9056#Depth-First Search (DFS)#3#Why does DFS mark a vertex as visited?#To make the search faster than O(V + E)#To avoid visiting a vertex twice and looping forever on a cycle#To find the shortest path#To sort the vertices#B
+PS#9057#Depth-First Search (DFS)#3#A graph with 5 vertices and 6 edges is stored as an adjacency list. Find V + E, the running time of DFS, and name the data structure that DFS uses.#V + E = 5 + 6 = 11, and DFS uses a stack#11#stack
