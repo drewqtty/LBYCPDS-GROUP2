@@ -1,5 +1,6 @@
 package lbycpds.group2.logic;
 
+import lbycpds.group2.model.Lesson;
 import lbycpds.group2.model.Question;
 
 import java.util.ArrayList;
@@ -34,5 +35,15 @@ public class TutorQuestionList {
             return Integer.compare(a.getId(), b.getId());
         });
         return list;
+    }
+
+    // The practice quiz questions for a lesson: the questions of its practice topic, easiest first.
+    // A lesson with no practice topic gets an empty list. (forTopic alone would return every question
+    // for an empty topic name.)
+    public static List<Question> forLesson(Lesson lesson, Question[] questions) {
+        if (lesson == null || !lesson.hasPracticeTopic()) {
+            return new ArrayList<>();
+        }
+        return forTopic(questions, lesson.getPracticeTopic());
     }
 }
