@@ -50,11 +50,6 @@ public class CourseCatalog {
             return bank;
         }
 
-        // True while the course is showing temporary sample content instead of real content
-        public boolean isSample() {
-            return sample;
-        }
-
         public boolean hasQuestions() {
             return bank.loadQuestions().length > 0;
         }
