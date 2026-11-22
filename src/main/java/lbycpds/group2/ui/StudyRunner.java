@@ -11,7 +11,7 @@ import lbycpds.group2.database.LocalCramStore;
 import lbycpds.group2.logic.AdaptiveDifficulty;
 import lbycpds.group2.logic.CramStudySession;
 import lbycpds.group2.logic.MissedQuestionsStudySession;
-import lbycpds.group2.logic.QuestionBankFiles;
+import lbycpds.group2.logic.CourseCatalog;
 import lbycpds.group2.logic.SingleCourseStudySession;
 import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.logic.StudyMode;
@@ -28,7 +28,6 @@ import java.util.Map;
 public class StudyRunner {
 
     private static final int QUESTIONS_PER_ROUND = 10;
-    private static final String[] BANK_FILES = {"/questions/circuits.txt", "/questions/dsa.txt"};
 
     public static void start() {
         String student = AppState.student.getName();
@@ -196,13 +195,8 @@ public class StudyRunner {
     }
 
     private static TextFileQuestionBank bankFor(String course) {
-        for (String file : BANK_FILES) {
-            TextFileQuestionBank bank = QuestionBankFiles.open(file);
-            if (bank.getCourse().equals(course)) {
-                return bank;
-            }
-        }
-        return null;
+        CourseCatalog.Course found = CourseCatalog.find(course);
+        return found == null ? null : found.getBank();
     }
 
     private static void tell(String message) {
