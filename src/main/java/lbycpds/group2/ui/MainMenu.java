@@ -6,7 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import lbycpds.group2.logic.QuestionBankFiles;
+import lbycpds.group2.logic.CourseCatalog;
 import lbycpds.group2.logic.StudyFlow;
 import lbycpds.group2.logic.TextFileQuestionBank;
 import lbycpds.group2.model.Question;
@@ -22,8 +22,8 @@ import lbycpds.group2.database.Stores;
 
 public class MainMenu {
 
-    TextFileQuestionBank circuits = QuestionBankFiles.open("/questions/circuits.txt");
-    TextFileQuestionBank dsa = QuestionBankFiles.open("/questions/dsa.txt");
+    // Every course the app offers (see CourseCatalog)
+    private final List<CourseCatalog.Course> courses = CourseCatalog.all();
 
     public Parent build() {
         // Top bar
@@ -81,19 +81,26 @@ public class MainMenu {
 
         // Course & action
         ComboBox<String> courseBox = new ComboBox<>();
-        courseBox.getItems().addAll(circuits.getCourse(), dsa.getCourse());
-        courseBox.setValue(circuits.getCourse());
+        for (CourseCatalog.Course course : courses) {
+            courseBox.getItems().add(course.getName());
+        }
+        courseBox.setValue(courses.get(0).getName());
         courseBox.setMaxWidth(Double.MAX_VALUE);
 
         Button start = new Button("START SESSION  ");
         start.getStyleClass().add("start-button");
         start.setMaxWidth(Double.MAX_VALUE);
         start.setOnAction(e -> {
+            CourseCatalog.Course chosen = courseNamed(courseBox.getValue());
+            if (chosen == null || !chosen.hasQuestions()) {
+                Dialogs.tell(courseBox.getValue() + " has no questions yet. "
+                        + "It will be available once the course content is added.");
+                return;
+            }
+
             if (tutor.isSelected()) {
-                boolean isCircuits = courseBox.getValue().equals(circuits.getCourse());
-                TextFileQuestionBank bank = isCircuits ? circuits : dsa;
-                LessonRepository lessons = LessonRepository.forQuestionBank(
-                        isCircuits ? "/questions/circuits.txt" : "/questions/dsa.txt");
+                TextFileQuestionBank bank = chosen.getBank();
+                LessonRepository lessons = LessonRepository.forQuestionBank(chosen.getResourcePath());
                 SceneManager.show(new TutorTopicScreen(bank.getCourse(), lessons, bank.loadQuestions()).build());
                 return;
             }
@@ -103,13 +110,9 @@ public class MainMenu {
             AppState.mode = cram.isSelected() ? "CRAM" : "REGULAR";
             AppState.course = courseBox.getValue();
             AppState.student.addCourse(AppState.course);
-            if (AppState.course.equals(circuits.getCourse())) {
-                AppState.topics.addAll(loadTopics(circuits));
-            } else {
-                AppState.topics.addAll(loadTopics(dsa));
-            }
+            AppState.topics.addAll(loadTopics(chosen.getBank()));
 
-            AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
+            AppState.graphs = StudyFlow.buildGraphs(AppState.topics, banks());
 
             if (cram.isSelected()) {
                 StudyRunner.start();
@@ -165,6 +168,25 @@ public class MainMenu {
         root.setCenter(columns);
         root.getStyleClass().add("green");
         return root;
+    }
+
+    // The course with this name, or null
+    private CourseCatalog.Course courseNamed(String name) {
+        for (CourseCatalog.Course course : courses) {
+            if (course.getName().equals(name)) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    // The question banks of every course
+    private List<TextFileQuestionBank> banks() {
+        List<TextFileQuestionBank> banks = new ArrayList<>();
+        for (CourseCatalog.Course course : courses) {
+            banks.add(course.getBank());
+        }
+        return banks;
     }
 
     // Study modes
@@ -238,12 +260,17 @@ public class MainMenu {
 
     // Loads the saved progress and goes straight back into the mode the student was using
     private void continueLast(LastSession last) {
+        CourseCatalog.Course saved = courseNamed(last.getCourse());
+        if (saved == null || !saved.hasQuestions()) {
+            Dialogs.tell(last.getCourse() + " has no questions available right now.");
+            return;
+        }
         AppState.mode = last.isCram() ? "CRAM" : "REGULAR";
         AppState.course = last.getCourse();
         AppState.student.addCourse(last.getCourse());
         AppState.topics = new ArrayList<>();
-        AppState.topics.addAll(loadTopics(last.getCourse().equals(circuits.getCourse()) ? circuits : dsa));
-        AppState.graphs = StudyFlow.buildGraphs(AppState.topics, List.of(circuits, dsa));
+        AppState.topics.addAll(loadTopics(saved.getBank()));
+        AppState.graphs = StudyFlow.buildGraphs(AppState.topics, banks());
         if (last.isCram()) {
             StudyRunner.start();
             return;
