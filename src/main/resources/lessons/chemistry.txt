@@ -1,6 +1,0 @@
-// Tutor Mode lessons for Chemistry for Engineers
-// THIS FILE IS INTENTIONALLY EMPTY OF LESSONS.
-// The real lessons are supplied by the backend / content team (see the format in lessons/circuits.txt).
-// Practice topics must match the TOPIC# names in questions/chemistry.txt exactly.
-// Until this file has lessons, the app shows the temporary sample in lessons/chemistry-mock.txt.
-COURSE#Chemistry for Engineers
