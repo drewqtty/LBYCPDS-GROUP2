@@ -4,44 +4,526 @@ CATEGORY#Safety and Hazards
 
 LESSON#Chemical Safety (MSDS)#Chemical Safety (MSDS)
 PAGE#What Is an MSDS?
-PAGE#Toxicity and Exposure
+A Material Safety Data Sheet (MSDS) is a document that summarizes the hazards and the health and safety information for a chemical. It tells workers how to store, handle, use, and dispose of the chemical, and what to do in an emergency.
+
+Written chemical safety information is very old. Egyptian tomb walls and papyrus records contain some of the earliest written material resembling it, dating back over 4,000 years.
+
+## MSDS and SDS
+- In the United States, the Hazard Communication Standard was issued by OSHA (the Occupational Safety and Health Administration). It requires employers to give workers access to MSDSs and SDSs.
+- OSHA issued its final hazard communication rule on November 25, 1983.
+- Manufacturers and importers had to supply an MSDS with all shipments by November 1985.
+- The Globally Harmonized System (GHS) influenced the change from the MSDS to the standardized SDS (Safety Data Sheet) format, so that every sheet is organized the same way.
+
+## Key terms
+- MSDS: a document of hazard and safety information for a chemical
+- SDS: the standardized, GHS-based format that replaced the MSDS
+- OSHA: the U.S. agency behind the Hazard Communication Standard
+- GHS: the global system that standardized the sheet format
+
+PAGE#Toxicity and Dose
+The principle "the dose makes the poison" means that harm depends on the amount of a substance and the exposure to it. A substance that is harmless in a tiny amount can be harmful in a large amount.
+
+## Where the effect happens
+- Local effects happen at the site of contact, such as the skin, eyes, or lungs.
+- Systemic effects happen after the substance is absorbed and carried to other parts of the body.
+
+## How long the exposure lasts
+- Acute toxicity comes from short-term exposure and has immediate effects.
+- Chronic toxicity comes from long-term exposure and has delayed effects.
+
+## LD50
+The LD50 is the dose that is lethal to 50% of the exposed test subjects. It is given in mg of chemical per kg of body mass. A lower LD50 means a more toxic chemical.
+
+Assuming the dose scales with body mass:
+
+```
+dose = LD50 x body mass
+```
+
+Example: a chemical has an LD50 of 250 mg/kg. For a person of 60 kg:
+
+```
+250 mg/kg x 60 kg = 15000 mg = 15 g
+```
+
+PAGE#Controlling Exposure
+Workers can be protected in several ways. Engineering controls change the workplace itself so that less of the hazard reaches people.
+
+- An example of an engineering control is a ventilation system, which reduces the inhalation of vapors in a workroom.
+- Engineering controls are preferred over personal protective equipment (PPE) because they reduce the risk at the source.
+- PPE, such as gloves, goggles, and respirators, protects only the person wearing it and only when it is worn correctly. It is the last line of defense.
+
+## Key terms
+- Engineering control: a change to the workplace, such as ventilation, that reduces the risk at the source
+- PPE: personal protective equipment worn by the worker
 
 LESSON#Ethanol (MSDS)#Ethanol (MSDS)
-PAGE#Reading an MSDS: Ethanol
-PAGE#Handling and Fire Safety
+PAGE#Identification and Hazards
+Ethanol is the alcohol found in beverages, solvents, and fuels. According to its MSDS:
+
+- The molecular formula is C2H5OH.
+- It is a flammable liquid and vapor.
+- The target organs are the kidneys, heart, central nervous system, and liver.
+
+A target organ is an organ that the chemical is most likely to damage after exposure.
+
+## Reading the sheet
+An MSDS is divided into numbered sections. In this MSDS, Section 5 is Fire Fighting Measures. Knowing the section number lets you find the right information quickly during an emergency.
+
+PAGE#Fire Safety and Spills
+## Flash point
+The flash point is the lowest temperature at which a liquid gives off enough vapor to ignite. The flash point of absolute ethanol is 16.6 degrees C. That is below normal room temperature, so ethanol can ignite in an ordinary laboratory.
+
+To convert degrees Celsius to degrees Fahrenheit:
+
+```
+F = (9/5)C + 32
+F = (9/5)(16.6) + 32 = 29.88 + 32 = 61.88 degrees F
+```
+
+## Vapor density
+The vapor density of ethanol is 1.59 (air = 1). A vapor with a density above 1 is heavier than air, so it sinks. Ethanol vapor can travel along the ground to a source of ignition and flash back to the spill. Because of this, all sources of ignition must be controlled near ethanol.
+
+## Spills
+If ethanol is spilled in a laboratory, absorb the spill with an inert material such as sand, vermiculite, or earth. Remove all sources of ignition from the area.
+
+PAGE#Exposure Limits and Toxicity Data
+## Exposure limit
+The OSHA permissible exposure limit (PEL) of ethanol as a time-weighted average (TWA) is 1000 ppm. A TWA is the average concentration a worker may be exposed to over a working day.
+
+## LD50 for rats
+The MSDS gives an oral LD50 for rats of 7060 mg per kg of body mass. To find the dose for a rat of a given mass, multiply:
+
+```
+7060 mg/kg x 0.25 kg = 1765 mg
+```
+
+So a 0.25 kg rat has an LD50 dose of 1765 mg.
+
+## Key terms
+- PEL: permissible exposure limit set by OSHA
+- TWA: time-weighted average
+- Flash point: lowest temperature at which the vapor can ignite
 
 CATEGORY#Environment and Matter
 
 LESSON#Atmospheric Chemistry#Atmospheric Chemistry
 PAGE#Layers and Composition of the Atmosphere
+The troposphere is the lowest layer of the atmosphere. It is where we live and it holds about 75% of the mass of the air. Above it are the stratosphere, the mesosphere, and the thermosphere.
+
+## Dry air
+- Nitrogen makes up about 78% of dry air.
+- Oxygen makes up about 21%.
+- Argon and carbon dioxide make up most of the remainder.
+
+## Nitrogen fixation
+Plants cannot use molecular nitrogen (N2) directly. The process of converting N2 into usable nitrogen compounds such as ammonia and nitrates is called nitrogen fixation.
+
 PAGE#Air Pollutants
+A primary pollutant is released directly into the air. A secondary pollutant forms in the air from reactions of other pollutants. Ozone in photochemical smog is not released directly by vehicles, so it is a secondary pollutant.
+
+## Carbon monoxide (CO)
+Incomplete combustion of a fuel produces carbon monoxide instead of carbon dioxide. CO is called the silent killer because it is odorless and it blocks the oxygen transport system of the body.
+
+## Radon
+Radon is a radioactive noble gas formed from the decay of uranium-238. It can seep from the ground into the basements of homes.
+
+## Nitrogen dioxide (NO2)
+Nitrogen dioxide reacts with water in the lungs and forms two acids, nitrous acid and nitric acid:
+
+```
+2 NO2 + H2O -> HNO2 + HNO3
+```
+
+## Sulfur dioxide (SO2)
+Sulfur dioxide comes from burning sulfur-containing fuels and is a main cause of acid rain.
+
+PAGE#Controlling Pollution and Air Quality Standards
+## Catalytic converters
+A catalytic converter in a car changes toxic carbon monoxide into carbon dioxide.
+
+## Removing SO2 with limestone
+Powdered limestone (calcium carbonate, CaCO3) is injected into a furnace. At high temperature it decomposes into carbon dioxide and quicklime (calcium oxide, CaO). The quicklime then reacts with sulfur dioxide and traps it as a solid.
+
+```
+CaCO3 -> CaO + CO2
+CaO + SO2 -> CaSO3
+```
+
+## Comparing a concentration to a standard
+Air quality standards are written as concentrations. Convert the units first, then compare.
+
+Example: an air sample contains 5000 ug of carbon monoxide per cubic meter. Since 1000 ug = 1 mg:
+
+```
+5000 ug/m3 = 5 mg/m3
+```
+
+The 8-hour standard for carbon monoxide is 10 mg/m3. Since 5 mg/m3 is below 10 mg/m3, the sample is not above the standard.
 
 LESSON#Water#Water
 PAGE#Structure and Properties of Water
+Water molecules are held together by polar covalent bonds. In a polar covalent bond the electrons are displaced toward the more electronegative atom. In water, the oxygen atom pulls the electrons closer, so oxygen carries a partial negative charge and each hydrogen carries a partial positive charge.
+
+## Hydrogen bonding
+Because water is polar, its molecules attract each other through hydrogen bonds. Hydrogen bonding explains why ice floats on liquid water. In ice, the hydrogen bonds hold the molecules in a porous, open structure, so ice is less dense than liquid water.
+
+## Key terms
+- Polar covalent bond: electrons are displaced toward the more electronegative atom
+- Hydrogen bond: attraction between a partly positive hydrogen and a partly negative atom of another molecule
+
+PAGE#Sources of Water and Desalination
+Most of Earth's water is seawater, which is too salty to drink.
+
+## Freshwater
+- Glaciers and ice hold most of the freshwater.
+- Aquifers (groundwater) hold much of the rest.
+- Surface water, such as lakes and rivers, makes up only about 0.3% of the freshwater on Earth but is the most convenient to use.
+
+## Desalination
+Any process that removes sodium chloride and other minerals from salty water to produce potable (drinkable) water is called desalination.
+
 PAGE#Solutions and Concentration
+A compound that dissolves in water and dissociates into ions is an electrolyte. A compound that dissolves in water but does not dissociate into ions, such as sugar, is called a nonelectrolyte.
+
+## Percent by mass
+```
+percent by mass = mass of solute / mass of solution x 100
+```
+
+Example: 6.44 g of naphthalene in 80.1 g of benzene. The solution has a mass of 6.44 + 80.1 = 86.54 g.
+
+```
+6.44 / 86.54 x 100 = 7.44 percent
+```
+
+## Parts per million (ppm)
+For dilute water solutions, 1 ppm is 1 mg of solute per liter of solution.
+
+Example: 0.025 g of Pb(NO3)2 is dissolved in 100 g of water, which is about 0.100 L. Convert 0.025 g to 25 mg.
+
+```
+25 mg / 0.100 L = 250 mg/L = 250 ppm
+```
+
+## Molarity
+```
+M = moles of solute / liters of solution
+moles = mass / molar mass
+```
+
+Example: 2.30 g of C2H5OH (46.07 g/mol) in 3.50 L of solution.
+
+```
+moles = 2.30 g / 46.07 g/mol = 0.0499 mol
+M = 0.0499 mol / 3.50 L = 0.0143 M
+```
+
+PAGE#Acids, Bases, and pH
+The pH of a solution is a measure of its acidity.
+
+- A neutral solution has a pH of 7 at 25 degrees C.
+- A pH below 7 is acidic.
+- A pH above 7 is basic.
+
+## The water constant
+At 25 degrees C:
+
+```
+Kw = [H+][OH-] = 1.0 x 10^-14
+pH = -log[H+]
+```
+
+Example: a solution has [OH-] = 1.0 x 10^-3 M.
+
+```
+[H+] = 1.0 x 10^-14 / 1.0 x 10^-3 = 1.0 x 10^-11 M
+pH = 11
+```
+
+Since the pH is above 7, the solution is basic.
 
 CATEGORY#Energy and Fuels
 
 LESSON#Energy from Combustion#Energy from Combustion
-PAGE#Heat, Temperature and the Laws of Thermodynamics
-PAGE#Bond Energy and Calorimetry
+PAGE#Heat, Temperature, and the Laws of Thermodynamics
+Temperature is a measure of the average kinetic energy of molecules. Heat is energy that flows from a hotter object to a colder object.
+
+## The laws of thermodynamics
+- Zeroth Law: if object A is in thermal equilibrium with object C, and object B is also in thermal equilibrium with C, then A and B are in thermal equilibrium with each other.
+- First Law: energy is neither created nor destroyed, but it may be transformed from one form to another.
+- Second Law: the entropy of the universe is always increasing.
+
+Burning a fuel does not create energy. It converts the chemical energy stored in the fuel into heat.
+
+PAGE#Bond Energy and Exothermic Reactions
+Breaking bonds always requires energy. Forming bonds releases energy.
+
+```
+net energy change = energy absorbed (bonds broken) - energy released (bonds formed)
+```
+
+If more energy is released than absorbed, the net change is negative and the reaction is exothermic. If more energy is absorbed than released, the reaction is endothermic.
+
+## Example: 2 H2 + O2 -> 2 H2O
+- Breaking 2 H-H bonds takes 872 kJ.
+- Breaking 1 O=O bond takes 498 kJ.
+- Forming 4 O-H bonds releases 1868 kJ.
+
+```
+absorbed = 872 + 498 = 1370 kJ
+released = 1868 kJ
+net change = 1370 - 1868 = -498 kJ
+```
+
+The net change is negative, so the reaction is exothermic.
+
+PAGE#Energy Units and Calorimetry
+1 calorie (cal) equals 4.184 joules (J). One calorie raises the temperature of 1 g of water by 1 degree C. The heat released in a combustion reaction is measured with a calorimeter.
+
+## Food Calories
+A dietary Calorie (Cal) is 1 kcal, which is 1000 cal.
+
+Example: convert a 250 Cal snack bar to kilojoules.
+
+```
+250 Cal = 250,000 cal
+250,000 cal x 4.184 J/cal = 1,046,000 J = 1046 kJ
+```
+
+## Heating water
+Example: heat needed to raise 50.0 g of water by 10.0 degrees C.
+
+```
+50.0 g x 10.0 degrees C x 1 cal = 500 cal
+500 cal x 4.184 J/cal = 2092 J
+```
+
+## Key terms
+- Calorimeter: instrument that measures heat released in a reaction
+- Exothermic: releases net energy
+- Entropy: a measure of disorder, always increasing in the universe
 
 LESSON#Fuels#Fuels
-PAGE#Fossil Fuels and Refining
-PAGE#Biofuels and Alternatives
+PAGE#Fossil Fuels and Crude Oil
+Most of the fossil fuels we use today were formed from decaying plant life over millions of years.
+
+Crude oil is not a single compound. It is a mixture of several thousand compounds, mostly hydrocarbons with 5 to 12 carbon atoms.
+
+## Comparing fuels
+Petroleum generates about 40 to 60 percent more energy per gram than coal.
+
+Example: if coal gives 30 kJ per gram, petroleum gives:
+
+```
+30 x 1.40 = 42 kJ/g
+30 x 1.60 = 48 kJ/g
+```
+
+So the range is 42 to 48 kJ per gram.
+
+PAGE#Refining Crude Oil
+## Distillation
+Distillation separates crude oil into its components based on their different boiling points.
+
+## Isomers and branching
+Isomers are molecules that have the same molecular formula but different chemical structures. Branched hydrocarbons burn more smoothly in an engine than linear ones.
+
+## Catalysts, cracking, and reforming
+A catalyst lowers the activation energy of a reaction by providing an alternate pathway.
+
+- Catalytic cracking splits large molecules into smaller ones. Compared with thermal cracking alone, the catalyst lowers the temperature that is required.
+- Catalytic reforming rearranges linear hydrocarbon molecules into more branched ones, which burn more smoothly.
+
+## Key terms
+- Distillation: separation by boiling point
+- Isomers: same formula, different structure
+- Catalyst: lowers activation energy through an alternate pathway
+
+PAGE#Biofuels and Energy per Mole
+## Biodiesel
+Biodiesel is generated from fats and oils, such as waste cooking oil.
+
+## Energy per mole
+Ethanol (C2H5OH) releases 1240 kJ/mol when burned. Octane (C8H18) releases 5060 kJ/mol. To compare them, divide:
+
+```
+5060 / 1240 = 4.08
+```
+
+So octane releases about 4.1 times more energy per mole than ethanol. The bigger molecule has more bonds to form into CO2 and H2O.
 
 CATEGORY#Nuclear and Electrical Chemistry
 
 LESSON#Nuclear Chemistry#Nuclear Chemistry
-PAGE#Nuclei, Decay and Half-Life
-PAGE#Fission and Radiation Dose
+PAGE#Nuclear Notation and Equations
+The mass number (A) of an atom is the number of protons plus the number of neutrons. The atomic number (Z) is the number of protons.
+
+## Balancing a nuclear equation
+Both the mass number and the atomic number must be conserved. The totals on the left must equal the totals on the right.
+
+## Alpha decay
+An alpha particle is a helium nucleus. Polonium-212 decays spontaneously to Pb-208 and an alpha particle, so the decay is alpha decay.
+
+```
+Po-212 -> Pb-208 + He-4 (alpha)
+```
+
+## Electron capture
+In electron capture, the nucleus absorbs an inner electron. A proton becomes a neutron, so the mass number stays the same and the atomic number drops by 1. Ar-37 (Z = 18) undergoes electron capture and forms Cl-37 (Z = 17).
+
+PAGE#Half-Life
+The half-life is the time it takes for half of a radioactive sample to decay.
+
+After 1 half-life, 50% remains. After 2, 25%. After 3, 12.5%.
+
+So 12.5 percent of a sample remains after 3 half-lives.
+
+## Example
+Tritium (H-3) has a half-life of 12.3 years. About 12% of the original sample remains after 3 half-lives (12.5%).
+
+```
+3 x 12.3 years = 36.9 years, about 37 years
+```
+
+PAGE#Fission and Energy
+Nuclear fission is the process in which a heavy nucleus splits into smaller nuclei and one or more neutrons.
+
+## Example: U-235
+When U-235 absorbs one neutron, it can fission into Ba-138 and Kr-95 and release neutrons. Balance the mass numbers:
+
+```
+235 + 1 = 236
+138 + 95 + 3 = 236
+```
+
+So 3 neutrons are released. These neutrons can cause more fissions, which is how a chain reaction works.
+
+## Energy released
+A small amount of mass is converted into energy: E = (mass lost) x c^2, with c = 3 x 10^8 m/s.
+
+Example: in the fission of 1.0 kg of U-235 the mass decreases by 0.1 percent, so the mass lost is 1.0 x 10^-3 kg.
+
+```
+E = (1.0 x 10^-3 kg)(3 x 10^8 m/s)^2 = 9.0 x 10^13 J
+```
+
+PAGE#Radiation Dose
+Radiation dose can be given in rem or in sieverts (Sv).
+
+```
+1 Sv = 100 rem
+```
+
+Example: a worker receives 150 rem.
+
+```
+150 rem / 100 rem per Sv = 1.5 Sv
+```
 
 LESSON#Electrochemistry#Electrochemistry
-PAGE#Batteries and Cells
+PAGE#Cells and Batteries
+A battery uses a redox reaction to make electrical energy. Oxidation is the loss of electrons and happens at the anode. Reduction is the gain of electrons and happens at the cathode.
+
+The voltage of a battery is determined by its chemical composition, not its size, weight, or shape.
+
+## Primary and secondary batteries
+- A primary battery cannot be recharged.
+- A secondary battery can be recharged because its redox reactions can run in either direction.
+
+## Ohm's law
+```
+V = I x R
+```
+
+Example: a 9 V battery across a 450 ohm resistor.
+
+```
+I = 9 V / 450 ohm = 0.020 A = 20 mA
+```
+
+PAGE#Common Batteries
+## Alkaline cell
+At the anode of an alkaline cell, zinc is oxidized. Manganese dioxide is reduced at the cathode.
+
+## Lead-acid cell
+The maximum voltage of a lead-acid cell is 2.1 volts. A car battery connects several cells in series.
+
+## Lithium-ion
+Lithium-ion batteries must use non-aqueous electrolytes. Group 1 metals such as lithium are dangerously reactive toward water, so water cannot be used as the electrolyte.
+
 PAGE#Electrolysis and Fuel Cells
+## Electrolysis
+Electrolysis is the process in which electrical energy is used to cause a nonspontaneous chemical reaction, such as splitting water into hydrogen and oxygen.
+
+The electrolysis reaction H2O(g) -> H2(g) + 1/2 O2(g) requires 249 kJ for each mole of water.
+
+Example: energy to split 4 moles of water vapor.
+
+```
+4 mol x 249 kJ/mol = 996 kJ
+```
+
+## Fuel cells
+A fuel cell does the reverse. It combines hydrogen and oxygen to make electrical energy directly. A hydrogen fuel cell converts 45 to 55 percent of its energy to electric energy.
+
+Example: a fuel cell uses 200 kJ of chemical energy.
+
+```
+45 percent of 200 kJ = 90 kJ
+55 percent of 200 kJ = 110 kJ
+```
+
+So it delivers between 90 and 110 kJ of electric energy.
 
 CATEGORY#Materials
 
 LESSON#Metallurgy#Metallurgy
-PAGE#Ores and Metal Recovery
-PAGE#Alloys and Semiconductors
+PAGE#Ores and Recovering a Metal
+An ore is a mineral deposit concentrated enough to allow economical recovery of a desired metal. Examples are hematite (Fe2O3), an ore of iron, and galena (PbS), an ore of lead.
+
+## Three stages of recovery
+Recovering a metal from its ore has three stages:
+- Preparation of the ore
+- Production of the metal
+- Purification of the metal
+
+## Ore preparation
+The unwanted clay and silicate material in an ore is called gangue. Flotation is the ore preparation method that separates the gangue from the ore.
+
+PAGE#Ore Composition Calculations
+The percent by mass of a metal in a compound is:
+
+```
+percent = (mass of metal in one mole / molar mass) x 100
+```
+
+## Iron in hematite, Fe2O3 (Fe = 55.85, O = 16.00)
+```
+molar mass = 2(55.85) + 3(16.00) = 159.7 g/mol
+percent Fe = 111.7 / 159.7 x 100 = 69.9 percent
+```
+
+## Lead in galena, PbS (Pb = 207.2, S = 32.07)
+```
+molar mass = 207.2 + 32.07 = 239.27 g/mol
+percent Pb = 207.2 / 239.27 x 100 = 86.6 percent
+```
+
+PAGE#Production, Purification, and Alloys
+## Producing aluminum
+The Hall process produces aluminum by electrolysis using molten cryolite.
+
+## Zone refining
+Zone refining is a purification method in which a heating coil moves along a metal rod. Impurities stay in the molten zone and are carried to one end.
+
+## Alloys
+An alloy is a solid solution of two or more metals, or of a metal with one or more nonmetals.
+
+## Doping silicon
+Doping adds a small amount of another element to a semiconductor.
+
+- A p-type semiconductor is made by doping with an element that has fewer valence electrons than silicon. Aluminum is an acceptor impurity.
+- An n-type semiconductor is made by doping with an element that has more valence electrons than silicon. That element is a donor impurity.
+
+Silicon doped with aluminum is a p-type semiconductor.
