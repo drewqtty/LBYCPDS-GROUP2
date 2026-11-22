@@ -1,0 +1,2512 @@
+// Tutor Mode lessons for Data Structures and Algorithms. Format: see docs/lesson-format.md
+// The topic after the second # on a LESSON line is the question bank topic used for that lesson's practice quiz.
+COURSE#Data Structures and Algorithms
+
+CATEGORY#Fundamentals
+
+LESSON#Introduction to Data Structures#Intro, ADT, and Complexity
+PAGE#What is a data structure?
+A data structure is a way of organizing data in memory so that a program can store it and use it efficiently. An algorithm is a step-by-step procedure that works on that data. The two always go together: a good algorithm on the wrong data structure can still be slow.
+
+Think of a library. Books could be thrown in one big pile, or sorted on shelves by subject, or listed in a catalog. The books are the same, but finding one is very different in each arrangement. Choosing a data structure is choosing how to arrange your data for the work your program does most.
+
+## Common data structures
+- Array: items in numbered slots
+- Linked list: items chained together by references
+- Stack: last item in is the first one out
+- Queue: first item in is the first one out
+- Hash table: items found by a key
+- Tree and heap: items arranged in a hierarchy
+- Graph: items connected by links in any pattern
+
+```text
+Data structures
+ |-- Linear (one item after another)
+ |     Array, Linked List, Stack, Queue
+ |-- Hierarchical
+ |     Tree, Heap
+ |-- Network and key-based
+       Graph, Hash Table
+```
+
+PAGE#Abstract data types (ADTs)
+An abstract data type (ADT) describes WHAT a data structure can do, without saying HOW it does it. A stack is an ADT. It promises four operations: push, pop, peek, and isEmpty. You can build it with an array or with a linked list, and the code that uses the stack does not need to know which one.
+
+In Java, an interface is a natural way to write an ADT:
+
+```java
+interface StackADT {
+    void push(int value);    // add on top
+    int pop();               // remove and return the top
+    int peek();              // look at the top
+    boolean isEmpty();       // true when nothing is stored
+}
+```
+
+## Key terms
+- ADT: the list of operations and what they mean
+- Data structure: a concrete way to store the data
+- Implementation: the actual code that makes the operations work
+
+Separating these ideas lets you swap one implementation for another (for example, array for linked list) without rewriting the rest of the program.
+
+PAGE#Measuring efficiency with Big O
+Two programs can give the same answer but take very different amounts of time. Big O notation describes how the running time (or memory) grows as the input size n grows. It ignores the speed of the computer and focuses on the shape of the growth.
+
+## Rules for finding Big O
+- Count how the number of steps grows with n
+- Drop constants: 5n is O(n)
+- Keep only the biggest term: 4n^2 + 10n + 7 is O(n^2)
+- One loop over n items is O(n); two nested loops over n items are O(n^2)
+- A loop that halves (or doubles) its counter each pass is O(log n)
+
+```java
+class Complexity {
+    static int first(int[] a) {            // O(1)
+        return a[0];
+    }
+    static int sum(int[] a) {              // O(n)
+        int total = 0;
+        for (int x : a) total += x;
+        return total;
+    }
+    static int countPairs(int[] a) {       // O(n^2)
+        int count = 0;
+        for (int i = 0; i < a.length; i++)
+            for (int j = i + 1; j < a.length; j++) count++;
+        return count;
+    }
+    static int halvings(int n) {           // O(log n)
+        int steps = 0;
+        while (n > 1) { n = n / 2; steps++; }
+        return steps;
+    }
+    public static void main(String[] args) {
+        int[] a = {4, 8, 15, 16};
+        System.out.println(first(a));
+        System.out.println(sum(a));
+        System.out.println(countPairs(a));
+        System.out.println(halvings(1024));
+    }
+}
+```
+
+Output:
+
+```text
+4
+43
+6
+10
+```
+
+PAGE#How fast do they grow?
+The table shows the number of steps for two input sizes. Notice how O(n^2) explodes while O(log n) barely moves.
+
+```text
+n       O(1)   O(log n)   O(n)    O(n log n)   O(n^2)
+8         1        3         8          24          64
+1024      1       10      1024       10240     1048576
+```
+
+From fastest to slowest: O(1), O(log n), O(n), O(n log n), O(n^2).
+
+## Best, worst, and average case
+The same algorithm can take different amounts of time on different inputs. Linear search finds the target immediately if it is first (best case, O(1)) but must check every item if it is last or missing (worst case, O(n)). Unless told otherwise, Big O means the worst case.
+
+## Space complexity
+Space complexity measures extra memory in the same way. An algorithm that makes a copy of an n-item array uses O(n) extra space. One that only uses a few variables uses O(1) extra space.
+
+PAGE#Summary
+- A data structure organizes data; an algorithm works on it.
+- An ADT says what operations exist; the implementation says how they work.
+- Big O describes how running time grows with input size n.
+- Drop constants and lower terms: 3n^2 + 5n + 20 is O(n^2).
+- Common growth rates, fastest to slowest: O(1), O(log n), O(n), O(n log n), O(n^2).
+- Big O usually means the worst case.
+
+Next, the Fundamentals category continues with recursion, a technique you will use in trees, sorting, and graph traversal.
+
+LESSON#Recursion
+PAGE#What is recursion?
+Recursion is when a method solves a problem by calling itself on a smaller version of the same problem. Picture a set of nested Russian dolls. To find the smallest doll, you open the current doll, and then do the same thing to the doll inside, until there is nothing left to open.
+
+Every correct recursive method has two parts:
+- Base case: the simplest version of the problem, answered directly with no more recursive calls
+- Recursive case: the method calls itself with a smaller input that moves toward the base case
+
+If the base case is missing, or the input never gets smaller, the method calls itself forever and the program crashes with a StackOverflowError.
+
+## Where recursion is used
+- Tree and graph traversal
+- Divide-and-conquer algorithms such as binary search and merge sort
+- Problems that repeat a smaller version of themselves, such as factorial
+
+PAGE#Example: factorial
+The factorial of n, written n!, is n times every whole number below it down to 1. So 4! = 4 x 3 x 2 x 1 = 24. Notice that 4! = 4 x 3!, which is the same problem with a smaller number. That is a recursive definition.
+
+```java
+class Factorial {
+    static long factorial(int n) {
+        if (n <= 1) {
+            return 1;                    // base case
+        }
+        return n * factorial(n - 1);     // recursive case
+    }
+
+    public static void main(String[] args) {
+        System.out.println(factorial(4));
+    }
+}
+```
+
+Output:
+
+```text
+24
+```
+
+## How it works, step by step
+The calls go down until the base case, then the answers come back up:
+
+```text
+factorial(4) = 4 * factorial(3)
+             = 4 * (3 * factorial(2))
+             = 4 * (3 * (2 * factorial(1)))
+             = 4 * (3 * (2 * 1))      <- base case reached
+             = 24
+```
+
+PAGE#The call stack
+Each time a method is called, Java puts a new frame (a box holding the method's variables and where to return to) on top of the call stack. When the method finishes, its frame is removed and the program goes back to the frame below. That is why recursion works: every call has its own copy of n.
+
+```text
+factorial(4) called         factorial(1) returns 1
+                            then each call returns upward
+
+ | factorial(1) n=1 |  <- top, runs first to finish
+ | factorial(2) n=2 |
+ | factorial(3) n=3 |
+ | factorial(4) n=4 |
+ | main             |
+ +------------------+
+```
+
+## Common mistakes
+- Forgetting the base case, which causes a StackOverflowError
+- Not making the input smaller, for example calling factorial(n) instead of factorial(n - 1)
+- Not returning the result of the recursive call
+
+The depth of the stack matters. factorial(n) makes n nested calls, so it uses O(n) extra space for the stack.
+
+PAGE#Recursion with more than one call: Fibonacci
+The Fibonacci numbers start 0, 1, and each next number is the sum of the previous two: 0, 1, 1, 2, 3, 5, 8, 13. This is naturally recursive, and each call makes TWO recursive calls.
+
+```java
+class Fibonacci {
+    static int fib(int n) {
+        if (n <= 1) {
+            return n;                    // base cases: fib(0)=0, fib(1)=1
+        }
+        return fib(n - 1) + fib(n - 2);
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 8; i++) {
+            System.out.print(fib(i) + " ");
+        }
+        System.out.println();
+    }
+}
+```
+
+Output:
+
+```text
+0 1 1 2 3 5 8 13
+```
+
+## The cost of repeating work
+This version recomputes the same values again and again. fib(5) calls fib(3) twice and fib(2) three times, so the running time doubles roughly each time n grows by 1. That is O(2^n), far too slow for n = 50. Saving each answer after computing it (memoization), or using a simple loop, brings it down to O(n).
+
+```text
+                 fib(4)
+               /        \
+          fib(3)        fib(2)
+          /    \        /    \
+      fib(2) fib(1) fib(1) fib(0)
+      /    \
+  fib(1) fib(0)
+```
+
+PAGE#Summary
+- Recursion solves a problem by calling the same method on a smaller input.
+- Every recursive method needs a base case and a recursive case that moves toward it.
+- Each call gets its own stack frame, so deep recursion uses memory and can cause a StackOverflowError.
+- Factorial makes one recursive call per level and runs in O(n).
+- Naive Fibonacci makes two calls per level and runs in O(2^n) unless answers are saved.
+- Any recursion can be rewritten as a loop, but recursion is often shorter and clearer for trees and graphs.
+
+CATEGORY#Linear Structures
+
+LESSON#Arrays#Intro, ADT, and Complexity
+PAGE#What is an array?
+An array is a fixed-size collection of items of the same type, stored one after another in memory. Each slot has a number called an index. In Java, the first index is 0, so an array of 5 items has indexes 0 to 4.
+
+Real-world uses: a list of quiz scores, the rows of a spreadsheet, the pixels of an image, the days of a week.
+
+```text
+index:    0     1     2     3     4
+        +-----+-----+-----+-----+-----+
+ scores | 90  | 85  | 77  | 62  | 100 |
+        +-----+-----+-----+-----+-----+
+```
+
+## Key terms
+- Element: one item stored in the array
+- Index: the position number of an element, starting at 0
+- Length: how many slots the array has, fixed when it is created
+- Contiguous: stored side by side in memory
+
+Because the slots are side by side, the computer can jump straight to any index by simple arithmetic. That is why reading an element by its index is so fast.
+
+PAGE#Basic operations in Java
+Creating, reading, changing, and walking through an array:
+
+```java
+import java.util.Arrays;
+
+class ArrayBasics {
+    public static void main(String[] args) {
+        int[] scores = {90, 85, 77, 62, 100};
+
+        System.out.println(scores[1]);        // read an element
+        scores[3] = 70;                       // change an element
+        System.out.println(scores.length);    // number of slots
+
+        int total = 0;
+        for (int i = 0; i < scores.length; i++) {
+            total += scores[i];               // traverse
+        }
+        System.out.println(total);
+        System.out.println(Arrays.toString(scores));
+    }
+}
+```
+
+Output:
+
+```text
+85
+5
+422
+[90, 85, 77, 70, 100]
+```
+
+Going past the ends, for example scores[5], throws an ArrayIndexOutOfBoundsException. Always keep the index between 0 and length - 1.
+
+PAGE#Inserting and deleting
+An array has no spare room between items, so inserting in the middle means shifting the items after it one place to the right. Deleting means shifting them one place to the left to close the gap. We keep a separate variable, size, for how many slots are actually in use.
+
+```java
+import java.util.Arrays;
+
+class ArrayShift {
+    // Insert value at index. Returns the new size.
+    static int insert(int[] a, int size, int index, int value) {
+        for (int i = size; i > index; i--) {
+            a[i] = a[i - 1];            // shift right
+        }
+        a[index] = value;
+        return size + 1;
+    }
+
+    // Delete the item at index. Returns the new size.
+    static int delete(int[] a, int size, int index) {
+        for (int i = index; i < size - 1; i++) {
+            a[i] = a[i + 1];            // shift left
+        }
+        return size - 1;
+    }
+
+    public static void main(String[] args) {
+        int[] a = new int[6];
+        a[0] = 10; a[1] = 20; a[2] = 30; a[3] = 40;
+        int size = 4;
+        size = insert(a, size, 1, 15);
+        System.out.println(Arrays.toString(a) + " size " + size);
+        size = delete(a, size, 3);
+        System.out.println(Arrays.toString(a) + " size " + size);
+    }
+}
+```
+
+Output:
+
+```text
+[10, 15, 20, 30, 40, 0] size 5
+[10, 15, 20, 40, 40, 0] size 4
+```
+
+After the delete, the old last value is still sitting in index 4. It does not matter, because only the first size items count. Inserting at the front or deleting from the front shifts every item, which takes O(n).
+
+PAGE#Complexity, advantages, and disadvantages
+```text
+Operation                          Time
+Access by index                    O(1)
+Search an unsorted array           O(n)
+Insert or delete at the end        O(1)  (if there is room)
+Insert or delete in the middle     O(n)  (items must shift)
+Insert or delete at the front      O(n)
+```
+
+## Advantages
+- Very fast access to any element by its index
+- Simple, and uses little extra memory
+- Items sit next to each other, which is friendly to the computer's cache
+
+## Disadvantages
+- The size is fixed when the array is created
+- Inserting and deleting in the middle is slow because of shifting
+- To grow an array you must create a bigger one and copy every item (O(n))
+
+PAGE#Summary
+- An array stores same-type items side by side, numbered from index 0.
+- Reading or writing by index is O(1).
+- Inserting or deleting in the middle shifts items and costs O(n).
+- Searching an unsorted array costs O(n).
+- The size is fixed, so growing needs a new, larger array.
+- Use arrays when you need fast access by position and the size is known ahead of time.
+
+LESSON#Linked Lists#Linked Lists
+PAGE#What is a linked list?
+A linked list is a chain of nodes. Each node stores a piece of data and a reference (called next) to the following node. The list is reached through the first node, called the head. The next reference of the last node is null, which marks the end.
+
+Unlike an array, the nodes do not need to sit side by side in memory. The links connect them. Real-world examples: a music playlist where each song points to the next, or a train where each car is hooked to the next one.
+
+```text
+head
+  |
+  v
++----+---+    +----+---+    +----+------+
+| 10 | o-+--> | 20 | o-+--> | 30 | null |
++----+---+    +----+---+    +----+------+
+ data next     data next     data next
+```
+
+## Key terms
+- Node: one item holding data and a next reference
+- Head: the reference to the first node
+- Tail: the last node (its next is null)
+- Traversal: following the next references one by one
+
+PAGE#A singly linked list in Java
+This class has a Node, and a list that keeps only the head. addFirst changes just two references, so it is fast. To reach anything else, we must walk from the head.
+
+```java
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+class SinglyLinkedList {
+    Node head;
+
+    void addFirst(int value) {            // O(1)
+        Node node = new Node(value);
+        node.next = head;                 // new node points at the old head
+        head = node;                      // head now points at the new node
+    }
+
+    void addLast(int value) {             // O(n)
+        Node node = new Node(value);
+        if (head == null) {
+            head = node;
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;       // walk to the last node
+        }
+        current.next = node;
+    }
+
+    void print() {
+        for (Node c = head; c != null; c = c.next) {
+            System.out.print(c.data + " -> ");
+        }
+        System.out.println("null");
+    }
+}
+```
+
+```java
+class ListDemo1 {
+    public static void main(String[] args) {
+        SinglyLinkedList list = new SinglyLinkedList();
+        list.addFirst(20);
+        list.addFirst(10);
+        list.addLast(30);
+        list.print();
+    }
+}
+```
+
+Output:
+
+```text
+10 -> 20 -> 30 -> null
+```
+
+PAGE#Searching and deleting
+To search, walk the list and compare each node's data. To delete a node, change the link of the node BEFORE it so that it skips the deleted node.
+
+```java
+class ListOps {
+    // Works with the Node class from the previous page.
+    static boolean contains(Node head, int value) {      // O(n)
+        for (Node c = head; c != null; c = c.next) {
+            if (c.data == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Deletes the first node holding value. Returns the new head.
+    static Node delete(Node head, int value) {           // O(n)
+        if (head == null) {
+            return null;
+        }
+        if (head.data == value) {
+            return head.next;                 // deleting the head
+        }
+        Node current = head;
+        while (current.next != null && current.next.data != value) {
+            current = current.next;
+        }
+        if (current.next != null) {
+            current.next = current.next.next; // skip the deleted node
+        }
+        return head;
+    }
+
+    public static void main(String[] args) {
+        Node a = new Node(10);
+        a.next = new Node(20);
+        a.next.next = new Node(30);
+        System.out.println(contains(a, 20));
+        a = delete(a, 20);
+        System.out.println(contains(a, 20));
+        for (Node c = a; c != null; c = c.next) {
+            System.out.print(c.data + " ");
+        }
+        System.out.println();
+    }
+}
+```
+
+Output:
+
+```text
+true
+false
+10 30
+```
+
+PAGE#Doubly linked lists and comparison with arrays
+A doubly linked list gives each node a second reference, prev, pointing to the node before it. This lets you walk backward and delete a known node without searching for its predecessor.
+
+```text
+null <-- [10] <--> [20] <--> [30] --> null
+```
+
+To delete a node X in the middle of a doubly linked list:
+
+```text
+X.prev.next = X.next;
+X.next.prev = X.prev;
+```
+
+## Linked list or array?
+```text
+Operation                  Array        Singly linked list
+Access the k-th item       O(1)         O(n)
+Insert at the front        O(n)         O(1)
+Insert at the end          O(1)*        O(n)  (O(1) if you keep a tail)
+Delete at the front        O(n)         O(1)
+Search                     O(n)         O(n)
+Memory per item            data only    data + a reference
+* when the array has spare room
+```
+
+A linked list wins when you often insert or delete at the front and the size keeps changing. An array wins when you need quick access by position.
+
+PAGE#Summary
+- A linked list is a chain of nodes, each holding data and a next reference.
+- The head is the first node; the last node's next is null.
+- addFirst and deleting the head are O(1); reaching, searching, or adding at the end is O(n).
+- Deleting a node means changing the previous node's link.
+- A doubly linked list adds a prev reference, so it can go backward.
+- There is no direct access by index, which is the main trade-off against arrays.
+
+LESSON#Stacks#Stacks
+PAGE#What is a stack?
+A stack is a collection that follows LIFO: Last In, First Out. The last item you put on is the first one you take off. Think of a pile of plates: you add a plate on top and you remove the top plate first. You cannot pull out one from the middle without disturbing the others.
+
+Real-world examples:
+- The undo history in a text editor (the latest change is undone first)
+- The back button of a web browser
+- The pile of method calls a program is currently running
+
+```text
+   push(30)        pop()
+      |              ^
+      v              |
+   +------+       +------+
+   |  30  | <-top |  30  | <-top
+   |  20  |       +------+
+   |  10  |
+   +------+
+```
+
+Only one end of the stack, the top, is ever used. That restriction is what makes a stack simple and fast.
+
+PAGE#Stack operations
+```text
+push(x)     add x on the top
+pop()       remove and return the top item
+peek()      look at the top item without removing it
+isEmpty()   true when the stack has no items
+size()      how many items are stored
+```
+
+All of these take O(1) time, because they only touch the top.
+
+## Trace example
+Start with an empty stack and run: push(4), push(9), pop(), push(2).
+
+```text
+push(4)     top -> 4
+push(9)     top -> 9, 4
+pop()       returns 9, now top -> 4
+push(2)     top -> 2, 4
+```
+
+## Overflow and underflow
+- Overflow: pushing onto a stack that is already full (possible with a fixed-size array)
+- Underflow: popping or peeking at a stack that is empty
+
+A good implementation checks for both and reports the problem clearly.
+
+PAGE#Implementing a stack with an array
+We keep an array and an index top that points to the current top item. top is -1 when the stack is empty.
+
+```java
+class ArrayStack {
+    private int[] items;
+    private int top = -1;              // -1 means empty
+
+    ArrayStack(int capacity) {
+        items = new int[capacity];
+    }
+
+    boolean isEmpty() { return top == -1; }
+    boolean isFull()  { return top == items.length - 1; }
+
+    void push(int value) {             // O(1)
+        if (isFull()) {
+            throw new IllegalStateException("Stack overflow");
+        }
+        top++;
+        items[top] = value;
+    }
+
+    int pop() {                        // O(1)
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack underflow");
+        }
+        int value = items[top];
+        top--;
+        return value;
+    }
+
+    int peek() {                       // O(1)
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
+        }
+        return items[top];
+    }
+}
+```
+
+```java
+class StackDemo {
+    public static void main(String[] args) {
+        ArrayStack s = new ArrayStack(5);
+        s.push(4);
+        s.push(9);
+        System.out.println(s.pop());
+        s.push(2);
+        System.out.println(s.peek());
+        System.out.println(s.isEmpty());
+    }
+}
+```
+
+Output:
+
+```text
+9
+2
+false
+```
+
+PAGE#Implementing a stack with a linked list
+A linked list never fills up, because every push just creates a new node. The top of the stack is the head of the list: pushing is addFirst and popping is removing the head, both O(1).
+
+```java
+class LinkedStack {
+    private static class Node {
+        int data;
+        Node next;
+        Node(int data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
+
+    private Node top;
+
+    void push(int value) {
+        top = new Node(value, top);        // new node points at the old top
+    }
+
+    int pop() {
+        if (top == null) {
+            throw new IllegalStateException("Stack underflow");
+        }
+        int value = top.data;
+        top = top.next;
+        return value;
+    }
+
+    boolean isEmpty() { return top == null; }
+
+    public static void main(String[] args) {
+        LinkedStack s = new LinkedStack();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        while (!s.isEmpty()) {
+            System.out.print(s.pop() + " ");
+        }
+        System.out.println();
+    }
+}
+```
+
+Output:
+
+```text
+3 2 1
+```
+
+The items come out in the reverse of the order they went in. That is LIFO in action.
+
+PAGE#Applications of stacks
+## Function calls
+Every method call is pushed on the call stack, and removed when the method returns. This is how recursion works.
+
+## Undo and redo
+Each action is pushed on an undo stack. Pressing undo pops the latest action.
+
+## Checking balanced brackets
+Push each opening bracket. When a closing bracket appears, pop and check that it matches. At the end the stack must be empty.
+
+```java
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Balanced {
+    static boolean isBalanced(String text) {
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c : text.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else if (c == ')' || c == ']' || c == '}') {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                char open = stack.pop();
+                boolean matches = (c == ')' && open == '(')
+                        || (c == ']' && open == '[')
+                        || (c == '}' && open == '{');
+                if (!matches) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isBalanced("(a[b]{c})"));
+        System.out.println(isBalanced("(a[b)]"));
+        System.out.println(isBalanced("(("));
+    }
+}
+```
+
+Output:
+
+```text
+true
+false
+false
+```
+
+## Expression evaluation
+Calculators use stacks to convert and evaluate expressions such as 3 + 4 * 2.
+
+Java also has a built-in stack: use Deque with ArrayDeque, as above, with push, pop, and peek.
+
+PAGE#Summary
+- A stack follows LIFO: the last item in is the first item out.
+- Operations: push, pop, peek, isEmpty, all O(1).
+- Overflow means pushing onto a full stack; underflow means popping an empty one.
+- An array stack tracks a top index; a linked stack uses the head as the top.
+- Used for function calls, undo, bracket matching, and expression evaluation.
+
+LESSON#Queues#Queues
+PAGE#What is a queue?
+A queue is a collection that follows FIFO: First In, First Out. The first item added is the first one removed, just like people waiting in line: the person who arrived first is served first.
+
+Real-world examples:
+- Print jobs waiting for a printer
+- Customers served in order of arrival
+- Tasks waiting for the processor
+- The waiting list that breadth-first search uses to visit a graph
+
+```text
+ dequeue <-- [ 10 | 20 | 30 | 40 ] <-- enqueue
+             front              rear
+```
+
+Items are added at the rear (back) and removed from the front. This is the opposite of a stack, where both happen at the same end.
+
+PAGE#Queue operations
+```text
+enqueue(x)   add x at the rear
+dequeue()    remove and return the front item
+peek()       look at the front item without removing it
+isEmpty()    true when the queue has no items
+size()       how many items are stored
+```
+
+## Trace example
+Start with an empty queue and run: enqueue(3), enqueue(8), enqueue(5), dequeue().
+
+```text
+enqueue(3)    front: 3
+enqueue(8)    front: 3 8
+enqueue(5)    front: 3 8 5
+dequeue()     returns 3, now front: 8 5
+```
+
+The value 3 left first because it arrived first. The front of the queue is now 8.
+
+PAGE#The problem with a plain array queue
+If we store a queue in an array and always dequeue from index 0, every item must shift left, which costs O(n). If we instead just move a front index forward, the slots at the beginning of the array are never used again, even though they are empty.
+
+```text
+After dequeuing twice, with a plain array:
+
+index:   0     1     2     3
+        [ -  | -  | 30 | 40 ]    <- two empty slots can never be reused
+```
+
+A circular queue fixes this by wrapping around. When the rear reaches the end of the array, the next item goes back to index 0, using the free space. The trick is the remainder operator %:
+
+```text
+next free slot = (front + size) % capacity
+new front after a dequeue = (front + 1) % capacity
+```
+
+For example, with capacity 4, if the front is at index 1 and the queue holds 3 items, the next item goes to (1 + 3) % 4 = 0.
+
+PAGE#Implementing a circular queue
+We keep the array, the index of the front item, and the number of items (size).
+
+```java
+class CircularQueue {
+    private int[] items;
+    private int front = 0;      // index of the front item
+    private int size = 0;       // how many items are stored
+
+    CircularQueue(int capacity) {
+        items = new int[capacity];
+    }
+
+    boolean isEmpty() { return size == 0; }
+    boolean isFull()  { return size == items.length; }
+
+    void enqueue(int value) {                       // O(1)
+        if (isFull()) {
+            throw new IllegalStateException("Queue is full");
+        }
+        int rear = (front + size) % items.length;   // next free slot
+        items[rear] = value;
+        size++;
+    }
+
+    int dequeue() {                                 // O(1)
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        int value = items[front];
+        front = (front + 1) % items.length;
+        size--;
+        return value;
+    }
+
+    void print() {
+        for (int i = 0; i < size; i++) {
+            System.out.print(items[(front + i) % items.length] + " ");
+        }
+        System.out.println("(front index " + front + ")");
+    }
+
+    public static void main(String[] args) {
+        CircularQueue q = new CircularQueue(4);
+        q.enqueue(10);
+        q.enqueue(20);
+        q.enqueue(30);
+        q.enqueue(40);
+        System.out.println(q.dequeue());
+        q.enqueue(50);                // wraps around to index 0
+        q.print();
+    }
+}
+```
+
+Output:
+
+```text
+10
+20 30 40 50 (front index 1)
+```
+
+Inside the array, the values are stored like this, because 50 wrapped around to index 0:
+
+```text
+index:   0     1     2     3
+        [ 50 | 20 | 30 | 40 ]
+               ^front
+```
+
+PAGE#Other queues and applications
+## Variations
+- Deque (double-ended queue): add and remove at both ends
+- Priority queue: items leave by priority, not by arrival order (often built with a heap)
+- Circular queue: the array version you just saw
+
+## Java's built-in queue
+```java
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+class BuiltInQueue {
+    public static void main(String[] args) {
+        Queue<String> line = new ArrayDeque<>();
+        line.add("Ana");
+        line.add("Ben");
+        line.add("Cy");
+        System.out.println(line.remove());
+        System.out.println(line.peek());
+        System.out.println(line.size());
+    }
+}
+```
+
+Output:
+
+```text
+Ana
+Ben
+2
+```
+
+## Applications
+- Print spoolers and task scheduling
+- Breadth-first search of graphs and trees
+- Buffers that hold data until it can be processed, such as keyboard input
+
+PAGE#Summary
+- A queue follows FIFO: first in, first out.
+- Operations: enqueue (at the rear), dequeue (from the front), peek, isEmpty; all O(1).
+- A plain array queue wastes space; a circular queue reuses it with the % operator.
+- Next free slot is (front + size) % capacity; the new front is (front + 1) % capacity.
+- Queues drive scheduling, buffering, and breadth-first search.
+
+CATEGORY#Searching, Sorting, and Hashing
+
+LESSON#Searching Algorithms#Searching
+PAGE#What is searching?
+Searching means finding where a target value is stored in a collection, or finding out that it is not there. Almost every program does this: looking up a contact, finding a student record, checking a username.
+
+This lesson covers two classic algorithms:
+- Linear search: check the items one by one. Works on any array.
+- Binary search: repeatedly cut the search area in half. Needs a SORTED array, but is much faster.
+
+Both return the index where the target was found, or -1 if it is not in the array.
+
+PAGE#Linear search
+Linear search starts at the first item and checks each one until it finds the target or reaches the end.
+
+```java
+class LinearSearchDemo {
+    // Returns the index of target, or -1 when it is not in the array.
+    static int linearSearch(int[] a, int target) {
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] == target) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {4, 9, 2, 8, 6};
+        System.out.println(linearSearch(a, 8));
+        System.out.println(linearSearch(a, 7));
+    }
+}
+```
+
+Output:
+
+```text
+3
+-1
+```
+
+## Walkthrough
+Searching for 8 in {4, 9, 2, 8, 6} compares 4, 9, 2, and then 8, which is 4 comparisons. Searching for 7 compares all 5 items and finds nothing.
+
+## Complexity
+- Best case: O(1), the target is the first item
+- Worst case: O(n), the target is last or missing
+- It works on unsorted data, which is its main advantage
+
+PAGE#Binary search: the idea
+Binary search only works on a sorted array. Because the items are in order, one comparison with the middle item tells us which half the target must be in, so we can throw the other half away.
+
+Think of guessing a number from 1 to 100. If you guess 50 and are told "higher", you never need to look below 50 again.
+
+## Steps
+1. Set low = 0 and high = n - 1.
+2. Find the middle index: mid = (low + high) / 2 (integer division).
+3. If a[mid] equals the target, you are done.
+4. If a[mid] is smaller than the target, search the right half: low = mid + 1.
+5. If a[mid] is larger than the target, search the left half: high = mid - 1.
+6. Repeat while low <= high. If low passes high, the target is not there.
+
+Why must the array be sorted? If it were not, a[mid] being smaller than the target would tell us nothing about where the target is.
+
+PAGE#Binary search: a walkthrough
+Search for 23 in the sorted array {2, 5, 8, 12, 16, 23, 38} (indexes 0 to 6):
+
+```text
+index:   0   1   2   3    4    5    6
+value:   2   5   8   12   16   23   38
+
+Step 1: low=0, high=6, mid=3, a[3]=12 < 23  ->  low = 4
+Step 2: low=4, high=6, mid=5, a[5]=23 == 23 ->  found at index 5
+```
+
+Now search for 9, which is not in the array:
+
+```text
+Step 1: low=0, high=6, mid=3, a[3]=12 > 9   ->  high = 2
+Step 2: low=0, high=2, mid=1, a[1]=5  < 9   ->  low = 2
+Step 3: low=2, high=2, mid=2, a[2]=8  < 9   ->  low = 3
+low (3) is now greater than high (2), so 9 is not in the array.
+```
+
+Each step cuts the remaining items in half: 7, then 3, then 1.
+
+PAGE#Binary search in Java
+```java
+class BinarySearchDemo {
+    // The array must be sorted. Returns the index, or -1.
+    static int binarySearch(int[] a, int target) {
+        int low = 0;
+        int high = a.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (a[mid] == target) {
+                return mid;
+            } else if (a[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {2, 5, 8, 12, 16, 23, 38};
+        System.out.println(binarySearch(a, 23));
+        System.out.println(binarySearch(a, 9));
+    }
+}
+```
+
+Output:
+
+```text
+5
+-1
+```
+
+Note: for arrays with billions of items, (low + high) can overflow an int. The safe form is low + (high - low) / 2, which gives the same index.
+
+## Complexity
+The search area is halved each step, so the worst case needs floor(log2 n) + 1 comparisons:
+
+```text
+n               worst-case comparisons
+7                3
+31               5
+32               6
+1,000,000       20
+```
+
+That is O(log n). Linear search on a million items may need a million comparisons; binary search needs about 20.
+
+PAGE#Comparing the two and summary
+```text
+                Linear search       Binary search
+Needs sorted?   No                  Yes
+Best case       O(1)                O(1)
+Worst case      O(n)                O(log n)
+Works on        arrays, lists       arrays (needs direct access)
+```
+
+Binary search needs the data sorted first. Sorting costs time, so it pays off when you search many times, but for a one-off search of an unsorted array, linear search is simpler and often enough.
+
+## Summary
+- Searching finds the index of a target, or reports that it is missing.
+- Linear search checks every item in turn: O(n), works on unsorted data.
+- Binary search halves the sorted search area each step: O(log n).
+- Binary search needs a sorted array and uses mid = (low + high) / 2.
+
+LESSON#Sorting Algorithms#Sorting
+PAGE#What is sorting?
+Sorting arranges items in order, for example numbers from smallest to largest (ascending) or from largest to smallest (descending). Sorted data is easier to search (binary search needs it), to display, and to compare.
+
+## Key terms
+- Ascending / descending: smallest first / largest first
+- Pass: one trip through the data
+- Comparison: checking which of two items is larger
+- Stable: equal items keep their original order after sorting
+- In-place: the sort uses almost no extra memory
+
+Different algorithms trade off simplicity, speed, and memory. This lesson looks at insertion sort in detail, then gives an overview of other sorts, including heap sort, counting sort, and radix sort.
+
+PAGE#Insertion sort: the idea
+Insertion sort works like sorting playing cards in your hand. Pick up one card at a time and slide it into the correct place among the cards you already hold.
+
+The first element counts as already sorted. For each next element (the key):
+1. Compare the key with the sorted items to its left.
+2. Shift every larger item one place to the right.
+3. Drop the key into the gap.
+
+## Walkthrough on {5, 2, 4, 1}
+```text
+Start:                 [5, 2, 4, 1]
+Pass 1 (key = 2):      [2, 5, 4, 1]    5 shifts right
+Pass 2 (key = 4):      [2, 4, 5, 1]    5 shifts right
+Pass 3 (key = 1):      [1, 2, 4, 5]    5, 4, and 2 shift right
+```
+
+An array of n items needs n - 1 passes, because the first item starts out sorted.
+
+PAGE#Insertion sort in Java
+```java
+import java.util.Arrays;
+
+class InsertionSortDemo {
+    static void insertionSort(int[] a) {
+        for (int i = 1; i < a.length; i++) {
+            int key = a[i];
+            int j = i - 1;
+            while (j >= 0 && a[j] > key) {
+                a[j + 1] = a[j];          // shift right
+                j--;
+            }
+            a[j + 1] = key;               // drop the key into the gap
+            System.out.println("after pass " + i + ": " + Arrays.toString(a));
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] a = {5, 2, 4, 1};
+        insertionSort(a);
+    }
+}
+```
+
+Output:
+
+```text
+after pass 1: [2, 5, 4, 1]
+after pass 2: [2, 4, 5, 1]
+after pass 3: [1, 2, 4, 5]
+```
+
+## Complexity
+- Best case: O(n). If the array is already sorted, each key stays where it is and no shifting happens.
+- Worst case: O(n^2). If the array is in reverse order, every key shifts past every sorted item.
+- Space: O(1) extra, because it sorts in place.
+- Stable: yes. Equal items are never moved past each other.
+
+It is a good choice for small or nearly sorted arrays.
+
+PAGE#Faster and special-purpose sorts
+## Heap sort
+Heap sort builds a heap, then repeatedly removes the smallest (or largest) item. It runs in O(n log n) in every case. You will see how heaps work in the Heaps lesson.
+
+## Counting sort
+Counting sort does not compare items. When the values are whole numbers from 0 to max, it counts how many times each value appears, then rebuilds the array from the counts.
+
+```java
+import java.util.Arrays;
+
+class CountingSortDemo {
+    // Values must be whole numbers from 0 to max.
+    static int[] countingSort(int[] a, int max) {
+        int[] count = new int[max + 1];
+        for (int x : a) {
+            count[x]++;
+        }
+        int[] result = new int[a.length];
+        int k = 0;
+        for (int value = 0; value <= max; value++) {
+            for (int c = 0; c < count[value]; c++) {
+                result[k] = value;
+                k++;
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {2, 5, 3, 0, 2, 3, 0, 3};
+        int[] sorted = countingSort(a, 5);
+        System.out.println(Arrays.toString(sorted));
+    }
+}
+```
+
+Output:
+
+```text
+[0, 0, 2, 2, 3, 3, 3, 5]
+```
+
+The count array has max + 1 = 6 slots (for values 0 to 5), and the value 3 appears 3 times. Counting sort runs in O(n + max).
+
+## Radix sort
+Radix sort sorts numbers digit by digit, starting from the least significant (ones) digit, using a stable sort for each pass. For {170, 45, 75, 90}, the first pass on the ones digit gives {170, 90, 45, 75}. Repeating for the tens digit and the hundreds digit finishes the sort.
+
+PAGE#Comparing sorting algorithms and summary
+```text
+Algorithm        Best         Worst        Extra space   Stable
+Insertion sort   O(n)         O(n^2)       O(1)          Yes
+Heap sort        O(n log n)   O(n log n)   O(1)          No
+Counting sort    O(n + max)   O(n + max)   O(n + max)    Yes (full version)
+```
+
+## Summary
+- Sorting puts items in order; sorted data speeds up searching.
+- Insertion sort inserts one item at a time into the sorted part: O(n) best, O(n^2) worst.
+- Heap sort is O(n log n) in every case.
+- Counting and radix sort avoid comparisons by using the values themselves.
+- Pick the algorithm by input size, how sorted the data already is, and available memory.
+
+LESSON#Hash Tables
+PAGE#What is a hash table?
+A hash table stores key-value pairs and finds a value from its key in about O(1) time, no matter how many items are stored. Think of a coat check: you hand over a ticket (the key) and the attendant goes straight to your coat without searching every hook.
+
+Real-world uses:
+- Dictionaries and phone contact lists (name to number)
+- Caches that remember recent results
+- Counting how often each word appears in a text
+- Checking whether a username is already taken
+
+The idea: a hash function turns the key into an array index. We store the value at that index, and we find it again later by running the same function on the same key.
+
+```text
+key 12 --hash--> index 2
+        +----+----+----+----+----+
+        | 25 |    | 12 |    |    |
+        +----+----+----+----+----+
+          0    1    2    3    4
+```
+
+PAGE#Hash functions and collisions
+A simple hash function for whole-number keys is the remainder: index = key % capacity. With capacity 5, the key 12 goes to index 12 % 5 = 2, and the key 25 goes to index 0.
+
+A good hash function is fast, always gives the same index for the same key, and spreads keys evenly across the array.
+
+## Collisions
+Sometimes two different keys give the same index. This is called a collision. With capacity 5:
+
+```text
+12 % 5 = 2
+ 7 % 5 = 2     <- collision with 12
+17 % 5 = 2     <- collision again
+```
+
+Collisions cannot be avoided completely, so every hash table needs a plan for them.
+
+## Load factor
+The load factor is the number of items divided by the capacity. The fuller the table, the more collisions happen. Most tables grow (resize) when the load factor gets high.
+
+PAGE#Handling collisions
+## Separate chaining
+Each array slot holds a small list (a chain). All keys that hash to the same index are added to that slot's list.
+
+```text
+0: (25,Ben)
+1:
+2: (12,Ana) -> (7,Cy) -> (17,Dee)
+3:
+4:
+```
+
+## Open addressing (linear probing)
+All items live in the array itself. If the slot is taken, try the next slot, then the next, wrapping around, until a free one is found.
+
+```text
+Insert 12 -> slot 2
+Insert 25 -> slot 0
+Insert  7 -> slot 2 is taken, so slot 3
+Insert 17 -> slots 2 and 3 are taken, so slot 4
+
+0: 25   1: -   2: 12   3: 7   4: 17
+```
+
+Chaining is easier to understand and handles a full table gracefully. Open addressing uses less memory per item but slows down sharply as the table fills.
+
+PAGE#A hash table in Java
+This table uses separate chaining with whole-number keys and text values.
+
+```java
+import java.util.LinkedList;
+
+class ChainedHashTable {
+    private static class Entry {
+        int key;
+        String value;
+        Entry(int key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private LinkedList<Entry>[] buckets;
+
+    @SuppressWarnings("unchecked")
+    ChainedHashTable(int capacity) {
+        buckets = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            buckets[i] = new LinkedList<>();
+        }
+    }
+
+    private int hash(int key) {
+        return key % buckets.length;
+    }
+
+    void put(int key, String value) {
+        for (Entry e : buckets[hash(key)]) {
+            if (e.key == key) {
+                e.value = value;              // key exists: replace its value
+                return;
+            }
+        }
+        buckets[hash(key)].add(new Entry(key, value));
+    }
+
+    String get(int key) {
+        for (Entry e : buckets[hash(key)]) {
+            if (e.key == key) {
+                return e.value;
+            }
+        }
+        return null;
+    }
+
+    void print() {
+        for (int i = 0; i < buckets.length; i++) {
+            System.out.print(i + ":");
+            for (Entry e : buckets[i]) {
+                System.out.print(" (" + e.key + "," + e.value + ")");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        ChainedHashTable t = new ChainedHashTable(5);
+        t.put(12, "Ana");
+        t.put(25, "Ben");
+        t.put(7, "Cy");
+        t.put(17, "Dee");
+        t.print();
+        System.out.println(t.get(7));
+        System.out.println(t.get(99));
+    }
+}
+```
+
+Output:
+
+```text
+0: (25,Ben)
+1:
+2: (12,Ana) (7,Cy) (17,Dee)
+3:
+4:
+Cy
+null
+```
+
+PAGE#Complexity, Java's HashMap, and summary
+```text
+Operation     Average    Worst case
+put           O(1)       O(n)
+get           O(1)       O(n)
+remove        O(1)       O(n)
+```
+
+The worst case happens when every key lands in the same slot, which turns the table into one long list. A good hash function and resizing keep the average case at O(1).
+
+## Java's HashMap
+In real programs, use the built-in HashMap, which handles hashing, collisions, and resizing for you.
+
+```java
+import java.util.HashMap;
+
+class HashMapDemo {
+    public static void main(String[] args) {
+        HashMap<String, Integer> ages = new HashMap<>();
+        ages.put("Ana", 20);
+        ages.put("Ben", 22);
+        System.out.println(ages.get("Ana"));
+        System.out.println(ages.containsKey("Cy"));
+        System.out.println(ages.size());
+    }
+}
+```
+
+Output:
+
+```text
+20
+false
+2
+```
+
+## Summary
+- A hash table maps keys to values using a hash function that picks an array index.
+- Average time for put, get, and remove is O(1).
+- Collisions happen when two keys share an index; handle them with chaining or open addressing.
+- A high load factor means more collisions, so tables resize as they fill.
+- Hash tables do not keep keys in sorted order.
+
+CATEGORY#Trees and Heaps
+
+LESSON#Trees#Trees
+PAGE#What is a tree?
+A tree is a hierarchy of nodes connected by edges. It is used whenever data has a parent-and-child structure: a folder system with folders inside folders, a family tree, the chapters and sections of a book, or the menus of a program.
+
+```text
+            50            <- root
+           /  \
+         30    70
+        /  \   / \
+      20   40 60  80     <- leaves
+```
+
+## Key terms
+- Root: the topmost node (it has no parent)
+- Parent and child: a node and the nodes directly below it
+- Siblings: nodes that share the same parent
+- Leaf: a node with no children
+- Edge: the link between a parent and a child
+- Subtree: a node together with everything below it
+- Depth of a node: the number of edges from the root down to it
+- Height of the tree: the number of edges on the longest path from the root to a leaf (the tree above has height 2)
+
+PAGE#Binary trees
+A binary tree is a tree in which every node has at most two children, called the left child and the right child. Binary trees are the base of binary search trees, heaps, and expression trees.
+
+```java
+class TreeNode {
+    int value;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int value) {
+        this.value = value;
+    }
+}
+```
+
+Each node stores a value and two references. A reference that is null means that child does not exist.
+
+## Kinds of binary trees
+- Full: every node has 0 or 2 children
+- Perfect: all leaves are on the same level and every other node has 2 children
+- Complete: every level is full except possibly the last, which fills from the left (heaps use this shape)
+
+## Facts worth remembering
+- A node of a binary tree has at most 2 children
+- A perfect binary tree of height h has 2^(h+1) - 1 nodes (height 2 gives 7 nodes)
+
+PAGE#Tree traversals
+A traversal visits every node exactly once. For a binary tree, there are four common orders. Let L be the left subtree and R the right subtree:
+
+```text
+Inorder     L, node, R
+Preorder    node, L, R
+Postorder   L, R, node
+Level-order one level at a time, top to bottom, using a queue
+```
+
+```java
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+class Traversals {
+    static void inorder(TreeNode n) {
+        if (n == null) {
+            return;
+        }
+        inorder(n.left);
+        System.out.print(n.value + " ");
+        inorder(n.right);
+    }
+
+    static void preorder(TreeNode n) {
+        if (n == null) {
+            return;
+        }
+        System.out.print(n.value + " ");
+        preorder(n.left);
+        preorder(n.right);
+    }
+
+    static void postorder(TreeNode n) {
+        if (n == null) {
+            return;
+        }
+        postorder(n.left);
+        postorder(n.right);
+        System.out.print(n.value + " ");
+    }
+
+    static void levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode n = queue.remove();
+            System.out.print(n.value + " ");
+            if (n.left != null) {
+                queue.add(n.left);
+            }
+            if (n.right != null) {
+                queue.add(n.right);
+            }
+        }
+    }
+
+    static int height(TreeNode n) {
+        if (n == null) {
+            return -1;                  // an empty tree has height -1
+        }
+        return 1 + Math.max(height(n.left), height(n.right));
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(50);
+        root.left = new TreeNode(30);
+        root.right = new TreeNode(70);
+        root.left.left = new TreeNode(20);
+        root.left.right = new TreeNode(40);
+        root.right.left = new TreeNode(60);
+        root.right.right = new TreeNode(80);
+
+        System.out.print("Inorder:    "); inorder(root); System.out.println();
+        System.out.print("Preorder:   "); preorder(root); System.out.println();
+        System.out.print("Postorder:  "); postorder(root); System.out.println();
+        System.out.print("Level-order: "); levelOrder(root); System.out.println();
+        System.out.println("Height: " + height(root));
+    }
+}
+```
+
+Output:
+
+```text
+Inorder:    20 30 40 50 60 70 80
+Preorder:   50 30 20 40 70 60 80
+Postorder:  20 40 30 60 80 70 50
+Level-order: 50 30 70 20 40 60 80
+Height: 2
+```
+
+PAGE#Applications and complexity
+## Where trees are used
+- File systems (folders and files)
+- Searching and sorted storage (binary search trees)
+- Priority queues (heaps)
+- Parsing expressions such as (3 + 4) * 2
+- The topic progression in this app is a graph, closely related to a tree
+
+## Cost of traversal
+Every traversal visits each of the n nodes once, so it takes O(n) time. The recursive versions use stack space equal to the height of the tree. That is O(log n) for a balanced tree and O(n) for a tree that has become a chain.
+
+PAGE#Summary
+- A tree is a hierarchy: a root, parents, children, and leaves.
+- A binary tree node has at most two children (left and right).
+- Height counts edges from the root to the deepest leaf; a single node has height 0.
+- Inorder is L-node-R, preorder is node-L-R, postorder is L-R-node, level-order goes level by level with a queue.
+- Each traversal takes O(n).
+
+LESSON#Binary Search Trees#Trees
+PAGE#The binary search tree property
+A binary search tree (BST) is a binary tree that keeps its values in order so that searching is fast. For EVERY node:
+- All values in its left subtree are smaller than the node's value
+- All values in its right subtree are larger than the node's value
+
+```text
+Inserting 50, 30, 70, 20, 40, 60, 80 in that order:
+
+            50
+           /  \
+         30    70
+        /  \   / \
+      20   40 60  80
+```
+
+Because of this rule, an inorder traversal of a BST visits the values in ascending order: 20, 30, 40, 50, 60, 70, 80.
+
+## Why it is useful
+To find a value, compare it with the current node. If it is smaller, go left; if it is larger, go right. Each comparison throws away a whole subtree, just like binary search throws away half an array.
+
+PAGE#Searching and inserting
+## Search
+Start at the root. If the target equals the node, you found it. If it is smaller, go left. If it is larger, go right. If you reach null, the value is not in the tree.
+
+To search for 60 in the tree above: 50 (go right), 70 (go left), 60 (found). That is 3 comparisons.
+
+## Insert
+Insert follows the same path as a search for the new value and puts the new node where the search ended, as a new leaf.
+
+```java
+class BST {
+    private static class Node {
+        int key;
+        Node left;
+        Node right;
+        Node(int key) {
+            this.key = key;
+        }
+    }
+
+    private Node root;
+
+    void insert(int key) {
+        root = insert(root, key);
+    }
+
+    private Node insert(Node node, int key) {
+        if (node == null) {
+            return new Node(key);            // found the empty spot
+        }
+        if (key < node.key) {
+            node.left = insert(node.left, key);
+        } else if (key > node.key) {
+            node.right = insert(node.right, key);
+        }                                    // equal keys are ignored
+        return node;
+    }
+
+    boolean contains(int key) {
+        Node current = root;
+        while (current != null) {
+            if (key == current.key) {
+                return true;
+            }
+            current = (key < current.key) ? current.left : current.right;
+        }
+        return false;
+    }
+
+    void printInorder() {
+        printInorder(root);
+        System.out.println();
+    }
+
+    private void printInorder(Node n) {
+        if (n == null) {
+            return;
+        }
+        printInorder(n.left);
+        System.out.print(n.key + " ");
+        printInorder(n.right);
+    }
+}
+```
+
+```java
+class BSTDemo {
+    public static void main(String[] args) {
+        BST tree = new BST();
+        int[] keys = {50, 30, 70, 20, 40, 60, 80};
+        for (int k : keys) {
+            tree.insert(k);
+        }
+        tree.printInorder();
+        System.out.println(tree.contains(60));
+        System.out.println(tree.contains(65));
+    }
+}
+```
+
+Output:
+
+```text
+20 30 40 50 60 70 80
+true
+false
+```
+
+PAGE#Deleting a node
+Deleting is the trickiest BST operation, because the tree must stay in order. There are three cases:
+
+```text
+1. Leaf (no children):   just remove it.
+2. One child:            replace the node with its child.
+3. Two children:         copy in the inorder successor (the smallest value
+                         in the right subtree), then delete that successor.
+```
+
+```java
+class BSTDeletion {
+    static class Node {
+        int key;
+        Node left;
+        Node right;
+        Node(int key) {
+            this.key = key;
+        }
+    }
+
+    static Node insert(Node node, int key) {
+        if (node == null) {
+            return new Node(key);
+        }
+        if (key < node.key) {
+            node.left = insert(node.left, key);
+        } else if (key > node.key) {
+            node.right = insert(node.right, key);
+        }
+        return node;
+    }
+
+    static Node delete(Node node, int key) {
+        if (node == null) {
+            return null;
+        }
+        if (key < node.key) {
+            node.left = delete(node.left, key);
+        } else if (key > node.key) {
+            node.right = delete(node.right, key);
+        } else {
+            if (node.left == null) {
+                return node.right;               // case 1 and case 2
+            }
+            if (node.right == null) {
+                return node.left;                // case 2
+            }
+            Node successor = node.right;         // case 3
+            while (successor.left != null) {
+                successor = successor.left;
+            }
+            node.key = successor.key;
+            node.right = delete(node.right, successor.key);
+        }
+        return node;
+    }
+
+    static void inorder(Node n) {
+        if (n == null) {
+            return;
+        }
+        inorder(n.left);
+        System.out.print(n.key + " ");
+        inorder(n.right);
+    }
+
+    public static void main(String[] args) {
+        Node root = null;
+        for (int k : new int[]{50, 30, 70, 20, 40, 60, 80}) {
+            root = insert(root, k);
+        }
+        root = delete(root, 20);               // leaf
+        inorder(root);
+        System.out.println();
+        root = delete(root, 30);               // one child (40)
+        inorder(root);
+        System.out.println();
+        root = delete(root, 50);               // two children: the root
+        inorder(root);
+        System.out.println();
+        System.out.println("New root: " + root.key);
+    }
+}
+```
+
+Output:
+
+```text
+30 40 50 60 70 80
+40 50 60 70 80
+40 60 70 80
+New root: 60
+```
+
+When the root 50 is deleted, its inorder successor is 60 (the smallest value in the right subtree). 60 moves up to become the new root.
+
+PAGE#Balance, AVL trees, and complexity
+Search, insert, and delete all follow one path from the root, so their cost is the height of the tree, h.
+
+```text
+Balanced tree:            O(log n)   (height about log2 n)
+Chain-like tree:          O(n)       (height about n)
+```
+
+A BST can become a chain. If you insert already-sorted values 10, 20, 30, each one goes to the right of the last:
+
+```text
+10
+  \
+   20
+     \
+      30       height 2, but it behaves like a linked list
+```
+
+## AVL trees
+An AVL tree is a BST that keeps itself balanced. For every node, the heights of the left and right subtrees may differ by at most 1. When an insert breaks this rule, the tree fixes itself with a rotation.
+
+```text
+Inserting 10, 20, 30 gives a right-heavy chain.
+A LEFT rotation at 10 makes 20 the root:
+
+      20
+     /  \
+   10    30
+```
+
+Inserting 30, 20, 10 is left-heavy, and a RIGHT rotation makes 20 the root. The mixed cases (a zig-zag shape) need two rotations.
+
+```java
+class Rotations {
+    static class Node {
+        int key;
+        Node left;
+        Node right;
+        Node(int key) {
+            this.key = key;
+        }
+    }
+
+    // x's right child y becomes the new top of this subtree
+    static Node rotateLeft(Node x) {
+        Node y = x.right;
+        x.right = y.left;
+        y.left = x;
+        return y;
+    }
+
+    // y's left child x becomes the new top of this subtree
+    static Node rotateRight(Node y) {
+        Node x = y.left;
+        y.left = x.right;
+        x.right = y;
+        return x;
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(10);
+        root.right = new Node(20);
+        root.right.right = new Node(30);
+        root = rotateLeft(root);
+        System.out.println(root.key + " left=" + root.left.key
+                + " right=" + root.right.key);
+    }
+}
+```
+
+Output:
+
+```text
+20 left=10 right=30
+```
+
+PAGE#Summary
+- A BST keeps smaller values on the left and larger values on the right of every node.
+- Inorder traversal of a BST gives the values in ascending order.
+- Search and insert follow one path from the root; delete has three cases (leaf, one child, two children).
+- Cost is O(h): O(log n) when balanced, O(n) when the tree has become a chain.
+- AVL trees stay balanced by rotating when subtree heights differ by more than 1.
+
+LESSON#Heaps#Heaps
+PAGE#What is a heap?
+A binary heap is a complete binary tree that follows the heap rule. Complete means every level is full except possibly the last, which fills from the left.
+
+- Min-heap: every parent is less than or equal to its children, so the SMALLEST value is at the root
+- Max-heap: every parent is greater than or equal to its children, so the LARGEST value is at the root
+
+```text
+A min-heap:
+
+         1
+       /   \
+      3     8
+     /
+    5
+```
+
+A heap is not fully sorted. It only guarantees that the parent comes before its children, so siblings can be in any order. What it does give you is instant access to the smallest (or largest) item.
+
+Real-world uses: a priority queue where the most urgent task goes first, scheduling jobs, finding the k largest items, and heap sort.
+
+PAGE#Heaps stored in an array
+Because a heap is a complete tree, it fits neatly into an array with no gaps and no node objects. Fill the tree level by level, left to right. With the root at index 0:
+
+```text
+left child of index i     is 2i + 1
+right child of index i    is 2i + 2
+parent of index i         is (i - 1) / 2    (integer division)
+```
+
+```text
+Tree:        1             Array:
+           /   \           index:  0  1  2  3
+          3     8          value:  1  3  8  5
+         /
+        5
+```
+
+Check with the array: the node at index 1 (value 3) has its left child at 2 x 1 + 1 = 3 (value 5) and its right child at 2 x 1 + 2 = 4 (no item there). Its parent is at (1 - 1) / 2 = 0 (value 1).
+
+PAGE#Inserting into a heap
+To insert, put the new value at the end of the array (the next free spot in the tree), then "bubble it up": while it is smaller than its parent, swap them. This restores the heap rule. At most one swap per level, so it takes O(log n).
+
+## Walkthrough: insert 5, 3, 8, 1 into an empty min-heap
+```text
+insert 5:   [5]
+insert 3:   [5, 3]       3 < parent 5, swap       -> [3, 5]
+insert 8:   [3, 5, 8]    8 > parent 3, stays
+insert 1:   [3, 5, 8, 1] 1 < parent 5 (index 1), swap -> [3, 1, 8, 5]
+                         1 < parent 3 (index 0), swap -> [1, 3, 8, 5]
+```
+
+The final array is [1, 3, 8, 5], with the smallest value at the root.
+
+PAGE#Removing the smallest item
+To remove the root (the minimum), we cannot just delete it and leave a hole. Instead:
+1. Save the root value to return it.
+2. Move the LAST item of the array to the root.
+3. "Sink it down": while it is larger than a child, swap it with the SMALLER child.
+
+This also takes O(log n).
+
+```text
+Heap [1, 3, 8, 5]. Extract the minimum:
+  save 1, move last item 5 to the root:   [5, 3, 8]
+  children of 5 are 3 and 8; the smaller is 3, so swap:   [3, 5, 8]
+```
+
+```java
+import java.util.Arrays;
+
+class MinHeap {
+    private int[] data;
+    private int size = 0;
+
+    MinHeap(int capacity) {
+        data = new int[capacity];
+    }
+
+    void insert(int value) {                        // O(log n)
+        if (size == data.length) {
+            throw new IllegalStateException("Heap is full");
+        }
+        data[size] = value;
+        int i = size;
+        size++;
+        while (i > 0 && data[(i - 1) / 2] > data[i]) {
+            swap(i, (i - 1) / 2);                   // bubble up
+            i = (i - 1) / 2;
+        }
+    }
+
+    int extractMin() {                              // O(log n)
+        if (size == 0) {
+            throw new IllegalStateException("Heap is empty");
+        }
+        int min = data[0];
+        size--;
+        data[0] = data[size];                       // last item goes to the root
+        int i = 0;
+        while (true) {                              // sink down
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+            int smallest = i;
+            if (left < size && data[left] < data[smallest]) {
+                smallest = left;
+            }
+            if (right < size && data[right] < data[smallest]) {
+                smallest = right;
+            }
+            if (smallest == i) {
+                break;
+            }
+            swap(i, smallest);
+            i = smallest;
+        }
+        return min;
+    }
+
+    boolean isEmpty() { return size == 0; }
+
+    private void swap(int a, int b) {
+        int temp = data[a];
+        data[a] = data[b];
+        data[b] = temp;
+    }
+
+    public String toString() {
+        return Arrays.toString(Arrays.copyOf(data, size));
+    }
+
+    public static void main(String[] args) {
+        MinHeap h = new MinHeap(10);
+        h.insert(5);
+        h.insert(3);
+        h.insert(8);
+        h.insert(1);
+        System.out.println(h);
+        System.out.println(h.extractMin());
+        System.out.println(h);
+    }
+}
+```
+
+Output:
+
+```text
+[1, 3, 8, 5]
+1
+[3, 5, 8]
+```
+
+PAGE#Heap sort, complexity, and summary
+## Heap sort
+Because extractMin always returns the smallest remaining item, putting items into a heap and taking them out one by one returns them in sorted order.
+
+```java
+class HeapSortDemo {
+    public static void main(String[] args) {
+        MinHeap h = new MinHeap(10);
+        int[] values = {9, 4, 7, 1, 6};
+        for (int v : values) {
+            h.insert(v);
+        }
+        while (!h.isEmpty()) {
+            System.out.print(h.extractMin() + " ");
+        }
+        System.out.println();
+    }
+}
+```
+
+Output:
+
+```text
+1 4 6 7 9
+```
+
+## Complexity
+```text
+peek at the root        O(1)
+insert                  O(log n)
+extract the root        O(log n)
+heap sort (n items)     O(n log n)
+```
+
+## Summary
+- A heap is a complete binary tree with the heap rule: in a min-heap each parent is at most its children.
+- The minimum (or maximum for a max-heap) is always at the root.
+- Stored in an array: left child 2i + 1, right child 2i + 2, parent (i - 1) / 2.
+- Insert by adding at the end and bubbling up; extract by moving the last item to the root and sinking down.
+- Heaps power priority queues and heap sort.
+
+CATEGORY#Graphs
+
+LESSON#Graphs#Graphs
+PAGE#What is a graph?
+A graph is a set of vertices (also called nodes) connected by edges. Graphs model anything that is connected in a network: cities joined by roads, people joined by friendships, web pages joined by links, or the topics in Cram that unlock the next topic.
+
+```text
+  A --- B
+  |     |
+  D --- E ... connected network
+```
+
+## Key terms
+- Vertex: a point in the graph
+- Edge: a connection between two vertices
+- Undirected graph: edges work in both directions
+- Directed graph: each edge has a direction (A to B does not mean B to A)
+- Weighted graph: each edge has a number, such as a distance
+- Neighbors: vertices joined by an edge
+- Degree: the number of edges at a vertex
+- Path: a sequence of vertices joined by edges
+- Cycle: a path that starts and ends at the same vertex
+
+A complete undirected graph joins every pair of vertices. With n vertices it has n(n - 1) / 2 edges: 4 vertices give 6 edges, and 6 vertices give 15.
+
+PAGE#Representing a graph
+There are two standard ways to store a graph in a program. We will use this undirected graph with vertices A to E (numbered 0 to 4):
+
+```text
+  A --- B
+  |     |
+  D     C
+   \   /
+     E
+
+Edges: A-B, A-D, B-C, D-E, C-E
+```
+
+## Adjacency matrix
+A table where row i, column j is 1 if there is an edge between vertex i and vertex j.
+
+```text
+     A B C D E
+  A  0 1 0 1 0
+  B  1 0 1 0 0
+  C  0 1 0 0 1
+  D  1 0 0 0 1
+  E  0 0 1 1 0
+```
+
+## Adjacency list
+Each vertex keeps a list of its neighbors.
+
+```text
+A: B, D
+B: A, C
+C: B, E
+D: A, E
+E: C, D
+```
+
+```text
+                    Matrix              List
+Memory              O(V^2)              O(V + E)
+Is there an edge?   O(1)                O(neighbors)
+List the neighbors  O(V)                O(neighbors)
+Best for            dense graphs        sparse graphs (most real graphs)
+```
+
+PAGE#A graph in Java
+This class stores an undirected graph as an adjacency list. Each list is kept sorted so that the neighbors always come in the same order.
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class Graph {
+    private final List<List<Integer>> adj = new ArrayList<>();
+
+    Graph(int vertices) {
+        for (int i = 0; i < vertices; i++) {
+            adj.add(new ArrayList<>());
+        }
+    }
+
+    void addEdge(int u, int v) {             // undirected: add both ways
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+        Collections.sort(adj.get(u));
+        Collections.sort(adj.get(v));
+    }
+
+    List<Integer> neighbors(int v) {
+        return adj.get(v);
+    }
+
+    int vertexCount() {
+        return adj.size();
+    }
+
+    public static void main(String[] args) {
+        String[] names = {"A", "B", "C", "D", "E"};
+        Graph g = new Graph(5);
+        g.addEdge(0, 1);   // A-B
+        g.addEdge(0, 3);   // A-D
+        g.addEdge(1, 2);   // B-C
+        g.addEdge(3, 4);   // D-E
+        g.addEdge(2, 4);   // C-E
+
+        for (int v = 0; v < g.vertexCount(); v++) {
+            System.out.print(names[v] + ":");
+            for (int n : g.neighbors(v)) {
+                System.out.print(" " + names[n]);
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+Output:
+
+```text
+A: B D
+B: A C
+C: B E
+D: A E
+E: C D
+```
+
+PAGE#Directed graphs, applications, and complexity
+In a directed graph, an edge from A to B can be followed only from A to B. Directed graphs model one-way streets, "follows" on social media, and prerequisites. In Cram, each topic is a vertex and an edge points to the topic it unlocks, for example Linked Lists to Stacks.
+
+```text
+Linked Lists --> Stacks --> Queues --> Trees
+```
+
+For a directed edge, addEdge would add only adj.get(u).add(v), not the reverse.
+
+## Where graphs are used
+- Maps and route finding (shortest path)
+- Social networks (friends of friends)
+- The internet (pages and links)
+- Scheduling tasks with prerequisites
+
+## Searching a graph
+To visit every reachable vertex you need a traversal. The next two lessons cover breadth-first search (BFS) and depth-first search (DFS). Both run in O(V + E) with an adjacency list.
+
+PAGE#Summary
+- A graph is vertices joined by edges; edges may be directed, undirected, or weighted.
+- A complete undirected graph on n vertices has n(n - 1) / 2 edges.
+- Adjacency matrix uses O(V^2) memory; adjacency list uses O(V + E) and suits most graphs.
+- Graphs model maps, networks, and dependencies.
+- Traversals (BFS and DFS) visit the graph systematically.
+
+LESSON#Breadth-First Search (BFS)#Graphs
+PAGE#The idea behind BFS
+Breadth-first search (BFS) explores a graph level by level. It visits the start vertex, then all of its neighbors, then all of THEIR neighbors, and so on. Imagine dropping a stone in a pond: the ripples spread outward one ring at a time.
+
+BFS uses a queue to remember which vertices are waiting to be visited. Because a queue is first-in, first-out, vertices closer to the start are always visited before vertices farther away.
+
+## The algorithm
+1. Mark the start vertex as visited and enqueue it.
+2. Dequeue a vertex and visit it.
+3. For each neighbor that has not been visited, mark it visited and enqueue it.
+4. Repeat steps 2 and 3 until the queue is empty.
+
+Marking a vertex as visited when it is ENQUEUED (not when it is dequeued) stops the same vertex from being added twice.
+
+PAGE#BFS walkthrough
+We will run BFS from A on this graph, taking neighbors in alphabetical order:
+
+```text
+Edges: A-B, A-D, B-C, D-E, C-E
+
+  A --- B
+  |     |
+  D     C
+   \   /
+     E
+```
+
+```text
+Step   Dequeue   Visit order        Queue after the step
+start    -       -                  [A]
+1        A       A                  [B, D]
+2        B       A, B               [D, C]
+3        D       A, B, D            [C, E]
+4        C       A, B, D, C         [E]
+5        E       A, B, D, C, E      []
+```
+
+The visiting order is A, B, D, C, E. Notice that B and D (one edge from A) are visited before C and E (two edges from A). BFS finishes all vertices at one distance before moving to the next.
+
+PAGE#BFS in Java
+This version also records each vertex's distance from the start, measured in edges.
+
+```java
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Queue;
+
+class BFSDemo {
+    static List<List<Integer>> build(int n, int[][] edges) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+        }
+        for (List<Integer> list : adj) {
+            Collections.sort(list);
+        }
+        return adj;
+    }
+
+    static void bfs(List<List<Integer>> adj, int start, String[] names) {
+        boolean[] visited = new boolean[adj.size()];
+        int[] distance = new int[adj.size()];
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        visited[start] = true;
+        queue.add(start);
+        while (!queue.isEmpty()) {
+            int v = queue.remove();
+            System.out.println(names[v] + " (distance " + distance[v] + ")");
+            for (int next : adj.get(v)) {
+                if (!visited[next]) {
+                    visited[next] = true;
+                    distance[next] = distance[v] + 1;
+                    queue.add(next);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] names = {"A", "B", "C", "D", "E"};
+        int[][] edges = {{0, 1}, {0, 3}, {1, 2}, {3, 4}, {2, 4}};
+        bfs(build(5, edges), 0, names);
+    }
+}
+```
+
+Output:
+
+```text
+A (distance 0)
+B (distance 1)
+D (distance 1)
+C (distance 2)
+E (distance 2)
+```
+
+PAGE#Shortest paths, complexity, and applications
+## Shortest paths in an unweighted graph
+BFS reaches each vertex by the path with the FEWEST edges, so the distance it records is the length of the shortest path. In the example, the shortest path from A to E has 2 edges (A, D, E).
+
+BFS finds shortest paths only when every edge counts the same. For weighted graphs, other algorithms such as Dijkstra's are used.
+
+## Complexity
+- Time: O(V + E). Every vertex is enqueued once and every edge is looked at once (with an adjacency list).
+- Space: O(V) for the visited array and the queue.
+
+## Applications
+- Shortest route with the fewest steps (for example fewest transfers)
+- Finding everyone within 2 connections in a social network
+- Checking whether a graph is connected
+- Solving mazes and puzzles by fewest moves
+
+PAGE#Summary
+- BFS visits a graph level by level, using a queue.
+- Mark vertices visited when you enqueue them so none is added twice.
+- Time O(V + E), space O(V).
+- On an unweighted graph, BFS gives the shortest path measured in edges.
+- BFS order depends on the order of the neighbors; in these lessons neighbors are taken alphabetically.
+
+LESSON#Depth-First Search (DFS)#Graphs
+PAGE#The idea behind DFS
+Depth-first search (DFS) goes as DEEP as it can along one path before backing up. Imagine exploring a maze: you keep walking forward until you hit a dead end, then you backtrack to the last junction and try a different turn.
+
+DFS uses a stack. The stack is either one you manage yourself, or the call stack, which is what recursion uses.
+
+## The algorithm (recursive)
+1. Visit the current vertex and mark it visited.
+2. For each neighbor that has not been visited, run DFS on that neighbor.
+3. When all neighbors are done, return (this is the backtrack).
+
+Compared with BFS, which fans out one level at a time, DFS dives down one branch first.
+
+PAGE#DFS walkthrough
+We run DFS from A on the same graph, taking neighbors in alphabetical order:
+
+```text
+Edges: A-B, A-D, B-C, D-E, C-E
+
+  A --- B
+  |     |
+  D     C
+   \   /
+     E
+```
+
+```text
+visit A          neighbors B, D       go to B
+ visit B         neighbors A, C       A is visited, go to C
+  visit C        neighbors B, E       B is visited, go to E
+   visit E       neighbors C, D       C is visited, go to D
+    visit D      neighbors A, E       both visited, backtrack
+```
+
+The visiting order is A, B, C, E, D. Compare with BFS, which gave A, B, D, C, E. DFS went down the path A, B, C, E, D without ever coming back to try D from A until the very end.
+
+PAGE#DFS in Java
+## Recursive version
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class DFSDemo {
+    static List<List<Integer>> build(int n, int[][] edges) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for (int[] e : edges) {
+            adj.get(e[0]).add(e[1]);
+            adj.get(e[1]).add(e[0]);
+        }
+        for (List<Integer> list : adj) {
+            Collections.sort(list);
+        }
+        return adj;
+    }
+
+    static void dfs(List<List<Integer>> adj, int v,
+                    boolean[] visited, String[] names) {
+        visited[v] = true;
+        System.out.print(names[v] + " ");
+        for (int next : adj.get(v)) {
+            if (!visited[next]) {
+                dfs(adj, next, visited, names);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] names = {"A", "B", "C", "D", "E"};
+        int[][] edges = {{0, 1}, {0, 3}, {1, 2}, {3, 4}, {2, 4}};
+        List<List<Integer>> adj = build(5, edges);
+        dfs(adj, 0, new boolean[5], names);
+        System.out.println();
+    }
+}
+```
+
+Output:
+
+```text
+A B C E D
+```
+
+## Version with your own stack
+The recursion can be replaced by an explicit stack. Pushing the neighbors in reverse order makes the smallest neighbor come off first, so the visiting order stays the same.
+
+```java
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+
+class DFSIterative {
+    static void dfs(List<List<Integer>> adj, int start, String[] names) {
+        boolean[] visited = new boolean[adj.size()];
+        Deque<Integer> stack = new ArrayDeque<>();
+        stack.push(start);
+        while (!stack.isEmpty()) {
+            int v = stack.pop();
+            if (visited[v]) {
+                continue;
+            }
+            visited[v] = true;
+            System.out.print(names[v] + " ");
+            List<Integer> list = adj.get(v);
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (!visited[list.get(i)]) {
+                    stack.push(list.get(i));
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        String[] names = {"A", "B", "C", "D", "E"};
+        int[][] edges = {{0, 1}, {0, 3}, {1, 2}, {3, 4}, {2, 4}};
+        dfs(DFSDemo.build(5, edges), 0, names);
+    }
+}
+```
+
+Output:
+
+```text
+A B C E D
+```
+
+PAGE#BFS versus DFS, applications, and summary
+```text
+                 BFS                       DFS
+Uses             a queue                   a stack (or recursion)
+Order            level by level            deep first, then backtrack
+Shortest path    yes (unweighted graphs)   not guaranteed
+Time             O(V + E)                  O(V + E)
+Space            O(V) (queue can be wide)  O(V) (stack can be deep)
+```
+
+## Applications of DFS
+- Detecting a cycle in a graph
+- Finding a path between two vertices
+- Solving mazes and puzzles with backtracking
+- Ordering tasks that depend on each other (topological sort)
+- Checking whether a graph is connected
+
+## Summary
+- DFS follows one path as deep as it can, then backtracks.
+- It uses recursion (the call stack) or an explicit stack.
+- Mark vertices visited so you never go around a cycle forever.
+- Time O(V + E), space O(V).
+- Choose BFS for fewest-edges paths, and DFS for exploring all possibilities or backtracking problems.
