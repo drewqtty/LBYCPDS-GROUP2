@@ -127,7 +127,7 @@ PAGE#Summary
 
 Next, the Fundamentals category continues with recursion, a technique you will use in trees, sorting, and graph traversal.
 
-LESSON#Recursion
+LESSON#Recursion#Recursion
 PAGE#What is recursion?
 Recursion is when a method solves a problem by calling itself on a smaller version of the same problem. Picture a set of nested Russian dolls. To find the smallest doll, you open the current doll, and then do the same thing to the doll inside, until there is nothing left to open.
 
@@ -249,7 +249,7 @@ PAGE#Summary
 
 CATEGORY#Linear Structures
 
-LESSON#Arrays#Intro, ADT, and Complexity
+LESSON#Arrays#Arrays
 PAGE#What is an array?
 An array is a fixed-size collection of items of the same type, stored one after another in memory. Each slot has a number called an index. In Java, the first index is 0, so an array of 5 items has indexes 0 to 4.
 
@@ -1241,7 +1241,7 @@ Counting sort    O(n + max)   O(n + max)   O(n + max)    Yes (full version)
 - Counting and radix sort avoid comparisons by using the values themselves.
 - Pick the algorithm by input size, how sorted the data already is, and available memory.
 
-LESSON#Hash Tables
+LESSON#Hash Tables#Hash Tables
 PAGE#What is a hash table?
 A hash table stores key-value pairs and finds a value from its key in about O(1) time, no matter how many items are stored. Think of a coat check: you hand over a ticket (the key) and the attendant goes straight to your coat without searching every hook.
 
@@ -1593,7 +1593,7 @@ PAGE#Summary
 - Inorder is L-node-R, preorder is node-L-R, postorder is L-R-node, level-order goes level by level with a queue.
 - Each traversal takes O(n).
 
-LESSON#Binary Search Trees#Trees
+LESSON#Binary Search Trees#Binary Search Trees
 PAGE#The binary search tree property
 A binary search tree (BST) is a binary tree that keeps its values in order so that searching is fast. For EVERY node:
 - All values in its left subtree are smaller than the node's value
@@ -2231,7 +2231,7 @@ PAGE#Summary
 - Graphs model maps, networks, and dependencies.
 - Traversals (BFS and DFS) visit the graph systematically.
 
-LESSON#Breadth-First Search (BFS)#Graphs
+LESSON#Breadth-First Search (BFS)#Breadth-First Search (BFS)
 PAGE#The idea behind BFS
 Breadth-first search (BFS) explores a graph level by level. It visits the start vertex, then all of its neighbors, then all of THEIR neighbors, and so on. Imagine dropping a stone in a pond: the ripples spread outward one ring at a time.
 
@@ -2357,7 +2357,7 @@ PAGE#Summary
 - On an unweighted graph, BFS gives the shortest path measured in edges.
 - BFS order depends on the order of the neighbors; in these lessons neighbors are taken alphabetically.
 
-LESSON#Depth-First Search (DFS)#Graphs
+LESSON#Depth-First Search (DFS)#Depth-First Search (DFS)
 PAGE#The idea behind DFS
 Depth-first search (DFS) goes as DEEP as it can along one path before backing up. Imagine exploring a maze: you keep walking forward until you hit a dead end, then you backtrack to the last junction and try a different turn.
 
