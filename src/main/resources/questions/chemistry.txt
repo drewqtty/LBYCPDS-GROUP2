@@ -1,9 +1,0 @@
-// Question bank for Chemistry for Engineers  (see docs/question-format.md for the line formats)
-//
-// THIS FILE IS INTENTIONALLY EMPTY OF QUESTIONS.
-// The real topics, questions and answers are supplied by the backend / content team.
-// Until this file contains questions, the app shows the temporary sample in questions/chemistry-mock.txt.
-// Once real questions are added here, the sample is ignored automatically.
-//
-// Add, below the COURSE line, the TOPIC lines (topic#topics it unlocks) and the MC / ID / PS lines.
-COURSE#Chemistry for Engineers

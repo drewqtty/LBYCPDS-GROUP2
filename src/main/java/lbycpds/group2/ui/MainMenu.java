@@ -87,6 +87,19 @@ public class MainMenu {
         courseBox.setValue(courses.get(0).getName());
         courseBox.setMaxWidth(Double.MAX_VALUE);
 
+        // Tells the student when a course is still showing temporary sample content
+        Label sampleNote = new Label("Sample content only: this course's real questions are not connected yet.");
+        sampleNote.getStyleClass().add("mode-desc");
+        sampleNote.setWrapText(true);
+        sampleNote.setMinHeight(Region.USE_PREF_SIZE);
+        sampleNote.managedProperty().bind(sampleNote.visibleProperty());
+        Runnable updateNote = () -> {
+            CourseCatalog.Course chosen = courseNamed(courseBox.getValue());
+            sampleNote.setVisible(chosen != null && chosen.isSample());
+        };
+        courseBox.setOnAction(e -> updateNote.run());
+        updateNote.run();
+
         Button start = new Button("START SESSION  ");
         start.getStyleClass().add("start-button");
         start.setMaxWidth(Double.MAX_VALUE);
@@ -133,7 +146,7 @@ public class MainMenu {
         Label courseHeader = new Label("SELECT YOUR COURSE");
         courseHeader.getStyleClass().add("card-label");
 
-        VBox courseCardBox = new VBox(20, courseHeader, courseBox, start);
+        VBox courseCardBox = new VBox(20, courseHeader, courseBox, sampleNote, start);
 
         // Returning students can pick up where they stopped, in the mode they were using
         LastSession resume = findSavedSession();
